@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { GameState, CharacterStats, LifeEvent, ScheduledEvent } from '../types/character'
+import type { GameState, CharacterStats, CharacterFinances, LifeEvent, ScheduledEvent } from '../types/character'
 import { generateRandomCharacter } from '../engine/characterGenerator'
 
 // ─── Actions ──────────────────────────────────────────────────────────────────
@@ -18,6 +18,10 @@ interface GameActions {
   addLifeEvent: (event: LifeEvent) => void
   /** Met en file un événement à déclencher à un âge futur */
   scheduleEvent: (scheduledEvent: ScheduledEvent) => void
+  /** Retire un tag du personnage (no-op s'il est absent) */
+  removeTag: (tag: string) => void
+  /** Met à jour les finances du personnage (merge partiel) */
+  updateFinances: (partialFinances: Partial<CharacterFinances>) => void
 }
 
 // ─── État initial ─────────────────────────────────────────────────────────────
@@ -86,6 +90,18 @@ export const useGameStore = create<GameState & GameActions>()(
         set((etat) => ({
           evenementsProgrammes: [...etat.evenementsProgrammes, scheduledEvent],
         }))
+      },
+
+      removeTag(tag) {
+        const { character } = get()
+        if (!character) return
+        set({ character: { ...character, tags: character.tags.filter((t) => t !== tag) } })
+      },
+
+      updateFinances(partialFinances) {
+        const { character } = get()
+        if (!character) return
+        set({ character: { ...character, finances: { ...character.finances, ...partialFinances } } })
       },
     }),
     {

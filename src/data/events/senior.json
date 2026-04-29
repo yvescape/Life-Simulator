@@ -1,0 +1,371 @@
+[
+  {
+    "id": "senior_retraite",
+    "category": "career",
+    "minAge": 60,
+    "maxAge": 67,
+    "requiredTags": ["premier_cdi_signe"],
+    "excludedTags": ["retraite_prise"],
+    "weight": 100,
+    "text": "Le dernier jour au bureau. Les collègues ont organisé un pot de départ avec un gâteau et des fleurs. {prenom} signe ses derniers documents et rend son badge. C'est bizarre comme sentiment.",
+    "choices": [
+      {
+        "id": "partir_heureux",
+        "label": "Partir le cœur léger, c'est bien mérité",
+        "effects": {
+          "stats": { "santeMentale": 8, "santePhysique": 3 },
+          "addTags": ["retraite_prise", "retraite_heureuse"]
+        }
+      },
+      {
+        "id": "partir_nostalgique",
+        "label": "Partir avec le cœur gros, ce travail comptait vraiment",
+        "effects": {
+          "stats": { "santeMentale": 2, "reputation": 3 },
+          "addTags": ["retraite_prise"]
+        }
+      },
+      {
+        "id": "mi_temps",
+        "label": "Négocier une transition progressive en mi-temps",
+        "effects": {
+          "stats": { "santeMentale": 4, "santePhysique": 2, "intelligence": 2 },
+          "addTags": ["retraite_prise", "transition_douce"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "senior_petits_enfants",
+    "category": "family",
+    "minAge": 58,
+    "maxAge": 75,
+    "requiredTags": ["premier_enfant_ne"],
+    "excludedTags": ["petits_enfants_arrives"],
+    "weight": 80,
+    "text": "L'enfant de {prenom} appelle pour annoncer une grande nouvelle : il va y avoir un bébé dans la famille. {prenom} va être grand-parent. Ça fait un drôle d'effet.",
+    "choices": [
+      {
+        "id": "joie_totale",
+        "label": "Exploser de joie et proposer son aide",
+        "effects": {
+          "stats": { "santeMentale": 8, "charisme": 3 },
+          "addTags": ["petits_enfants_arrives", "grand_parent_present"]
+        }
+      },
+      {
+        "id": "joie_reservee",
+        "label": "Être touché mais laisser les jeunes parents gérer",
+        "effects": {
+          "stats": { "santeMentale": 5 },
+          "addTags": ["petits_enfants_arrives"]
+        }
+      },
+      {
+        "id": "choc_age",
+        "label": "Avoir un choc existentiel sur son propre âge",
+        "effects": {
+          "stats": { "santeMentale": 1, "intelligence": 3 },
+          "addTags": ["petits_enfants_arrives"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "senior_probleme_sante",
+    "category": "health",
+    "minAge": 62,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": ["probleme_sante_senior"],
+    "weight": 75,
+    "text": "Le médecin annonce que {prenom} va devoir surveiller son cœur et adopter un mode de vie plus sain. Des médicaments quotidiens, moins de sel, plus de marche.",
+    "choices": [
+      {
+        "id": "changer_habitudes",
+        "label": "Changer radicalement ses habitudes de vie",
+        "effects": {
+          "stats": { "santePhysique": 6, "santeMentale": 3 },
+          "money": -200,
+          "addTags": ["probleme_sante_senior", "priorite_sante", "hygiène_vie_saine"]
+        }
+      },
+      {
+        "id": "minimum",
+        "label": "Faire le minimum : les médicaments, c'est tout",
+        "effects": {
+          "stats": { "santePhysique": 2, "santeMentale": 2 },
+          "money": -100,
+          "addTags": ["probleme_sante_senior"]
+        }
+      },
+      {
+        "id": "ignorer",
+        "label": "Continuer comme avant, la vie est trop courte",
+        "effects": {
+          "stats": { "santePhysique": -5, "santeMentale": 2, "chance": -3 },
+          "addTags": ["probleme_sante_senior"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "senior_passion_tardive",
+    "category": "random",
+    "minAge": 60,
+    "maxAge": 80,
+    "requiredTags": ["retraite_prise"],
+    "excludedTags": ["passion_retraite_trouvee"],
+    "weight": 65,
+    "text": "Avec tout ce temps libre, {prenom} décide de se mettre à la peinture aquarelle. Le premier tableau ressemble à une catastrophe, mais c'est libérateur.",
+    "choices": [
+      {
+        "id": "cours_peinture",
+        "label": "Prendre des cours dans un atelier",
+        "effects": {
+          "stats": { "santeMentale": 6, "charisme": 3, "beaute": 2 },
+          "money": -300,
+          "addTags": ["passion_retraite_trouvee", "artiste_tardif"]
+        }
+      },
+      {
+        "id": "apprendre_seul",
+        "label": "Continuer à apprendre seul avec YouTube",
+        "effects": {
+          "stats": { "santeMentale": 4, "intelligence": 3 },
+          "addTags": ["passion_retraite_trouvee"]
+        }
+      },
+      {
+        "id": "autre_chose",
+        "label": "Finalement essayer autre chose",
+        "effects": {
+          "stats": { "santeMentale": 2 },
+          "addTags": ["passion_retraite_trouvee"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "senior_voyage_reve",
+    "category": "random",
+    "minAge": 60,
+    "maxAge": 75,
+    "requiredTags": ["retraite_prise"],
+    "excludedTags": ["voyage_retraite_fait"],
+    "weight": 55,
+    "text": "{prenom} a toujours rêvé de voir le Japon en automne. Maintenant qu'il a le temps, il ne reste qu'à réserver. Mais les jambes ne sont plus tout à fait celles des 30 ans.",
+    "choices": [
+      {
+        "id": "y_aller",
+        "label": "Réserver le voyage, c'est maintenant ou jamais",
+        "effects": {
+          "stats": { "santeMentale": 9, "santePhysique": 2, "charisme": 2 },
+          "money": -4000,
+          "addTags": ["voyage_retraite_fait", "esprit_aventurier"]
+        }
+      },
+      {
+        "id": "voyage_europe",
+        "label": "Opter pour quelque chose de moins loin",
+        "effects": {
+          "stats": { "santeMentale": 6, "santePhysique": 2 },
+          "money": -1500,
+          "addTags": ["voyage_retraite_fait"]
+        }
+      },
+      {
+        "id": "remettre",
+        "label": "Remettre à l'année prochaine",
+        "effects": {
+          "stats": { "santeMentale": -2 },
+          "addTags": ["voyage_retraite_fait"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "senior_deces_conjoint",
+    "category": "family",
+    "minAge": 65,
+    "maxAge": 90,
+    "requiredTags": ["courageux_en_amour"],
+    "excludedTags": ["deuil_conjoint_vecu"],
+    "weight": 45,
+    "text": "Après des décennies ensemble, {prenom} se retrouve seul. La maison est trop silencieuse. Les habitudes à deux sont partout, cruellement présentes.",
+    "choices": [
+      {
+        "id": "famille_soutien",
+        "label": "Se rapprocher de la famille et des amis",
+        "effects": {
+          "stats": { "santeMentale": -4, "charisme": 3, "reputation": 2 },
+          "addTags": ["deuil_conjoint_vecu"]
+        }
+      },
+      {
+        "id": "therapie",
+        "label": "Rejoindre un groupe de soutien au deuil",
+        "effects": {
+          "stats": { "santeMentale": -1, "intelligence": 2 },
+          "money": -300,
+          "addTags": ["deuil_conjoint_vecu", "conscience_soi"]
+        }
+      },
+      {
+        "id": "isolement",
+        "label": "Traverser ça dans la solitude",
+        "effects": {
+          "stats": { "santeMentale": -9, "santePhysique": -3 },
+          "addTags": ["deuil_conjoint_vecu"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "senior_memoires",
+    "category": "random",
+    "minAge": 65,
+    "maxAge": 85,
+    "requiredTags": [],
+    "excludedTags": ["memoires_ecrites"],
+    "weight": 40,
+    "text": "Un petit-enfant demande à {prenom} de raconter sa vie. L'idée d'écrire ses mémoires germe. Il y a tellement à dire.",
+    "choices": [
+      {
+        "id": "ecrire",
+        "label": "Se mettre à écrire un livre de souvenirs",
+        "effects": {
+          "stats": { "intelligence": 5, "santeMentale": 6, "charisme": 3 },
+          "addTags": ["memoires_ecrites", "grand_lecteur"]
+        }
+      },
+      {
+        "id": "raconter_oral",
+        "label": "Raconter oralement à la famille lors des repas",
+        "effects": {
+          "stats": { "charisme": 4, "santeMentale": 4 },
+          "addTags": ["memoires_ecrites"]
+        }
+      },
+      {
+        "id": "garder_soi",
+        "label": "Certaines choses sont mieux gardées pour soi",
+        "effects": {
+          "stats": { "santeMentale": 2 },
+          "addTags": ["memoires_ecrites"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "senior_maison_retraite",
+    "category": "family",
+    "minAge": 75,
+    "maxAge": 92,
+    "requiredTags": [],
+    "excludedTags": ["maison_retraite_abordee"],
+    "weight": 50,
+    "text": "Les enfants de {prenom} abordent doucement la question d'un établissement médicalisé. Ça fait mal à entendre, mais les difficultés du quotidien sont réelles.",
+    "choices": [
+      {
+        "id": "accepter",
+        "label": "Accepter, c'est le plus sage",
+        "effects": {
+          "stats": { "santeMentale": -3, "santePhysique": 3, "reputation": 2 },
+          "addTags": ["maison_retraite_abordee", "en_maison_retraite"]
+        }
+      },
+      {
+        "id": "aide_domicile",
+        "label": "Préférer une aide à domicile",
+        "effects": {
+          "stats": { "santeMentale": 3, "santePhysique": -1 },
+          "money": -600,
+          "addTags": ["maison_retraite_abordee"]
+        }
+      },
+      {
+        "id": "refuser",
+        "label": "Refuser catégoriquement, je me débrouille encore",
+        "effects": {
+          "stats": { "santeMentale": 4, "santePhysique": -3 },
+          "addTags": ["maison_retraite_abordee"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "senior_reconciliation",
+    "category": "family",
+    "minAge": 62,
+    "maxAge": 85,
+    "requiredTags": [],
+    "excludedTags": ["reconciliation_famille"],
+    "weight": 45,
+    "text": "Un membre de la famille avec qui {prenom} ne s'est plus parlé depuis des années tend la main. Une lettre inattendue, quelques lignes maladroites mais sincères.",
+    "choices": [
+      {
+        "id": "repondre",
+        "label": "Répondre et rouvrir la porte",
+        "effects": {
+          "stats": { "santeMentale": 7, "charisme": 3, "reputation": 3 },
+          "addTags": ["reconciliation_famille", "genereux"]
+        }
+      },
+      {
+        "id": "ignorer",
+        "label": "Ne pas répondre, trop de mal a été fait",
+        "effects": {
+          "stats": { "santeMentale": -2 },
+          "addTags": ["reconciliation_famille"]
+        }
+      },
+      {
+        "id": "rencontre_neutre",
+        "label": "Proposer une rencontre dans un lieu neutre",
+        "effects": {
+          "stats": { "santeMentale": 4, "intelligence": 2, "charisme": 2 },
+          "addTags": ["reconciliation_famille"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "senior_legs",
+    "category": "finance",
+    "minAge": 70,
+    "maxAge": 95,
+    "requiredTags": [],
+    "excludedTags": ["testament_redige"],
+    "weight": 60,
+    "text": "Le notaire rappelle à {prenom} qu'il serait temps de rédiger un testament. Ce n'est pas une pensée agréable, mais c'est un acte d'amour pour ceux qui resteront.",
+    "choices": [
+      {
+        "id": "tout_preparer",
+        "label": "Tout préparer soigneusement avec le notaire",
+        "effects": {
+          "stats": { "santeMentale": 3, "reputation": 4, "intelligence": 2 },
+          "money": -500,
+          "addTags": ["testament_redige", "responsable"]
+        }
+      },
+      {
+        "id": "partage_egal",
+        "label": "Diviser équitablement entre les enfants",
+        "effects": {
+          "stats": { "santeMentale": 3, "reputation": 2 },
+          "money": -300,
+          "addTags": ["testament_redige"]
+        }
+      },
+      {
+        "id": "remettre",
+        "label": "Remettre ça à plus tard, pas envie d'y penser",
+        "effects": {
+          "stats": { "santeMentale": -2 },
+          "addTags": ["testament_redige"]
+        }
+      }
+    ]
+  }
+]

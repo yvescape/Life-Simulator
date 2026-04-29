@@ -1,0 +1,371 @@
+[
+  {
+    "id": "adulte_achat_immobilier",
+    "category": "finance",
+    "minAge": 30,
+    "maxAge": 45,
+    "requiredTags": ["premier_cdi_signe"],
+    "excludedTags": ["achat_immobilier_fait"],
+    "weight": 70,
+    "text": "La banque accepte le dossier de prêt de {prenom} pour acheter un appartement. C'est le grand saut : 20 ans de remboursement, mais enfin quelque chose à soi.",
+    "choices": [
+      {
+        "id": "signer_maintenant",
+        "label": "Signer le compromis sans hésiter",
+        "effects": {
+          "stats": { "santeMentale": 5, "reputation": 4 },
+          "money": -5000,
+          "addTags": ["achat_immobilier_fait", "proprietaire"]
+        }
+      },
+      {
+        "id": "negocier_prix",
+        "label": "Négocier le prix avant de signer",
+        "effects": {
+          "stats": { "intelligence": 3, "reputation": 3 },
+          "money": -3000,
+          "addTags": ["achat_immobilier_fait", "proprietaire", "sait_negocier"]
+        }
+      },
+      {
+        "id": "attendre",
+        "label": "Continuer à louer encore quelques années",
+        "effects": {
+          "stats": { "santeMentale": -2 },
+          "addTags": ["achat_immobilier_fait"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "adulte_naissance_enfant",
+    "category": "family",
+    "minAge": 28,
+    "maxAge": 42,
+    "requiredTags": [],
+    "excludedTags": ["premier_enfant_ne"],
+    "weight": 80,
+    "text": "L'annonce tombe : {prenom} va être parent. La joie se mélange à la panique. Comment est-ce qu'on fait pour ne pas rater ça ?",
+    "choices": [
+      {
+        "id": "se_preparer_fond",
+        "label": "Lire tous les livres sur la parentalité",
+        "effects": {
+          "stats": { "intelligence": 3, "santeMentale": -2, "reputation": 3 },
+          "money": -500,
+          "addTags": ["premier_enfant_ne", "parent_investi"]
+        }
+      },
+      {
+        "id": "improviser",
+        "label": "Faire confiance à l'instinct parental",
+        "effects": {
+          "stats": { "santeMentale": 2, "charisme": 3 },
+          "addTags": ["premier_enfant_ne"]
+        }
+      },
+      {
+        "id": "therapie",
+        "label": "Consulter un psy pour se préparer",
+        "effects": {
+          "stats": { "santeMentale": 5, "intelligence": 3 },
+          "money": -300,
+          "addTags": ["premier_enfant_ne", "conscience_soi"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "adulte_promotion_travail",
+    "category": "career",
+    "minAge": 32,
+    "maxAge": 50,
+    "requiredTags": ["premier_cdi_signe"],
+    "excludedTags": ["premiere_promotion"],
+    "weight": 65,
+    "text": "Le directeur convoque {prenom} pour lui proposer un poste de manager. Plus de responsabilités, une belle augmentation, mais aussi bien plus de pression.",
+    "choices": [
+      {
+        "id": "accepter",
+        "label": "Accepter avec enthousiasme",
+        "effects": {
+          "stats": { "reputation": 6, "charisme": 3, "santeMentale": -3 },
+          "money": 500,
+          "addTags": ["premiere_promotion", "manager"]
+        }
+      },
+      {
+        "id": "negocier_conditions",
+        "label": "Accepter mais négocier les conditions",
+        "effects": {
+          "stats": { "reputation": 4, "charisme": 4, "intelligence": 2 },
+          "money": 700,
+          "addTags": ["premiere_promotion", "manager", "sait_negocier"]
+        }
+      },
+      {
+        "id": "refuser",
+        "label": "Décliner, l'équilibre vie perso compte plus",
+        "effects": {
+          "stats": { "santeMentale": 4, "reputation": -2 },
+          "addTags": ["premiere_promotion"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "adulte_deces_parent",
+    "category": "family",
+    "minAge": 35,
+    "maxAge": 55,
+    "requiredTags": [],
+    "excludedTags": ["deuil_parent_vecu"],
+    "weight": 50,
+    "text": "Un appel que {prenom} redoutait arrive un dimanche matin. L'un de ses parents vient de partir. Le monde s'arrête une seconde, puis continue sans prévenir.",
+    "choices": [
+      {
+        "id": "soutenir_famille",
+        "label": "S'occuper de tout pour la famille",
+        "effects": {
+          "stats": { "santeMentale": -6, "charisme": 3, "reputation": 3 },
+          "addTags": ["deuil_parent_vecu", "pilier_famille"]
+        }
+      },
+      {
+        "id": "therapie_deuil",
+        "label": "Chercher un soutien psychologique",
+        "effects": {
+          "stats": { "santeMentale": -2, "intelligence": 2 },
+          "money": -400,
+          "addTags": ["deuil_parent_vecu", "conscience_soi"]
+        }
+      },
+      {
+        "id": "isolement",
+        "label": "S'isoler et traverser ça seul",
+        "effects": {
+          "stats": { "santeMentale": -8, "charisme": -2 },
+          "addTags": ["deuil_parent_vecu"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "adulte_burnout",
+    "category": "health",
+    "minAge": 33,
+    "maxAge": 55,
+    "requiredTags": ["manager"],
+    "excludedTags": ["burnout_vecu"],
+    "weight": 55,
+    "text": "Depuis six mois, {prenom} se lève épuisé, va travailler épuisé et revient épuisé. Le médecin dit le mot que personne ne veut entendre : burn-out.",
+    "choices": [
+      {
+        "id": "arret_medical",
+        "label": "Prendre un arrêt maladie et se reposer vraiment",
+        "effects": {
+          "stats": { "santePhysique": 5, "santeMentale": 6, "reputation": -3 },
+          "money": -1000,
+          "addTags": ["burnout_vecu", "priorite_sante"]
+        }
+      },
+      {
+        "id": "pousser_encore",
+        "label": "Tenir bon encore quelques mois",
+        "effects": {
+          "stats": { "santePhysique": -6, "santeMentale": -8, "reputation": 2 },
+          "addTags": ["burnout_vecu"]
+        }
+      },
+      {
+        "id": "changer_poste",
+        "label": "Demander à changer de poste en interne",
+        "effects": {
+          "stats": { "santeMentale": 3, "santePhysique": 2, "reputation": 2 },
+          "addTags": ["burnout_vecu", "sait_adapter"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "adulte_divorce",
+    "category": "family",
+    "minAge": 30,
+    "maxAge": 55,
+    "requiredTags": ["premier_enfant_ne"],
+    "excludedTags": ["divorce_vecu"],
+    "weight": 40,
+    "text": "Après des années de disputes et de silence, {prenom} et son partenaire admettent que c'est terminé. Il faut maintenant gérer le divorce, le logement, et les enfants.",
+    "choices": [
+      {
+        "id": "divorce_amiable",
+        "label": "Tenter un divorce à l'amiable pour les enfants",
+        "effects": {
+          "stats": { "santeMentale": -4, "reputation": 3, "charisme": 2 },
+          "money": -2000,
+          "addTags": ["divorce_vecu", "bonne_coparentalite"]
+        }
+      },
+      {
+        "id": "divorce_conflictuel",
+        "label": "Défendre ses droits bec et ongles",
+        "effects": {
+          "stats": { "santeMentale": -7, "reputation": -2 },
+          "money": -5000,
+          "addTags": ["divorce_vecu"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "adulte_reconversion",
+    "category": "career",
+    "minAge": 35,
+    "maxAge": 50,
+    "requiredTags": [],
+    "excludedTags": ["reconversion_envisagee"],
+    "weight": 45,
+    "text": "{prenom} est à la croisée des chemins. Son métier ne l'anime plus depuis un moment. Une formation de reconversion est possible, mais ça implique de tout recommencer.",
+    "choices": [
+      {
+        "id": "se_reconvertir",
+        "label": "Se lancer dans la reconversion",
+        "effects": {
+          "stats": { "intelligence": 5, "santeMentale": 4, "reputation": 2 },
+          "money": -3000,
+          "addTags": ["reconversion_envisagee", "reconversion_faite"]
+        }
+      },
+      {
+        "id": "formation_courte",
+        "label": "Suivre une formation courte en parallèle",
+        "effects": {
+          "stats": { "intelligence": 3, "santeMentale": 2 },
+          "money": -800,
+          "addTags": ["reconversion_envisagee"]
+        }
+      },
+      {
+        "id": "rester",
+        "label": "Rester dans son domaine, c'est plus sûr",
+        "effects": {
+          "stats": { "santeMentale": -3 },
+          "addTags": ["reconversion_envisagee"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "adulte_investissement",
+    "category": "finance",
+    "minAge": 35,
+    "maxAge": 55,
+    "requiredTags": ["proprietaire"],
+    "excludedTags": ["investissement_immo_fait"],
+    "weight": 50,
+    "text": "Un ami conseille à {prenom} d'acheter un studio pour le mettre en location. Les chiffres semblent tenir la route, mais ça mobilise toutes les économies.",
+    "choices": [
+      {
+        "id": "investir",
+        "label": "Foncer sur l'investissement locatif",
+        "effects": {
+          "stats": { "intelligence": 3, "reputation": 3 },
+          "money": -8000,
+          "addTags": ["investissement_immo_fait", "investisseur"]
+        }
+      },
+      {
+        "id": "placer_bourse",
+        "label": "Préférer placer en bourse",
+        "effects": {
+          "stats": { "intelligence": 2, "chance": 3 },
+          "money": -2000,
+          "addTags": ["investissement_immo_fait"]
+        }
+      },
+      {
+        "id": "garder_epargne",
+        "label": "Garder l'épargne pour la sécurité",
+        "effects": {
+          "stats": { "santeMentale": 2 },
+          "addTags": ["investissement_immo_fait"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "adulte_maladie_serieuse",
+    "category": "health",
+    "minAge": 38,
+    "maxAge": 58,
+    "requiredTags": [],
+    "excludedTags": ["maladie_serieuse_vecue"],
+    "weight": 35,
+    "text": "Les résultats d'analyse reviennent avec une mauvaise nouvelle. Ce n'est pas mortel, mais ça va changer la vie de {prenom} pour un moment.",
+    "choices": [
+      {
+        "id": "traitement_total",
+        "label": "Suivre le traitement à la lettre",
+        "effects": {
+          "stats": { "santePhysique": -4, "santeMentale": -3, "reputation": 2, "intelligence": 3 },
+          "money": -2000,
+          "addTags": ["maladie_serieuse_vecue", "priorite_sante"]
+        }
+      },
+      {
+        "id": "medecine_parallele",
+        "label": "Essayer des thérapies alternatives en complément",
+        "effects": {
+          "stats": { "santePhysique": -5, "santeMentale": 2 },
+          "money": -1000,
+          "addTags": ["maladie_serieuse_vecue"]
+        }
+      },
+      {
+        "id": "ignorer",
+        "label": "Minimiser et continuer comme avant",
+        "effects": {
+          "stats": { "santePhysique": -8, "santeMentale": -2 },
+          "addTags": ["maladie_serieuse_vecue"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "adulte_projet_associatif",
+    "category": "random",
+    "minAge": 30,
+    "maxAge": 55,
+    "requiredTags": [],
+    "excludedTags": ["engagement_associatif"],
+    "weight": 40,
+    "text": "Une voisine propose à {prenom} de rejoindre une association locale qui aide des jeunes en difficulté. Ce n'est pas payé, mais c'est utile.",
+    "choices": [
+      {
+        "id": "rejoindre",
+        "label": "Rejoindre bénévolement",
+        "effects": {
+          "stats": { "charisme": 4, "santeMentale": 5, "reputation": 4 },
+          "addTags": ["engagement_associatif", "solidaire"]
+        }
+      },
+      {
+        "id": "donner_argent",
+        "label": "Faire plutôt un don financier",
+        "effects": {
+          "stats": { "reputation": 2, "santeMentale": 2 },
+          "money": -200,
+          "addTags": ["engagement_associatif"]
+        }
+      },
+      {
+        "id": "refuser",
+        "label": "Pas le temps en ce moment",
+        "effects": {
+          "stats": { "santeMentale": -1 },
+          "addTags": ["engagement_associatif"]
+        }
+      }
+    ]
+  }
+]

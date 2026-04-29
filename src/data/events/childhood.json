@@ -1,0 +1,322 @@
+[
+  {
+    "id": "enfance_rentree_scolaire",
+    "category": "random",
+    "minAge": 6,
+    "maxAge": 6,
+    "requiredTags": [],
+    "excludedTags": ["rentree_scolaire_vecue"],
+    "weight": 100,
+    "text": "C'est la rentrée, {prenom} ! Tu ranges ton cartable neuf et tu te demandes si tu vas te faire des amis. La maîtresse s'appelle Mme Lefèvre et elle a l'air sympa.",
+    "choices": [
+      {
+        "id": "lever_main",
+        "label": "Lever la main pour répondre à une question",
+        "effects": {
+          "stats": { "intelligence": 3, "charisme": 2 },
+          "addTags": ["rentree_scolaire_vecue", "eleve_courageux"]
+        }
+      },
+      {
+        "id": "rester_discret",
+        "label": "Rester discret dans son coin",
+        "effects": {
+          "stats": { "santeMentale": 2 },
+          "addTags": ["rentree_scolaire_vecue"]
+        }
+      },
+      {
+        "id": "parler_voisin",
+        "label": "Parler au voisin de table",
+        "effects": {
+          "stats": { "charisme": 4 },
+          "addTags": ["rentree_scolaire_vecue", "premier_ami_ecole"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "enfance_chute_velo",
+    "category": "health",
+    "minAge": 5,
+    "maxAge": 10,
+    "requiredTags": [],
+    "excludedTags": ["chute_velo_vecue"],
+    "weight": 70,
+    "text": "En faisant du vélo sans les petites roues pour la première fois, {prenom} dérape et tombe sur le genou. Ça saigne un peu. Papa arrive en courant.",
+    "choices": [
+      {
+        "id": "pleurer",
+        "label": "Pleurer et se faire consoler",
+        "effects": {
+          "stats": { "santePhysique": -2, "santeMentale": 3 },
+          "addTags": ["chute_velo_vecue"]
+        }
+      },
+      {
+        "id": "remonter_velo",
+        "label": "Sécher ses larmes et remonter sur le vélo",
+        "effects": {
+          "stats": { "santePhysique": -1, "charisme": 3, "chance": 2 },
+          "addTags": ["chute_velo_vecue", "resilience_precoce"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "enfance_meilleur_ami",
+    "category": "family",
+    "minAge": 6,
+    "maxAge": 10,
+    "requiredTags": [],
+    "excludedTags": ["meilleur_ami_enfance"],
+    "weight": 80,
+    "text": "Un enfant de la classe, Théo, propose à {prenom} de venir jouer chez lui après l'école. C'est peut-être le début d'une grande amitié.",
+    "choices": [
+      {
+        "id": "accepter",
+        "label": "Accepter avec enthousiasme",
+        "effects": {
+          "stats": { "charisme": 3, "santeMentale": 4 },
+          "addTags": ["meilleur_ami_enfance"]
+        }
+      },
+      {
+        "id": "demander_parents",
+        "label": "Demander d'abord la permission aux parents",
+        "effects": {
+          "stats": { "charisme": 2, "santeMentale": 3, "reputation": 2 },
+          "addTags": ["meilleur_ami_enfance", "enfant_sage"]
+        }
+      },
+      {
+        "id": "refuser",
+        "label": "Refuser, on ne sait jamais",
+        "effects": {
+          "stats": { "santeMentale": -2 },
+          "addTags": []
+        }
+      }
+    ]
+  },
+  {
+    "id": "enfance_maladie_varicelle",
+    "category": "health",
+    "minAge": 4,
+    "maxAge": 10,
+    "requiredTags": [],
+    "excludedTags": ["varicelle_vecue"],
+    "weight": 60,
+    "text": "{prenom} se réveille couvert de boutons rouges qui grattent affreusement. La varicelle. Une semaine à la maison avec du sirop rose et des dessins animés en boucle.",
+    "choices": [
+      {
+        "id": "se_gratter",
+        "label": "Se gratter quand même (yolo)",
+        "effects": {
+          "stats": { "santePhysique": -4, "beaute": -2 },
+          "addTags": ["varicelle_vecue"]
+        }
+      },
+      {
+        "id": "etre_courageux",
+        "label": "Tenir bon et ne pas se gratter",
+        "effects": {
+          "stats": { "santePhysique": -2, "santeMentale": 3 },
+          "addTags": ["varicelle_vecue", "volonte_de_fer"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "enfance_spectacle_ecole",
+    "category": "random",
+    "minAge": 6,
+    "maxAge": 11,
+    "requiredTags": [],
+    "excludedTags": ["spectacle_ecole_vecu"],
+    "weight": 65,
+    "text": "L'école organise un spectacle de fin d'année. La maîtresse propose à {prenom} de jouer le rôle du narrateur. Tous les parents seront dans la salle.",
+    "choices": [
+      {
+        "id": "accepter_role",
+        "label": "Accepter le rôle fièrement",
+        "effects": {
+          "stats": { "charisme": 5, "intelligence": 2 },
+          "addTags": ["spectacle_ecole_vecu", "gout_scene"]
+        }
+      },
+      {
+        "id": "refuser_timidite",
+        "label": "Refuser, c'est trop stressant",
+        "effects": {
+          "stats": { "santeMentale": -2 },
+          "addTags": ["spectacle_ecole_vecu"]
+        }
+      },
+      {
+        "id": "proposer_coulisses",
+        "label": "Proposer de s'occuper des décors plutôt",
+        "effects": {
+          "stats": { "intelligence": 3, "reputation": 2 },
+          "addTags": ["spectacle_ecole_vecu", "gout_creation"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "enfance_note_excellente",
+    "category": "career",
+    "minAge": 7,
+    "maxAge": 12,
+    "requiredTags": [],
+    "excludedTags": ["premiere_excellente_note"],
+    "weight": 55,
+    "text": "{prenom} reçoit son premier 20/20 en dictée. La maîtresse lit la copie à voix haute devant toute la classe. Les joues de {prenom} deviennent toutes rouges.",
+    "choices": [
+      {
+        "id": "fierete",
+        "label": "Savourer le moment, tout sourires",
+        "effects": {
+          "stats": { "intelligence": 4, "charisme": 2, "reputation": 3 },
+          "addTags": ["premiere_excellente_note", "bon_eleve"]
+        }
+      },
+      {
+        "id": "faire_humble",
+        "label": "Faire semblant que c'est rien",
+        "effects": {
+          "stats": { "intelligence": 3, "santeMentale": 2 },
+          "addTags": ["premiere_excellente_note"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "enfance_animal_domestique",
+    "category": "family",
+    "minAge": 5,
+    "maxAge": 12,
+    "requiredTags": [],
+    "excludedTags": ["premier_animal"],
+    "weight": 75,
+    "text": "Pour l'anniversaire de {prenom}, la famille offre un chiot adorable. Il s'appelle déjà Biscuit. Il a mangé une chaussette et renversé un verre en cinq minutes.",
+    "choices": [
+      {
+        "id": "adorer_chien",
+        "label": "S'en occuper avec amour et sérieux",
+        "effects": {
+          "stats": { "santeMentale": 5, "reputation": 2, "charisme": 2 },
+          "addTags": ["premier_animal", "amoureux_animaux"]
+        }
+      },
+      {
+        "id": "laisser_parents",
+        "label": "Laisser les parents s'en occuper surtout",
+        "effects": {
+          "stats": { "santeMentale": 3 },
+          "addTags": ["premier_animal"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "enfance_dispute_ami",
+    "category": "random",
+    "minAge": 7,
+    "maxAge": 12,
+    "requiredTags": ["meilleur_ami_enfance"],
+    "excludedTags": ["premiere_dispute_ami"],
+    "weight": 70,
+    "text": "Théo et {prenom} se disputent pour une bêtise dans la cour. Théo dit qu'il ne veut plus être ami. C'est nul.",
+    "choices": [
+      {
+        "id": "presenter_excuses",
+        "label": "S'excuser en premier même si c'est pas ta faute",
+        "effects": {
+          "stats": { "charisme": 4, "santeMentale": 2 },
+          "addTags": ["premiere_dispute_ami"]
+        }
+      },
+      {
+        "id": "attendre",
+        "label": "Laisser passer, ça va se réconcilier tout seul",
+        "effects": {
+          "stats": { "santeMentale": -2, "intelligence": 2 },
+          "addTags": ["premiere_dispute_ami"]
+        }
+      },
+      {
+        "id": "trouver_nouveau_ami",
+        "label": "Aller jouer avec d'autres camarades",
+        "effects": {
+          "stats": { "charisme": 3, "santeMentale": 1 },
+          "addTags": ["premiere_dispute_ami"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "enfance_livre_passion",
+    "category": "random",
+    "minAge": 7,
+    "maxAge": 12,
+    "requiredTags": [],
+    "excludedTags": ["passion_lecture_eveillee"],
+    "weight": 50,
+    "text": "À la bibliothèque, {prenom} tombe sur une série de livres d'aventure. Il reste deux heures à lire assis par terre entre les rayons. La bibliothécaire lui sourit.",
+    "choices": [
+      {
+        "id": "devorer_serie",
+        "label": "Emprunter tous les tomes disponibles",
+        "effects": {
+          "stats": { "intelligence": 5, "santeMentale": 3 },
+          "addTags": ["passion_lecture_eveillee", "grand_lecteur"]
+        }
+      },
+      {
+        "id": "emprunter_un",
+        "label": "N'en prendre qu'un pour commencer",
+        "effects": {
+          "stats": { "intelligence": 3 },
+          "addTags": ["passion_lecture_eveillee"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "enfance_harcele",
+    "category": "health",
+    "minAge": 7,
+    "maxAge": 12,
+    "requiredTags": [],
+    "excludedTags": ["experience_harcelement"],
+    "weight": 35,
+    "text": "Un grand de CM2 se moque de {prenom} tous les jours dans la cour. C'est pas drôle du tout et {prenom} n'a plus envie d'aller à l'école.",
+    "choices": [
+      {
+        "id": "en_parler",
+        "label": "En parler à un adulte de confiance",
+        "effects": {
+          "stats": { "santeMentale": 3, "reputation": 2 },
+          "addTags": ["experience_harcelement", "a_demande_aide"]
+        }
+      },
+      {
+        "id": "ignorer",
+        "label": "Faire comme si de rien n'était",
+        "effects": {
+          "stats": { "santeMentale": -5, "resilience": 3 },
+          "addTags": ["experience_harcelement"]
+        }
+      },
+      {
+        "id": "repondre",
+        "label": "Répondre et ne pas se laisser faire",
+        "effects": {
+          "stats": { "santeMentale": -2, "charisme": 3, "reputation": 2 },
+          "addTags": ["experience_harcelement", "caractere_affirme"]
+        }
+      }
+    ]
+  }
+]

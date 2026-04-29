@@ -1,18 +1,54 @@
-import { useEffect } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
 import StatsPanel from '../components/StatsPanel'
+import EventModal from '../components/EventModal'
+import { pickNextEvent, applyChoice } from '../engine/eventEngine'
+import { tousLesEvenements } from '../data/events'
+import type { GameEvent, Choice } from '../types/event'
 
 export default function GamePage() {
   const navigate      = useNavigate()
   const character     = useGameStore((s) => s.character)
   const anneeCourante = useGameStore((s) => s.anneeCourante)
   const advanceYear   = useGameStore((s) => s.advanceYear)
+  const updateStats   = useGameStore((s) => s.updateStats)
+  const updateFinances = useGameStore((s) => s.updateFinances)
+  const addTag        = useGameStore((s) => s.addTag)
+  const removeTag     = useGameStore((s) => s.removeTag)
+  const addLifeEvent  = useGameStore((s) => s.addLifeEvent)
+  const scheduleEvent = useGameStore((s) => s.scheduleEvent)
+
+  const [evenementActuel, setEvenementActuel] = useState<GameEvent | null>(null)
 
   // Redirige vers l'accueil si aucune partie n'est en cours
   useEffect(() => {
     if (!character) navigate('/')
   }, [character, navigate])
+
+  const storeActions = { updateStats, updateFinances, addTag, removeTag, addLifeEvent, scheduleEvent }
+
+  function handleAnnéeSuivante() {
+    advanceYear()
+    // Zustand est synchrone : on lit l'état mis à jour immédiatement
+    const characterMisAJour = useGameStore.getState().character
+    if (!characterMisAJour) return
+    const event = pickNextEvent(characterMisAJour, tousLesEvenements)
+    setEvenementActuel(event)
+  }
+
+  const handleChoiceSelected = useCallback((choice: Choice): string[] => {
+    const characterActuel = useGameStore.getState().character
+    if (!characterActuel || !evenementActuel) return []
+    return applyChoice(choice, evenementActuel, characterActuel, storeActions)
+  // storeActions est stable car les actions Zustand ne changent pas
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [evenementActuel])
+
+  const handleFermerModal = useCallback(() => {
+    setEvenementActuel(null)
+  }, [])
 
   if (!character) return null
 
@@ -69,8 +105,10 @@ export default function GamePage() {
         {/* Actions */}
         <div className="flex flex-col gap-3">
           <button
-            onClick={advanceYear}
+            onClick={handleAnnéeSuivante}
+            disabled={evenementActuel !== null}
             className="w-full py-4 rounded-2xl bg-violet-600 hover:bg-violet-500 active:scale-95
+                       disabled:opacity-40 disabled:cursor-not-allowed
                        text-white text-lg font-semibold shadow-lg shadow-violet-900/50
                        transition-all duration-150"
           >
@@ -86,6 +124,19 @@ export default function GamePage() {
         </div>
 
       </div>
+
+      {/* Modal événement */}
+      <AnimatePresence>
+        {evenementActuel && (
+          <EventModal
+            key={evenementActuel.id}
+            event={evenementActuel}
+            character={character}
+            onChoiceSelected={handleChoiceSelected}
+            onClose={handleFermerModal}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }

@@ -1,0 +1,345 @@
+[
+  {
+    "id": "jeune_fac_premiere_annee",
+    "category": "career",
+    "minAge": 18,
+    "maxAge": 19,
+    "requiredTags": ["filiere_generale"],
+    "excludedTags": ["fac_commencee"],
+    "weight": 100,
+    "text": "{prenom} arrive sur le campus pour la première fois. La liberté est grisante : plus de parents pour surveiller les horaires, plus de cantine, plus personne pour forcer à dormir tôt.",
+    "choices": [
+      {
+        "id": "structure",
+        "label": "S'organiser et suivre tous les cours",
+        "effects": {
+          "stats": { "intelligence": 5, "santeMentale": 2, "santePhysique": -2 },
+          "addTags": ["fac_commencee", "etudiant_serieux"]
+        }
+      },
+      {
+        "id": "equilibre",
+        "label": "Trouver un équilibre vie sociale / études",
+        "effects": {
+          "stats": { "intelligence": 3, "charisme": 4, "santeMentale": 3 },
+          "addTags": ["fac_commencee"]
+        }
+      },
+      {
+        "id": "fete",
+        "label": "Surtout profiter de la vie étudiante",
+        "effects": {
+          "stats": { "intelligence": -3, "charisme": 5, "santeMentale": 2, "santePhysique": -3 },
+          "addTags": ["fac_commencee", "etudiant_fêtard"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "jeune_coloc",
+    "category": "family",
+    "minAge": 18,
+    "maxAge": 24,
+    "requiredTags": [],
+    "excludedTags": ["premiere_colocation"],
+    "weight": 75,
+    "text": "{prenom} emménage en colocation avec deux inconnus trouvés sur Internet. L'un cuisine bien, l'autre laisse toujours la vaisselle dans l'évier. La vie commence vraiment.",
+    "choices": [
+      {
+        "id": "regler_regles",
+        "label": "Proposer des règles de vie commune dès le début",
+        "effects": {
+          "stats": { "reputation": 3, "santeMentale": 3, "charisme": 2 },
+          "addTags": ["premiere_colocation", "diplomate"]
+        }
+      },
+      {
+        "id": "laisser_faire",
+        "label": "Laisser les choses se mettre en place naturellement",
+        "effects": {
+          "stats": { "santeMentale": -2, "charisme": 3 },
+          "addTags": ["premiere_colocation"]
+        }
+      },
+      {
+        "id": "etre_laxiste",
+        "label": "Profiter de la liberté totale (vaisselle peut attendre)",
+        "effects": {
+          "stats": { "santeMentale": 2, "reputation": -3 },
+          "addTags": ["premiere_colocation"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "jeune_premier_cdi",
+    "category": "career",
+    "minAge": 22,
+    "maxAge": 28,
+    "requiredTags": [],
+    "excludedTags": ["premier_cdi_signe"],
+    "weight": 85,
+    "text": "Après plusieurs stages et CDD, {prenom} reçoit enfin une offre de CDI. Le salaire n'est pas mirobolant, mais la stabilité, ça n'a pas de prix.",
+    "choices": [
+      {
+        "id": "accepter_direct",
+        "label": "Accepter sans négocier, on est trop content",
+        "effects": {
+          "stats": { "santeMentale": 4, "reputation": 2 },
+          "money": 0,
+          "addTags": ["premier_cdi_signe"]
+        }
+      },
+      {
+        "id": "negocier_salaire",
+        "label": "Négocier le salaire avant de signer",
+        "effects": {
+          "stats": { "charisme": 4, "reputation": 3, "intelligence": 2 },
+          "money": 200,
+          "addTags": ["premier_cdi_signe", "sait_negocier"]
+        }
+      },
+      {
+        "id": "refuser_attendre",
+        "label": "Refuser et attendre mieux",
+        "effects": {
+          "stats": { "santeMentale": -3, "chance": 3 },
+          "addTags": ["premier_cdi_signe"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "jeune_rupture_amoureuse",
+    "category": "family",
+    "minAge": 19,
+    "maxAge": 28,
+    "requiredTags": ["courageux_en_amour"],
+    "excludedTags": ["premiere_rupture_vecue"],
+    "weight": 70,
+    "text": "La relation avec Alex dure depuis deux ans, mais quelque chose ne va plus. Alex demande à {prenom} si c'est encore une bonne idée de continuer ensemble.",
+    "choices": [
+      {
+        "id": "separer",
+        "label": "Accepter la rupture, c'est le moment",
+        "effects": {
+          "stats": { "santeMentale": -5, "intelligence": 3, "charisme": 2 },
+          "addTags": ["premiere_rupture_vecue", "rupture_digne"]
+        }
+      },
+      {
+        "id": "se_battre",
+        "label": "Se battre pour sauver la relation",
+        "effects": {
+          "stats": { "santeMentale": -2, "charisme": 3 },
+          "addTags": ["premiere_rupture_vecue", "perseverant_amour"]
+        }
+      },
+      {
+        "id": "fuir",
+        "label": "Éviter la conversation et espérer que ça passe",
+        "effects": {
+          "stats": { "santeMentale": -6, "reputation": -2 },
+          "addTags": ["premiere_rupture_vecue"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "jeune_voyage_backpack",
+    "category": "random",
+    "minAge": 20,
+    "maxAge": 27,
+    "requiredTags": [],
+    "excludedTags": ["voyage_backpacker"],
+    "weight": 50,
+    "text": "Un ami propose à {prenom} un voyage de deux mois en Asie du Sud-Est avec un budget serré. Sac à dos, auberges de jeunesse, plans bancals. L'aventure ou jamais.",
+    "choices": [
+      {
+        "id": "partir",
+        "label": "Foncer, ça ne se refuse pas",
+        "effects": {
+          "stats": { "santeMentale": 8, "charisme": 5, "intelligence": 3, "santePhysique": -2 },
+          "money": -1500,
+          "addTags": ["voyage_backpacker", "esprit_aventurier"]
+        }
+      },
+      {
+        "id": "pas_assez_argent",
+        "label": "Décliner, les finances ne suivent pas",
+        "effects": {
+          "stats": { "santeMentale": -3 },
+          "addTags": ["voyage_backpacker"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "jeune_creation_entreprise",
+    "category": "finance",
+    "minAge": 22,
+    "maxAge": 30,
+    "requiredTags": [],
+    "excludedTags": ["idee_entreprise_eue"],
+    "weight": 40,
+    "text": "{prenom} a une idée de startup qui lui trotte dans la tête depuis des mois. Un ami ingénieur propose de s'associer. Le risque est réel, mais l'opportunité aussi.",
+    "choices": [
+      {
+        "id": "se_lancer",
+        "label": "Quitter son job et se lancer",
+        "effects": {
+          "stats": { "reputation": 4, "santeMentale": -3, "intelligence": 5, "charisme": 3 },
+          "money": -3000,
+          "addTags": ["idee_entreprise_eue", "entrepreneur"],
+          "scheduleEvent": { "triggerAge": 25, "type": "finance" }
+        }
+      },
+      {
+        "id": "projet_secondaire",
+        "label": "Garder son job et développer en parallèle",
+        "effects": {
+          "stats": { "intelligence": 3, "santeMentale": -2 },
+          "addTags": ["idee_entreprise_eue"]
+        }
+      },
+      {
+        "id": "abandonner_idee",
+        "label": "Laisser tomber, c'est trop risqué",
+        "effects": {
+          "stats": { "santeMentale": -3, "chance": -1 },
+          "addTags": ["idee_entreprise_eue"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "jeune_accident_voiture",
+    "category": "health",
+    "minAge": 19,
+    "maxAge": 28,
+    "requiredTags": [],
+    "excludedTags": ["accident_voiture_vecu"],
+    "weight": 30,
+    "text": "Un soir de retour d'une soirée, la voiture de {prenom} dérape sur une route mouillée et heurte un poteau. Personne n'est blessé, mais la voiture est en mauvais état.",
+    "choices": [
+      {
+        "id": "assurance",
+        "label": "Déclarer à l'assurance et assumer",
+        "effects": {
+          "stats": { "santePhysique": -3, "santeMentale": -4, "reputation": 2 },
+          "money": -500,
+          "addTags": ["accident_voiture_vecu", "responsable"]
+        }
+      },
+      {
+        "id": "fuir",
+        "label": "Partir sans signaler l'incident",
+        "effects": {
+          "stats": { "santeMentale": -6, "reputation": -5 },
+          "addTags": ["accident_voiture_vecu"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "jeune_premier_appart",
+    "category": "finance",
+    "minAge": 20,
+    "maxAge": 27,
+    "requiredTags": [],
+    "excludedTags": ["premier_appart_seul"],
+    "weight": 70,
+    "text": "L'occasion se présente : un petit studio libre dans un quartier sympa. Ce serait le premier appartement vraiment à {prenom}. Loyer correct, mais ça pince un peu.",
+    "choices": [
+      {
+        "id": "prendre",
+        "label": "Saisir l'opportunité et signer le bail",
+        "effects": {
+          "stats": { "santeMentale": 5, "reputation": 2 },
+          "money": -800,
+          "addTags": ["premier_appart_seul", "independant"]
+        }
+      },
+      {
+        "id": "attendre",
+        "label": "Attendre de trouver mieux ou moins cher",
+        "effects": {
+          "stats": { "santeMentale": -2 },
+          "addTags": ["premier_appart_seul"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "jeune_ami_besoin",
+    "category": "family",
+    "minAge": 18,
+    "maxAge": 29,
+    "requiredTags": ["meilleur_ami_enfance"],
+    "excludedTags": ["ami_aide_crise"],
+    "weight": 45,
+    "text": "Théo appelle {prenom} à 2h du matin, en pleurs. Il traverse une période très difficile et a besoin de parler. {prenom} doit travailler tôt demain matin.",
+    "choices": [
+      {
+        "id": "rester_ecouter",
+        "label": "Rester éveillé et l'écouter toute la nuit",
+        "effects": {
+          "stats": { "charisme": 4, "santeMentale": -2, "santePhysique": -2, "reputation": 3 },
+          "addTags": ["ami_aide_crise", "ami_loyal"]
+        }
+      },
+      {
+        "id": "rappeler_demain",
+        "label": "Lui promettre de rappeler demain matin",
+        "effects": {
+          "stats": { "santeMentale": 2 },
+          "addTags": ["ami_aide_crise"]
+        }
+      },
+      {
+        "id": "ignorer",
+        "label": "Laisser sonner, on verra demain",
+        "effects": {
+          "stats": { "santeMentale": -3, "reputation": -3 },
+          "addTags": ["ami_aide_crise"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "jeune_mariage_ami",
+    "category": "family",
+    "minAge": 24,
+    "maxAge": 30,
+    "requiredTags": [],
+    "excludedTags": ["mariage_ami_assiste"],
+    "weight": 55,
+    "text": "Un ami proche annonce son mariage et demande à {prenom} d'être son témoin. La cérémonie aura lieu dans trois mois. Il faut préparer un discours.",
+    "choices": [
+      {
+        "id": "accepter_preparer",
+        "label": "Accepter et préparer un discours mémorable",
+        "effects": {
+          "stats": { "charisme": 5, "intelligence": 3, "santeMentale": 3 },
+          "addTags": ["mariage_ami_assiste", "bon_temoin"]
+        }
+      },
+      {
+        "id": "accepter_improviser",
+        "label": "Accepter et improviser le jour J",
+        "effects": {
+          "stats": { "charisme": 3, "santeMentale": 1 },
+          "addTags": ["mariage_ami_assiste"]
+        }
+      },
+      {
+        "id": "declin",
+        "label": "Décliner poliment, trop de pression",
+        "effects": {
+          "stats": { "santeMentale": 2, "reputation": -2 },
+          "addTags": ["mariage_ami_assiste"]
+        }
+      }
+    ]
+  }
+]

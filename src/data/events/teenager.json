@@ -1,0 +1,353 @@
+[
+  {
+    "id": "ado_premier_amour",
+    "category": "family",
+    "minAge": 13,
+    "maxAge": 17,
+    "requiredTags": [],
+    "excludedTags": ["premier_amour_vecu"],
+    "weight": 90,
+    "text": "{prenom} a le cœur qui s'emballe dès que Camille entre en classe. Impossible de se concentrer sur les maths. Un ami propose de l'aider à déclarer sa flamme.",
+    "choices": [
+      {
+        "id": "declarer_direct",
+        "label": "Lui dire directement ce qu'on ressent",
+        "effects": {
+          "stats": { "charisme": 5, "santeMentale": 4 },
+          "addTags": ["premier_amour_vecu", "courageux_en_amour"]
+        }
+      },
+      {
+        "id": "envoyer_message",
+        "label": "Envoyer un message sur le téléphone",
+        "effects": {
+          "stats": { "charisme": 2, "santeMentale": 3 },
+          "addTags": ["premier_amour_vecu"]
+        }
+      },
+      {
+        "id": "ne_rien_dire",
+        "label": "Ne rien dire et souffrir en silence",
+        "effects": {
+          "stats": { "santeMentale": -4, "intelligence": 2 },
+          "addTags": ["premier_amour_vecu", "romantique_secret"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "ado_orientation_scolaire",
+    "category": "career",
+    "minAge": 14,
+    "maxAge": 15,
+    "requiredTags": [],
+    "excludedTags": ["choix_orientation_college"],
+    "weight": 100,
+    "text": "Le conseiller d'orientation convoque {prenom}. Il faut choisir entre une filière générale, technologique ou professionnelle. C'est maintenant que tout se joue, paraît-il.",
+    "choices": [
+      {
+        "id": "generale",
+        "label": "Filière générale pour viser le bac",
+        "effects": {
+          "stats": { "intelligence": 5, "santeMentale": -2 },
+          "addTags": ["choix_orientation_college", "filiere_generale"],
+          "scheduleEvent": { "triggerAge": 17, "type": "career" }
+        }
+      },
+      {
+        "id": "techno",
+        "label": "Filière technologique, plus concret",
+        "effects": {
+          "stats": { "intelligence": 3, "charisme": 2 },
+          "addTags": ["choix_orientation_college", "filiere_techno"]
+        }
+      },
+      {
+        "id": "pro",
+        "label": "Filière professionnelle pour travailler vite",
+        "effects": {
+          "stats": { "intelligence": 2, "finances": 0 },
+          "money": 0,
+          "addTags": ["choix_orientation_college", "filiere_pro"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "ado_fete_lycee",
+    "category": "random",
+    "minAge": 15,
+    "maxAge": 18,
+    "requiredTags": [],
+    "excludedTags": ["premiere_fete_lycee"],
+    "weight": 80,
+    "text": "Un élève populaire organise une fête ce week-end et {prenom} est invité. Les parents ne sont pas au courant. Il y aura peut-être de l'alcool.",
+    "choices": [
+      {
+        "id": "y_aller_honnete",
+        "label": "Y aller en prévenant les parents",
+        "effects": {
+          "stats": { "charisme": 3, "reputation": 2, "santeMentale": 2 },
+          "addTags": ["premiere_fete_lycee"]
+        }
+      },
+      {
+        "id": "y_aller_mentir",
+        "label": "Y aller en inventant une excuse",
+        "effects": {
+          "stats": { "charisme": 4, "santeMentale": -2, "reputation": -2 },
+          "addTags": ["premiere_fete_lycee", "tendance_mensonge"]
+        }
+      },
+      {
+        "id": "refuser",
+        "label": "Refuser, c'est pas vraiment ton truc",
+        "effects": {
+          "stats": { "santeMentale": 2, "intelligence": 2 },
+          "addTags": ["premiere_fete_lycee"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "ado_boulot_ete",
+    "category": "finance",
+    "minAge": 16,
+    "maxAge": 18,
+    "requiredTags": [],
+    "excludedTags": ["premier_boulot_ete"],
+    "weight": 65,
+    "text": "L'été arrive et {prenom} a trouvé un job saisonnier dans une crêperie. C'est pas glamour, mais ça paye et la patronne est sympa.",
+    "choices": [
+      {
+        "id": "bosser_dur",
+        "label": "Travailler sérieusement tout l'été",
+        "effects": {
+          "stats": { "reputation": 3, "charisme": 2, "santePhysique": -2 },
+          "money": 800,
+          "addTags": ["premier_boulot_ete", "sens_travail"]
+        }
+      },
+      {
+        "id": "bosser_minimum",
+        "label": "Faire le strict minimum",
+        "effects": {
+          "stats": { "santeMentale": 3 },
+          "money": 400,
+          "addTags": ["premier_boulot_ete"]
+        }
+      },
+      {
+        "id": "quitter",
+        "label": "Quitter après deux semaines, c'est trop dur",
+        "effects": {
+          "stats": { "santeMentale": 2, "reputation": -3 },
+          "money": 200,
+          "addTags": ["premier_boulot_ete"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "ado_sport_equipe",
+    "category": "health",
+    "minAge": 13,
+    "maxAge": 17,
+    "requiredTags": [],
+    "excludedTags": ["sport_equipe_rejoint"],
+    "weight": 60,
+    "text": "Le club de sport du quartier recrute pour son équipe de basket. L'entraîneur pense que {prenom} a du potentiel. Il faut s'entraîner trois fois par semaine.",
+    "choices": [
+      {
+        "id": "rejoindre",
+        "label": "Rejoindre l'équipe avec enthousiasme",
+        "effects": {
+          "stats": { "santePhysique": 6, "charisme": 3, "santeMentale": 3 },
+          "addTags": ["sport_equipe_rejoint", "sportif"]
+        }
+      },
+      {
+        "id": "essayer_abandonner",
+        "label": "Essayer, mais abandonner après un mois",
+        "effects": {
+          "stats": { "santePhysique": 2, "santeMentale": -2 },
+          "addTags": ["sport_equipe_rejoint"]
+        }
+      },
+      {
+        "id": "refuser",
+        "label": "Décliner, t'as déjà beaucoup à faire",
+        "effects": {
+          "stats": { "intelligence": 2 },
+          "addTags": ["sport_equipe_rejoint"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "ado_mauvaises_frequentations",
+    "category": "random",
+    "minAge": 14,
+    "maxAge": 18,
+    "requiredTags": [],
+    "excludedTags": ["mauvaises_freq_rencontrees"],
+    "weight": 40,
+    "text": "Un groupe de jeunes du quartier invite {prenom} à traîner avec eux. Ils ont l'air cool, mais ils sèchent les cours et ont parfois des comportements douteux.",
+    "choices": [
+      {
+        "id": "rejoindre",
+        "label": "Les rejoindre, pourquoi pas",
+        "effects": {
+          "stats": { "charisme": 3, "reputation": -4, "intelligence": -2, "santeMentale": -2 },
+          "addTags": ["mauvaises_freq_rencontrees", "mauvaise_influence"]
+        }
+      },
+      {
+        "id": "rester_poli",
+        "label": "Rester poli mais garder ses distances",
+        "effects": {
+          "stats": { "intelligence": 2, "reputation": 2 },
+          "addTags": ["mauvaises_freq_rencontrees"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "ado_passion_musique",
+    "category": "random",
+    "minAge": 13,
+    "maxAge": 17,
+    "requiredTags": [],
+    "excludedTags": ["passion_musique_eveillee"],
+    "weight": 55,
+    "text": "{prenom} découvre la guitare dans le grenier et passe des heures à apprendre des accords sur YouTube. Les voisins commencent à s'en plaindre, mais c'est addictif.",
+    "choices": [
+      {
+        "id": "prendre_cours",
+        "label": "Prendre des cours de guitare",
+        "effects": {
+          "stats": { "intelligence": 3, "charisme": 4, "santeMentale": 4 },
+          "money": -300,
+          "addTags": ["passion_musique_eveillee", "musicien"]
+        }
+      },
+      {
+        "id": "apprendre_seul",
+        "label": "Continuer à apprendre seul",
+        "effects": {
+          "stats": { "intelligence": 4, "santeMentale": 3 },
+          "addTags": ["passion_musique_eveillee"]
+        }
+      },
+      {
+        "id": "abandonner",
+        "label": "Abandonner, c'est trop dur",
+        "effects": {
+          "stats": { "santeMentale": -2 },
+          "addTags": ["passion_musique_eveillee"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "ado_probleme_poids",
+    "category": "health",
+    "minAge": 13,
+    "maxAge": 17,
+    "requiredTags": [],
+    "excludedTags": ["rapport_corps_adolescence"],
+    "weight": 45,
+    "text": "L'adolescence est ingrate. {prenom} se regarde dans le miroir et n'aime pas vraiment ce qu'il voit. Les réseaux sociaux n'arrangent rien.",
+    "choices": [
+      {
+        "id": "sport_regime",
+        "label": "Faire du sport et manger mieux",
+        "effects": {
+          "stats": { "santePhysique": 5, "beaute": 3, "santeMentale": 3 },
+          "addTags": ["rapport_corps_adolescence", "hygiène_vie_saine"]
+        }
+      },
+      {
+        "id": "accepter",
+        "label": "Apprendre à s'accepter tel qu'on est",
+        "effects": {
+          "stats": { "santeMentale": 5, "charisme": 3 },
+          "addTags": ["rapport_corps_adolescence", "confiance_soi"]
+        }
+      },
+      {
+        "id": "complexer",
+        "label": "Continuer à se complexer, c'est dur",
+        "effects": {
+          "stats": { "santeMentale": -4, "beaute": -1 },
+          "addTags": ["rapport_corps_adolescence"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "ado_bac_blanc",
+    "category": "career",
+    "minAge": 17,
+    "maxAge": 17,
+    "requiredTags": ["filiere_generale"],
+    "excludedTags": ["bac_blanc_passe"],
+    "weight": 100,
+    "text": "Le bac blanc approche. {prenom} n'a pas beaucoup révisé ces dernières semaines. La pression monte et les nuits raccourcissent.",
+    "choices": [
+      {
+        "id": "reviser_fond",
+        "label": "Réviser à fond les deux semaines qui restent",
+        "effects": {
+          "stats": { "intelligence": 5, "santePhysique": -3, "santeMentale": -2 },
+          "addTags": ["bac_blanc_passe", "travailleur_acharné"]
+        }
+      },
+      {
+        "id": "reviser_normal",
+        "label": "Réviser normalement sans se surcharger",
+        "effects": {
+          "stats": { "intelligence": 3, "santeMentale": 2 },
+          "addTags": ["bac_blanc_passe"]
+        }
+      },
+      {
+        "id": "pas_reviser",
+        "label": "Parier sur la chance",
+        "effects": {
+          "stats": { "intelligence": -2, "santeMentale": -3, "chance": 2 },
+          "addTags": ["bac_blanc_passe"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "ado_voyage_scolaire",
+    "category": "random",
+    "minAge": 14,
+    "maxAge": 17,
+    "requiredTags": [],
+    "excludedTags": ["voyage_scolaire_etranger"],
+    "weight": 55,
+    "text": "L'école organise un voyage à Londres pendant une semaine. C'est cher, mais les parents proposent de payer la moitié si {prenom} met de côté l'autre moitié.",
+    "choices": [
+      {
+        "id": "y_aller",
+        "label": "Économiser et partir en voyage",
+        "effects": {
+          "stats": { "intelligence": 4, "charisme": 3, "santeMentale": 5 },
+          "money": -150,
+          "addTags": ["voyage_scolaire_etranger", "ouverture_monde"]
+        }
+      },
+      {
+        "id": "ne_pas_y_aller",
+        "label": "Garder l'argent, Londres attendra",
+        "effects": {
+          "stats": { "santeMentale": -2 },
+          "addTags": ["voyage_scolaire_etranger"]
+        }
+      }
+    ]
+  }
+]
