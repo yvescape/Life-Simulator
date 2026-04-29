@@ -1,34 +1,55 @@
-import type { Character, CharacterStats, CharacterFinances, LifeEvent, ScheduledEvent } from '../types/character'
+import type { Character, CharacterStats, CharacterFinances, CareerStatus, LifeEvent, ScheduledEvent, WorldTag } from '../types/character'
 import type { GameEvent, Choice, ChoiceEffects, Outcome, EventCategory } from '../types/event'
 
 // ─── Interface des actions store passées en paramètre ─────────────────────────
 
 export interface StoreActions {
-  updateStats:    (p: Partial<CharacterStats>) => void
-  updateFinances: (p: Partial<CharacterFinances>) => void
-  addTag:         (t: string) => void
-  removeTag:      (t: string) => void
-  addLifeEvent:   (e: LifeEvent) => void
-  scheduleEvent:  (s: ScheduledEvent) => void
+  updateStats:     (p: Partial<CharacterStats>) => void
+  updateFinances:  (p: Partial<CharacterFinances>) => void
+  updateCareer:    (p: Partial<CareerStatus>) => void
+  addTag:          (t: string) => void
+  removeTag:       (t: string) => void
+  addLifeEvent:    (e: LifeEvent) => void
+  scheduleEvent:   (s: ScheduledEvent) => void
+  addWorldTag:     (w: { tag: string; label: string; durationYears: number }) => void
+  removeWorldTag:  (tag: string) => void
 }
 
 // ─── Sélection d'un événement éligible ───────────────────────────────────────
 
-export function pickNextEvent(character: Character, allEvents: GameEvent[]): GameEvent | null {
+export function pickNextEvent(
+  character: Character,
+  allEvents: GameEvent[],
+  worldTags: string[] = [],
+): GameEvent | null {
+  // World tags sont injectés dans le pool de tags pour le filtrage
+  const allTags = worldTags.length > 0 ? [...character.tags, ...worldTags] : character.tags
+
   const eligibles = allEvents.filter((evt) => {
     if (character.age < evt.minAge || character.age > evt.maxAge) return false
-    if (evt.requiredTags.some((tag) => !character.tags.includes(tag))) return false
-    if (evt.excludedTags.some((tag) => character.tags.includes(tag))) return false
+    if (evt.requiredTags.some((tag) => !allTags.includes(tag))) return false
+    if (evt.excludedTags.some((tag) => allTags.includes(tag))) return false
     return true
   })
 
   if (eligibles.length === 0) return null
 
-  const totalPoids = eligibles.reduce((acc, e) => acc + e.weight, 0)
+  // worldTagModifiers ajustent le poids de sélection de chaque événement
+  const weights = eligibles.map((evt) => {
+    let w = evt.weight
+    if (evt.worldTagModifiers) {
+      for (const [tag, delta] of Object.entries(evt.worldTagModifiers)) {
+        if (worldTags.includes(tag)) w += delta
+      }
+    }
+    return Math.max(1, w)
+  })
+
+  const totalPoids = weights.reduce((acc, w) => acc + w, 0)
   let tirage = Math.random() * totalPoids
-  for (const evt of eligibles) {
-    tirage -= evt.weight
-    if (tirage <= 0) return evt
+  for (let i = 0; i < eligibles.length; i++) {
+    tirage -= weights[i]
+    if (tirage <= 0) return eligibles[i]
   }
   return eligibles[eligibles.length - 1]
 }
@@ -75,6 +96,7 @@ export function modifyOutcomeWeights(
     family:  'charisme',
     health:  'santePhysique',
     random:  'chance',
+    world:   'chance',
   }
   const statCle = STAT_SECONDAIRE[category]
   const bonusSecondaire = (character.stats[statCle] - 50) / 200
@@ -163,32 +185,106 @@ export function genererConsequences(effects: ChoiceEffects): string[] {
     lignes.push(`${effects.money > 0 ? '+' : ''}${effects.money.toLocaleString('fr-FR')} €`)
   }
 
+  if (effects.debtDelta !== undefined && effects.debtDelta !== 0) {
+    if (effects.debtDelta > 0) {
+      lignes.push(`+${effects.debtDelta.toLocaleString('fr-FR')} € de dettes`)
+    } else {
+      lignes.push(`${Math.abs(effects.debtDelta).toLocaleString('fr-FR')} € de dettes remboursées`)
+    }
+  }
+
+  if (effects.addWorldTag) {
+    lignes.push(`Événement mondial : ${effects.addWorldTag.label} (${effects.addWorldTag.durationYears} ans)`)
+  }
+
+  if (effects.career) {
+    const c = effects.career
+    if (c.setUnemployed)                    lignes.push('Perte d\'emploi')
+    else if (c.jobTitle)                    lignes.push(`Nouveau poste : ${c.jobTitle}`)
+    if (c.salary !== undefined && c.salary > 0)
+      lignes.push(`Salaire : ${c.salary.toLocaleString('fr-FR')} €/mois`)
+    else if (c.salaryDelta !== undefined && c.salaryDelta !== 0)
+      lignes.push(`${c.salaryDelta > 0 ? '+' : ''}${c.salaryDelta.toLocaleString('fr-FR')} €/mois`)
+    if (c.satisfactionDelta !== undefined && c.satisfactionDelta !== 0)
+      lignes.push(`${c.satisfactionDelta > 0 ? '+' : ''}${c.satisfactionDelta} Satisfaction`)
+  }
+
   return lignes
 }
 
 // ─── Application d'un choix au store ─────────────────────────────────────────
 
+export interface ChoiceResult {
+  /** Lignes de conséquences formatées pour l'affichage */
+  consequences:      string[]
+  /** Tags ajoutés au personnage par ce choix */
+  addedTags:         string[]
+  /** Tags retirés du personnage par ce choix */
+  removedTags:       string[]
+  /** Vrai si un événement a été programmé pour un âge futur */
+  hasScheduledEvent: boolean
+}
+
+const VIDE: ChoiceResult = { consequences: [], addedTags: [], removedTags: [], hasScheduledEvent: false }
+
 /**
  * Résout les effets, les applique au store et enregistre l'événement dans
- * l'historique. Retourne les lignes de conséquences lisibles.
+ * l'historique. Retourne un ChoiceResult structuré pour l'affichage.
  */
 export function applyChoice(
   choice: Choice,
   event: GameEvent,
   character: Character,
   actions: StoreActions,
-): string[] {
+): ChoiceResult {
   const effects = resolveChoiceEffects(choice, character, event.category)
-  if (!effects) return []
+  if (!effects) return VIDE
 
   if (effects.stats) actions.updateStats(effects.stats)
 
-  if (effects.money !== undefined) {
-    actions.updateFinances({ argent: character.finances.argent + effects.money })
+  if (effects.money !== undefined || effects.debtDelta !== undefined) {
+    const newArgent = effects.money !== undefined
+      ? character.finances.argent + effects.money
+      : character.finances.argent
+    const newDettes = effects.debtDelta !== undefined
+      ? Math.max(0, character.finances.dettes + effects.debtDelta)
+      : character.finances.dettes
+    actions.updateFinances({ argent: newArgent, dettes: newDettes })
+  }
+
+  if (effects.career) {
+    const c = effects.career
+    const careerUpdates: Partial<CareerStatus> = {}
+    if (c.setUnemployed) {
+      careerUpdates.jobTitle          = null
+      careerUpdates.employer          = null
+      careerUpdates.salary            = 0
+      careerUpdates.satisfaction      = 20
+      careerUpdates.yearsInCurrentJob = 0
+    } else {
+      if (c.jobTitle !== undefined) {
+        careerUpdates.jobTitle          = c.jobTitle
+        careerUpdates.yearsInCurrentJob = 0
+      }
+      if (c.employer !== undefined) careerUpdates.employer = c.employer
+      if (c.salary    !== undefined) careerUpdates.salary  = c.salary
+      else if (c.salaryDelta !== undefined) {
+        careerUpdates.salary = Math.max(0, character.careerStatus.salary + c.salaryDelta)
+      }
+      if (c.satisfactionDelta !== undefined) {
+        careerUpdates.satisfaction = Math.min(
+          100, Math.max(0, character.careerStatus.satisfaction + c.satisfactionDelta),
+        )
+      }
+    }
+    if (Object.keys(careerUpdates).length > 0) actions.updateCareer(careerUpdates)
   }
 
   effects.addTags?.forEach((tag) => actions.addTag(tag))
   effects.removeTags?.forEach((tag) => actions.removeTag(tag))
+
+  if (effects.addWorldTag)   actions.addWorldTag(effects.addWorldTag)
+  if (effects.removeWorldTag) actions.removeWorldTag(effects.removeWorldTag)
 
   if (effects.scheduleEvent) {
     actions.scheduleEvent({
@@ -209,5 +305,10 @@ export function applyChoice(
     consequences,
   })
 
-  return consequences
+  return {
+    consequences,
+    addedTags:         effects.addTags     ?? [],
+    removedTags:       effects.removeTags  ?? [],
+    hasScheduledEvent: !!effects.scheduleEvent,
+  }
 }

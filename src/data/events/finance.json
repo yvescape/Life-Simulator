@@ -1,0 +1,762 @@
+[
+  {
+    "id": "finance_loyer_augmentation",
+    "category": "finance",
+    "minAge": 18,
+    "maxAge": 70,
+    "requiredTags": [],
+    "excludedTags": ["proprietaire"],
+    "weight": 45,
+    "text": "Le propriétaire de {prenom} annonce une hausse de loyer de 8 %. La décision ne sera pas simple.",
+    "choices": [
+      {
+        "id": "accepter",
+        "label": "Accepter l'augmentation",
+        "effects": { "money": -1800 }
+      },
+      {
+        "id": "demenager",
+        "label": "Chercher un logement moins cher",
+        "effects": { "money": -900, "stats": { "santeMentale": -6 } }
+      }
+    ]
+  },
+  {
+    "id": "finance_achat_immobilier",
+    "category": "finance",
+    "minAge": 26,
+    "maxAge": 60,
+    "requiredTags": [],
+    "excludedTags": ["proprietaire"],
+    "weight": 25,
+    "text": "Une opportunité s'ouvre pour {prenom} : acquérir un appartement. L'agent immobilier présente un bien correspondant à son budget.",
+    "choices": [
+      {
+        "id": "acheter_credit",
+        "label": "Acheter à crédit (apport + emprunt)",
+        "outcomes": [
+          {
+            "weight": 70,
+            "valence": "positif",
+            "tagModifiers": { "etudiant_serieux": 10, "sait_negocier": 15 },
+            "effects": {
+              "money": -35000,
+              "debtDelta": 180000,
+              "addTags": ["proprietaire"],
+              "stats": { "santeMentale": 5 }
+            }
+          },
+          {
+            "weight": 30,
+            "valence": "negatif",
+            "effects": {
+              "money": -40000,
+              "debtDelta": 220000,
+              "addTags": ["proprietaire"],
+              "stats": { "santeMentale": -5 }
+            }
+          }
+        ]
+      },
+      {
+        "id": "acheter_cash",
+        "label": "Acheter comptant (si épargne suffisante)",
+        "effects": {
+          "money": -200000,
+          "addTags": ["proprietaire"],
+          "stats": { "santeMentale": 10, "reputation": 5 }
+        }
+      },
+      {
+        "id": "ne_pas_acheter",
+        "label": "Continuer à louer",
+        "effects": { "stats": { "santeMentale": -3 } }
+      }
+    ]
+  },
+  {
+    "id": "finance_cession_immobilier",
+    "category": "finance",
+    "minAge": 30,
+    "maxAge": 80,
+    "requiredTags": ["proprietaire"],
+    "excludedTags": [],
+    "weight": 15,
+    "text": "Le marché immobilier est au beau fixe et un acquéreur sérieux se présente pour le bien de {prenom}.",
+    "choices": [
+      {
+        "id": "vendre",
+        "label": "Vendre au prix du marché",
+        "outcomes": [
+          {
+            "weight": 65,
+            "valence": "positif",
+            "effects": {
+              "money": 120000,
+              "removeTags": ["proprietaire", "investisseur_immo"],
+              "stats": { "santeMentale": 8 }
+            }
+          },
+          {
+            "weight": 35,
+            "valence": "negatif",
+            "effects": {
+              "money": 75000,
+              "removeTags": ["proprietaire", "investisseur_immo"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "ne_pas_vendre",
+        "label": "Refuser l'offre",
+        "effects": {}
+      }
+    ]
+  },
+  {
+    "id": "finance_decouverte_bourse",
+    "category": "finance",
+    "minAge": 20,
+    "maxAge": 60,
+    "requiredTags": [],
+    "excludedTags": ["investisseur_bourse"],
+    "weight": 35,
+    "text": "Un collègue parle à {prenom} de ses placements en bourse. Les rendements semblent alléchants, mais les risques existent.",
+    "choices": [
+      {
+        "id": "investir_prudemment",
+        "label": "Investir prudemment sur un ETF indiciel",
+        "effects": {
+          "money": -5000,
+          "addTags": ["investisseur_bourse"],
+          "stats": { "intelligence": 3 }
+        }
+      },
+      {
+        "id": "investir_agressivement",
+        "label": "Tout miser sur des actions risquées",
+        "outcomes": [
+          {
+            "weight": 45,
+            "valence": "positif",
+            "tagModifiers": { "bon_eleve": 10, "etudiant_serieux": 10 },
+            "effects": {
+              "money": 8000,
+              "addTags": ["investisseur_bourse"]
+            }
+          },
+          {
+            "weight": 55,
+            "valence": "negatif",
+            "effects": {
+              "money": -8000,
+              "addTags": ["investisseur_bourse"],
+              "stats": { "santeMentale": -8 }
+            }
+          }
+        ]
+      },
+      {
+        "id": "ne_pas_investir",
+        "label": "Ne pas s'y aventurer",
+        "effects": {}
+      }
+    ]
+  },
+  {
+    "id": "finance_krach_boursier",
+    "category": "finance",
+    "minAge": 20,
+    "maxAge": 80,
+    "requiredTags": ["investisseur_bourse"],
+    "excludedTags": [],
+    "weight": 18,
+    "text": "Les marchés s'effondrent. Le portefeuille de {prenom} perd 30 % de sa valeur en quelques semaines. La panique s'installe.",
+    "choices": [
+      {
+        "id": "tenir",
+        "label": "Ne pas vendre et tenir la position",
+        "outcomes": [
+          {
+            "weight": 55,
+            "valence": "positif",
+            "tagModifiers": { "etudiant_serieux": 15 },
+            "effects": {
+              "money": -5000,
+              "stats": { "santeMentale": -5, "intelligence": 3 }
+            }
+          },
+          {
+            "weight": 45,
+            "valence": "negatif",
+            "effects": {
+              "money": -18000,
+              "stats": { "santeMentale": -12 }
+            }
+          }
+        ]
+      },
+      {
+        "id": "vendre_panique",
+        "label": "Tout vendre en panique",
+        "effects": {
+          "money": -12000,
+          "removeTags": ["investisseur_bourse"],
+          "stats": { "santeMentale": -8 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "finance_opportunite_crypto",
+    "category": "finance",
+    "minAge": 18,
+    "maxAge": 45,
+    "requiredTags": [],
+    "excludedTags": ["crypto_investisseur"],
+    "weight": 30,
+    "text": "Un ami de {prenom} lui présente une cryptomonnaie en plein essor. Les chiffres donnent le vertige dans les deux sens.",
+    "choices": [
+      {
+        "id": "investir_crypto",
+        "label": "Investir une petite somme",
+        "outcomes": [
+          {
+            "weight": 40,
+            "valence": "positif",
+            "effects": {
+              "money": 6000,
+              "addTags": ["crypto_investisseur"]
+            }
+          },
+          {
+            "weight": 60,
+            "valence": "negatif",
+            "effects": {
+              "money": -3000,
+              "addTags": ["crypto_investisseur"],
+              "stats": { "santeMentale": -5 }
+            }
+          }
+        ]
+      },
+      {
+        "id": "refuser_crypto",
+        "label": "Refuser — trop spéculatif",
+        "effects": { "stats": { "intelligence": 2 } }
+      }
+    ]
+  },
+  {
+    "id": "finance_creation_entreprise",
+    "category": "finance",
+    "minAge": 22,
+    "maxAge": 50,
+    "requiredTags": [],
+    "excludedTags": ["entrepreneur"],
+    "weight": 22,
+    "text": "{prenom} a une idée de business et une petite épargne. L'entrepreneur qui sommeille en lui réclame à présent de passer à l'action.",
+    "choices": [
+      {
+        "id": "se_lancer",
+        "label": "Se lancer avec ses économies",
+        "effects": {
+          "money": -15000,
+          "addTags": ["entrepreneur"],
+          "stats": { "charisme": 5, "santeMentale": -5, "reputation": 5 }
+        }
+      },
+      {
+        "id": "emprunter_lancer",
+        "label": "Emprunter pour se lancer",
+        "effects": {
+          "money": -5000,
+          "debtDelta": 25000,
+          "addTags": ["entrepreneur"],
+          "stats": { "charisme": 5, "santeMentale": -8 }
+        }
+      },
+      {
+        "id": "renoncer",
+        "label": "Abandonner l'idée",
+        "effects": { "stats": { "santeMentale": -5 } }
+      }
+    ]
+  },
+  {
+    "id": "finance_crise_economique",
+    "category": "finance",
+    "minAge": 22,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": [],
+    "weight": 18,
+    "text": "Une crise économique mondiale éclate. Les prix augmentent, les emplois vacillent, et l'épargne de {prenom} fond sous l'effet de l'inflation.",
+    "choices": [
+      {
+        "id": "adapter_budget",
+        "label": "Revoir son budget et s'adapter",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "positif",
+            "tagModifiers": { "etudiant_serieux": 15, "alimentation_saine": 10 },
+            "effects": {
+              "money": -3500,
+              "stats": { "santeMentale": -5, "intelligence": 2 }
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "effects": {
+              "money": -8000,
+              "stats": { "santeMentale": -10 }
+            }
+          }
+        ]
+      },
+      {
+        "id": "continuer_normalement",
+        "label": "Continuer à dépenser normalement",
+        "effects": {
+          "money": -12000,
+          "stats": { "santeMentale": -3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "finance_heritage_inattendu",
+    "category": "finance",
+    "minAge": 30,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": ["heritage_recu"],
+    "weight": 12,
+    "text": "Un courrier notarié apporte une nouvelle inattendue : {prenom} est bénéficiaire d'un héritage.",
+    "choices": [
+      {
+        "id": "investir_heritage",
+        "label": "Investir prudemment l'héritage",
+        "outcomes": [
+          {
+            "weight": 50,
+            "valence": "positif",
+            "effects": {
+              "money": 80000,
+              "addTags": ["heritage_recu"],
+              "stats": { "santeMentale": 8 }
+            }
+          },
+          {
+            "weight": 50,
+            "valence": "neutre",
+            "effects": {
+              "money": 30000,
+              "addTags": ["heritage_recu"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "depenser_heritage",
+        "label": "Profiter et dépenser",
+        "effects": {
+          "money": 20000,
+          "addTags": ["heritage_recu"],
+          "stats": { "santeMentale": 15 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "finance_billet_loterie",
+    "category": "finance",
+    "minAge": 18,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": [],
+    "weight": 40,
+    "text": "{prenom} achète un billet de loterie. La chance sourit-elle ?",
+    "choices": [
+      {
+        "id": "tenter_chance",
+        "label": "Tenter sa chance",
+        "outcomes": [
+          {
+            "weight": 2,
+            "valence": "positif",
+            "tagModifiers": { "chance_exceptionnelle": 50 },
+            "effects": {
+              "money": 500000,
+              "stats": { "santeMentale": 25, "reputation": 15 },
+              "addTags": ["gagnant_loterie"]
+            }
+          },
+          {
+            "weight": 18,
+            "valence": "positif",
+            "tagModifiers": { "chance_exceptionnelle": 20 },
+            "effects": {
+              "money": 5000,
+              "stats": { "santeMentale": 10 }
+            }
+          },
+          {
+            "weight": 80,
+            "valence": "negatif",
+            "effects": { "money": -20 }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "finance_arnaque_internet",
+    "category": "finance",
+    "minAge": 20,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": [],
+    "weight": 28,
+    "text": "{prenom} reçoit un message proposant un placement qui garantit 30 % de rendement. Trop beau pour être vrai ?",
+    "choices": [
+      {
+        "id": "tomber_arnaque",
+        "label": "Envoyer l'argent — ça a l'air sérieux",
+        "effects": {
+          "money": -4500,
+          "stats": { "santeMentale": -10, "reputation": -5 }
+        }
+      },
+      {
+        "id": "ignorer_arnaque",
+        "label": "Ignorer et signaler",
+        "effects": {
+          "stats": { "intelligence": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "finance_investissement_locatif",
+    "category": "finance",
+    "minAge": 30,
+    "maxAge": 65,
+    "requiredTags": ["proprietaire"],
+    "excludedTags": ["investisseur_immo"],
+    "weight": 18,
+    "text": "Fort de sa première propriété, {prenom} envisage d'acheter un second bien pour le louer. L'investissement locatif est tentant.",
+    "choices": [
+      {
+        "id": "investir_locatif",
+        "label": "Acheter un studio pour le mettre en location",
+        "effects": {
+          "money": -20000,
+          "debtDelta": 120000,
+          "addTags": ["investisseur_immo"],
+          "stats": { "santeMentale": -5, "reputation": 5 }
+        }
+      },
+      {
+        "id": "ne_pas_investir",
+        "label": "Attendre un meilleur moment",
+        "effects": {}
+      }
+    ]
+  },
+  {
+    "id": "finance_mission_freelance",
+    "category": "finance",
+    "minAge": 22,
+    "maxAge": 55,
+    "requiredTags": [],
+    "excludedTags": [],
+    "weight": 40,
+    "text": "Une mission freelance bien rémunérée se présente à {prenom}. Quelques semaines de travail intense en échange d'une belle somme.",
+    "choices": [
+      {
+        "id": "accepter_mission",
+        "label": "Accepter la mission",
+        "outcomes": [
+          {
+            "weight": 65,
+            "valence": "positif",
+            "tagModifiers": { "etudiant_serieux": 15, "bon_eleve": 10 },
+            "effects": {
+              "money": 4500,
+              "stats": { "reputation": 3 }
+            }
+          },
+          {
+            "weight": 35,
+            "valence": "negatif",
+            "effects": {
+              "money": 2000,
+              "stats": { "santeMentale": -6 }
+            }
+          }
+        ]
+      },
+      {
+        "id": "refuser_mission",
+        "label": "Refuser — trop occupé",
+        "effects": {}
+      }
+    ]
+  },
+  {
+    "id": "finance_plan_remboursement",
+    "category": "finance",
+    "minAge": 25,
+    "maxAge": 70,
+    "requiredTags": ["endette"],
+    "excludedTags": [],
+    "weight": 35,
+    "text": "Les dettes de {prenom} pèsent lourd. Un conseiller financier propose un plan de remboursement structuré.",
+    "choices": [
+      {
+        "id": "accepter_plan",
+        "label": "Accepter le plan de remboursement",
+        "effects": {
+          "money": -15000,
+          "debtDelta": -15000,
+          "stats": { "santeMentale": 8 },
+          "removeTags": ["endette"]
+        }
+      },
+      {
+        "id": "continuer_minimum",
+        "label": "Ne payer que le minimum mensuel",
+        "effects": {
+          "debtDelta": 5000,
+          "stats": { "santeMentale": -5 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "finance_assurance_vie",
+    "category": "finance",
+    "minAge": 30,
+    "maxAge": 65,
+    "requiredTags": [],
+    "excludedTags": ["assurance_vie"],
+    "weight": 30,
+    "text": "Un conseiller bancaire propose à {prenom} d'ouvrir un contrat d'assurance-vie pour sécuriser son avenir.",
+    "choices": [
+      {
+        "id": "souscrire",
+        "label": "Souscrire et verser régulièrement",
+        "effects": {
+          "money": -3000,
+          "addTags": ["assurance_vie"],
+          "stats": { "santeMentale": 5 }
+        }
+      },
+      {
+        "id": "ne_pas_souscrire",
+        "label": "Ne pas souscrire",
+        "effects": {}
+      }
+    ]
+  },
+  {
+    "id": "finance_aide_familiale",
+    "category": "finance",
+    "minAge": 18,
+    "maxAge": 45,
+    "requiredTags": [],
+    "excludedTags": ["heritage_recu"],
+    "weight": 22,
+    "text": "La famille de {prenom} lui propose une aide financière : un don ou un prêt sans intérêts pour l'aider à démarrer.",
+    "choices": [
+      {
+        "id": "accepter_aide",
+        "label": "Accepter avec gratitude",
+        "effects": {
+          "money": 8000,
+          "stats": { "santeMentale": 8, "charisme": 2 }
+        }
+      },
+      {
+        "id": "refuser_aide",
+        "label": "Refuser — préférer l'indépendance",
+        "effects": {
+          "stats": { "santeMentale": -3, "reputation": 5 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "finance_depense_imprevue",
+    "category": "finance",
+    "minAge": 18,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": [],
+    "weight": 50,
+    "text": "Une dépense imprévue tombe au mauvais moment pour {prenom} : réparation voiture, électroménager en panne, fuite d'eau…",
+    "choices": [
+      {
+        "id": "payer_comptant",
+        "label": "Payer comptant",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "neutre",
+            "effects": { "money": -1500 }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "effects": {
+              "money": -4000,
+              "stats": { "santeMentale": -5 }
+            }
+          }
+        ]
+      },
+      {
+        "id": "payer_credit",
+        "label": "Payer à crédit",
+        "effects": {
+          "money": -500,
+          "debtDelta": 2500,
+          "stats": { "santeMentale": -4 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "finance_prime_exceptionnelle",
+    "category": "finance",
+    "minAge": 22,
+    "maxAge": 60,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": [],
+    "weight": 40,
+    "text": "L'entreprise de {prenom} traverse une excellente année. La direction annonce une prime exceptionnelle pour les employés méritants.",
+    "choices": [
+      {
+        "id": "recevoir_prime",
+        "label": "Recevoir la prime",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "positif",
+            "tagModifiers": { "en_emploi": 10, "etudiant_serieux": 10 },
+            "effects": {
+              "money": 5000,
+              "stats": { "santeMentale": 10, "reputation": 3 }
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "effects": {
+              "money": 1500,
+              "stats": { "santeMentale": 3 }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "finance_faillite_entreprise",
+    "category": "finance",
+    "minAge": 25,
+    "maxAge": 55,
+    "requiredTags": ["entrepreneur"],
+    "excludedTags": ["faillite_subie"],
+    "weight": 22,
+    "text": "L'entreprise de {prenom} ne parvient plus à honorer ses dettes. La faillite est inévitable. Un tournant brutal dans son parcours.",
+    "choices": [
+      {
+        "id": "depot_bilan",
+        "label": "Déposer le bilan et repartir à zéro",
+        "effects": {
+          "money": -20000,
+          "debtDelta": 30000,
+          "removeTags": ["entrepreneur"],
+          "addTags": ["faillite_subie", "endette"],
+          "stats": { "santeMentale": -20, "reputation": -15 }
+        }
+      },
+      {
+        "id": "trouver_repreneur",
+        "label": "Chercher un repreneur en urgence",
+        "outcomes": [
+          {
+            "weight": 40,
+            "valence": "positif",
+            "tagModifiers": { "charisme": 10, "sait_negocier": 15 },
+            "effects": {
+              "money": 5000,
+              "removeTags": ["entrepreneur"],
+              "addTags": ["faillite_subie"],
+              "stats": { "santeMentale": -10, "reputation": -5 }
+            }
+          },
+          {
+            "weight": 60,
+            "valence": "negatif",
+            "effects": {
+              "money": -15000,
+              "debtDelta": 20000,
+              "removeTags": ["entrepreneur"],
+              "addTags": ["faillite_subie", "endette"],
+              "stats": { "santeMentale": -15, "reputation": -10 }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "finance_investissement_bourse_gain",
+    "category": "finance",
+    "minAge": 20,
+    "maxAge": 80,
+    "requiredTags": ["investisseur_bourse"],
+    "excludedTags": [],
+    "weight": 25,
+    "text": "Le portefeuille boursier de {prenom} connaît une belle année. Les marchés ont progressé et ses placements ont suivi.",
+    "choices": [
+      {
+        "id": "reinvestir",
+        "label": "Réinvestir les gains",
+        "outcomes": [
+          {
+            "weight": 55,
+            "valence": "positif",
+            "tagModifiers": { "etudiant_serieux": 10 },
+            "effects": {
+              "money": 12000,
+              "stats": { "santeMentale": 6 }
+            }
+          },
+          {
+            "weight": 45,
+            "valence": "negatif",
+            "effects": {
+              "money": 3000,
+              "stats": { "santeMentale": 2 }
+            }
+          }
+        ]
+      },
+      {
+        "id": "encaisser",
+        "label": "Encaisser et sécuriser",
+        "effects": {
+          "money": 8000,
+          "stats": { "santeMentale": 8 }
+        }
+      }
+    ]
+  }
+]

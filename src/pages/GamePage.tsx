@@ -3,16 +3,24 @@ import { useNavigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { useGameStore } from '../store/gameStore'
 import StatsPanel from '../components/StatsPanel'
+import CareerPanel from '../components/CareerPanel'
 import EventModal from '../components/EventModal'
+import DeathScreen from '../components/DeathScreen'
+import FinancialFlowPanel from '../components/FinancialFlowPanel'
+import WorldStatusPanel from '../components/WorldStatusPanel'
 import { pickNextEvent, applyChoice } from '../engine/eventEngine'
+import type { ChoiceResult } from '../engine/eventEngine'
 import { tousLesEvenements } from '../data/events'
 import type { GameEvent, Choice } from '../types/event'
 
 export default function GamePage() {
   const navigate      = useNavigate()
-  const character     = useGameStore((s) => s.character)
-  const anneeCourante = useGameStore((s) => s.anneeCourante)
-  const advanceYear   = useGameStore((s) => s.advanceYear)
+  const character          = useGameStore((s) => s.character)
+  const anneeCourante      = useGameStore((s) => s.anneeCourante)
+  const evenementsVecus    = useGameStore((s) => s.evenementsVecus)
+  const dernierBilan       = useGameStore((s) => s.dernierBilan)
+  const advanceYear        = useGameStore((s) => s.advanceYear)
+  const newGame            = useGameStore((s) => s.newGame)
   const updateStats   = useGameStore((s) => s.updateStats)
   const updateFinances = useGameStore((s) => s.updateFinances)
   const addTag        = useGameStore((s) => s.addTag)
@@ -20,6 +28,9 @@ export default function GamePage() {
   const addLifeEvent  = useGameStore((s) => s.addLifeEvent)
   const scheduleEvent = useGameStore((s) => s.scheduleEvent)
   const consumeScheduledEventsAtAge = useGameStore((s) => s.consumeScheduledEventsAtAge)
+  const currentWorldTags = useGameStore((s) => s.currentWorldTags)
+  const addWorldTag      = useGameStore((s) => s.addWorldTag)
+  const removeWorldTag   = useGameStore((s) => s.removeWorldTag)
 
   // Événement affiché dans la modal
   const [evenementActuel, setEvenementActuel] = useState<GameEvent | null>(null)
@@ -30,14 +41,15 @@ export default function GamePage() {
     if (!character) navigate('/')
   }, [character, navigate])
 
-  const storeActions = { updateStats, updateFinances, addTag, removeTag, addLifeEvent, scheduleEvent }
+  const updateCareer  = useGameStore((s) => s.updateCareer)
+  const storeActions  = { updateStats, updateFinances, updateCareer, addTag, removeTag, addLifeEvent, scheduleEvent, addWorldTag, removeWorldTag }
 
   function handleAnnéeSuivante() {
     advanceYear()
 
     // Zustand est synchrone : état déjà mis à jour
     const { character: perso } = useGameStore.getState()
-    if (!perso) return
+    if (!perso || perso.statut === 'mort') return
 
     const queue: GameEvent[] = []
 
@@ -50,7 +62,9 @@ export default function GamePage() {
 
     // 2. Compléter avec un événement aléatoire si la file est vide
     if (queue.length === 0) {
-      const aléatoire = pickNextEvent(perso, tousLesEvenements)
+      const { currentWorldTags: wt } = useGameStore.getState()
+      const worldTagStrings = wt.map((w) => w.tag)
+      const aléatoire = pickNextEvent(perso, tousLesEvenements, worldTagStrings)
       if (aléatoire) queue.push(aléatoire)
     }
 
@@ -60,9 +74,9 @@ export default function GamePage() {
     }
   }
 
-  const handleChoiceSelected = useCallback((choice: Choice): string[] => {
+  const handleChoiceSelected = useCallback((choice: Choice): ChoiceResult => {
     const { character: perso } = useGameStore.getState()
-    if (!perso || !evenementActuel) return []
+    if (!perso || !evenementActuel) return { consequences: [], addedTags: [], removedTags: [], hasScheduledEvent: false }
     return applyChoice(choice, evenementActuel, perso, storeActions)
   // storeActions est stable (actions Zustand ne changent pas entre les renders)
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -103,8 +117,14 @@ export default function GamePage() {
           </div>
         </div>
 
+        {/* Contexte mondial */}
+        <WorldStatusPanel worldTags={currentWorldTags} anneeCourante={anneeCourante} />
+
         {/* Panneau des stats */}
         <StatsPanel stats={character.stats} />
+
+        {/* Carrière */}
+        <CareerPanel careerStatus={character.careerStatus} />
 
         {/* Finances */}
         <div className="bg-slate-800/60 backdrop-blur border border-slate-700 rounded-2xl p-6 shadow-lg">
@@ -131,11 +151,14 @@ export default function GamePage() {
           </div>
         </div>
 
+        {/* Flux financiers de l'année */}
+        {dernierBilan && <FinancialFlowPanel bilan={dernierBilan} />}
+
         {/* Actions */}
         <div className="flex flex-col gap-3">
           <button
             onClick={handleAnnéeSuivante}
-            disabled={evenementActuel !== null}
+            disabled={evenementActuel !== null || character.statut === 'mort'}
             className="w-full py-4 rounded-2xl bg-violet-600 hover:bg-violet-500 active:scale-95
                        disabled:opacity-40 disabled:cursor-not-allowed
                        text-white text-lg font-semibold shadow-lg shadow-violet-900/50
@@ -153,6 +176,15 @@ export default function GamePage() {
         </div>
 
       </div>
+
+      {/* Écran de fin de vie */}
+      {character.statut === 'mort' && (
+        <DeathScreen
+          character={character}
+          nombreEvenementsVecus={evenementsVecus.length}
+          onNewGame={() => { newGame(); navigate('/') }}
+        />
+      )}
 
       {/* Modal événement */}
       <AnimatePresence>

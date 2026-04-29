@@ -1,3 +1,6 @@
+import type { Relationship } from './relationship'
+export type { Relationship, RelationshipType } from './relationship'
+
 // ─── Énumérations ────────────────────────────────────────────────────────────
 
 export type Sexe = 'homme' | 'femme' | 'autre'
@@ -51,17 +54,19 @@ export interface CharacterFinances {
   dettes: number
 }
 
-// ─── Relations ────────────────────────────────────────────────────────────────
+// ─── Situation professionnelle ────────────────────────────────────────────────
 
-export interface Relation {
-  /** Identifiant unique de la personne liée */
-  id: string
-  /** Prénom affiché */
-  prenom: string
-  /** Type de lien : 'ami', 'ennemi', 'partenaire', 'enfant', 'parent', etc. */
-  type: string
-  /** Qualité de la relation (0 = hostile, 100 = excellent) */
-  affinite: number
+export interface CareerStatus {
+  /** Intitulé du poste actuel, null si sans emploi */
+  jobTitle: string | null
+  /** Salaire mensuel net en euros */
+  salary: number
+  /** Nom de l'employeur ou de l'entreprise */
+  employer: string | null
+  /** Satisfaction professionnelle (0–100) */
+  satisfaction: number
+  /** Nombre d'années dans le poste actuel (remis à 0 à chaque changement) */
+  yearsInCurrentJob: number
 }
 
 // ─── Personnage ───────────────────────────────────────────────────────────────
@@ -84,14 +89,13 @@ export interface Character {
 
   stats: CharacterStats
   finances: CharacterFinances
+  careerStatus: CareerStatus
 
   niveauEtude: NiveauEtude
-  /** Intitulé du poste actuel, null si sans emploi */
-  emploi: string | null
   statutRelation: StatutRelation
 
   /** Liste des personnes avec qui le personnage a un lien */
-  relations: Relation[]
+  relations: Relationship[]
 
   /** Tags anti-répétition : mémorisent les événements déjà survenus */
   tags: CharacterTags
@@ -132,6 +136,30 @@ export interface ScheduledEvent {
   donnees: Record<string, unknown>
 }
 
+// ─── Tags mondiaux ───────────────────────────────────────────────────────────
+
+export interface WorldTag {
+  /** Identifiant court utilisé dans requiredTags/excludedTags des événements */
+  tag: string
+  /** Libellé affiché dans l'UI (ex. "Pandémie mondiale") */
+  label: string
+  /** Première année civile où le tag n'est PLUS actif */
+  expireAtYear: number
+}
+
+// ─── Bilan financier annuel ───────────────────────────────────────────────────
+
+export interface FluxFinancier {
+  /** Salaire annuel brut (careerStatus.salary × 12) */
+  revenuAnnuel:   number
+  /** Loyer + vie courante + famille (annualisé) */
+  depensesFixes:  number
+  /** Intérêts payés sur les dettes (5 % annuel) */
+  interetsDettes: number
+  /** Flux net = revenu − dépenses − intérêts (peut être négatif) */
+  solde:          number
+}
+
 // ─── État global du jeu ───────────────────────────────────────────────────────
 
 export interface GameState {
@@ -145,4 +173,10 @@ export interface GameState {
   anneeCourante: number
   /** Indique si une partie est en cours */
   partieEnCours: boolean
+  /** Compteur d'années consécutives avec santé mentale < 30 (stress chronique) */
+  anneesStressEleve: number
+  /** Résumé des flux financiers de la dernière année simulée */
+  dernierBilan: FluxFinancier | null
+  /** Tags mondiaux actifs (pandémie, crise, guerre…) avec leur date d'expiration */
+  currentWorldTags: WorldTag[]
 }

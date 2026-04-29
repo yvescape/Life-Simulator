@@ -1,0 +1,517 @@
+[
+  {
+    "id": "monde_pandemie",
+    "category": "world",
+    "minAge": 10,
+    "maxAge": 90,
+    "requiredTags": [],
+    "excludedTags": ["pandemie_active"],
+    "weight": 8,
+    "text": "Une pandémie mondiale se déclare. Les gouvernements ferment les frontières et imposent des mesures d'urgence sanitaire. La vie de {prenom} ne sera plus tout à fait la même.",
+    "choices": [
+      {
+        "id": "se_proteger",
+        "label": "Appliquer rigoureusement les gestes barrières",
+        "effects": {
+          "stats": { "santePhysique": 3, "santeMentale": -8 },
+          "money": -400,
+          "addWorldTag": { "tag": "pandemie_active", "label": "Pandémie mondiale", "durationYears": 3 }
+        }
+      },
+      {
+        "id": "continuer_normalement",
+        "label": "Continuer sa vie normalement",
+        "effects": {
+          "stats": { "santePhysique": -10, "reputation": -5 },
+          "addWorldTag": { "tag": "pandemie_active", "label": "Pandémie mondiale", "durationYears": 3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "monde_confinement",
+    "category": "world",
+    "minAge": 10,
+    "maxAge": 90,
+    "requiredTags": ["pandemie_active"],
+    "excludedTags": ["confinement_vecu"],
+    "weight": 50,
+    "worldTagModifiers": { "pandemie_active": 20 },
+    "text": "Le gouvernement impose un confinement strict. {prenom} doit rester chez lui pendant plusieurs semaines. Les rues sont désertes.",
+    "choices": [
+      {
+        "id": "respecter_confinement",
+        "label": "Respecter scrupuleusement le confinement",
+        "effects": {
+          "stats": { "santeMentale": -12, "santePhysique": 4, "intelligence": 3 },
+          "addTags": ["confinement_vecu"]
+        }
+      },
+      {
+        "id": "braver_confinement",
+        "label": "Sortir malgré les restrictions",
+        "effects": {
+          "stats": { "santePhysique": -14, "reputation": -8 },
+          "money": -500,
+          "addTags": ["confinement_vecu"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "monde_vaccin_disponible",
+    "category": "world",
+    "minAge": 10,
+    "maxAge": 90,
+    "requiredTags": ["pandemie_active"],
+    "excludedTags": ["vaccine_covid"],
+    "weight": 55,
+    "worldTagModifiers": { "pandemie_active": 15 },
+    "text": "Un vaccin contre la pandémie est désormais disponible pour {prenom}. La campagne de vaccination bat son plein.",
+    "choices": [
+      {
+        "id": "se_vacciner",
+        "label": "Se faire vacciner sans attendre",
+        "effects": {
+          "stats": { "santePhysique": 10, "santeMentale": 8 },
+          "addTags": ["vaccine_covid"]
+        }
+      },
+      {
+        "id": "refuser_vaccin",
+        "label": "Refuser le vaccin",
+        "effects": {
+          "stats": { "santePhysique": -10, "reputation": -5 },
+          "addTags": ["non_vaccine"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "monde_crise_economique",
+    "category": "world",
+    "minAge": 20,
+    "maxAge": 90,
+    "requiredTags": [],
+    "excludedTags": ["crise_economique_active"],
+    "weight": 10,
+    "worldTagModifiers": { "inflation_active": 5 },
+    "text": "Une crise économique mondiale éclate. Les marchés s'effondrent, les entreprises gèlent les embauches et l'avenir semble incertain pour {prenom}.",
+    "choices": [
+      {
+        "id": "anticiper",
+        "label": "Anticiper en sécurisant ses finances",
+        "effects": {
+          "stats": { "intelligence": 3, "santeMentale": -5 },
+          "money": -4000,
+          "addWorldTag": { "tag": "crise_economique_active", "label": "Crise économique mondiale", "durationYears": 2 }
+        }
+      },
+      {
+        "id": "subir",
+        "label": "Subir sans se préparer",
+        "effects": {
+          "stats": { "santeMentale": -10 },
+          "money": -9000,
+          "addWorldTag": { "tag": "crise_economique_active", "label": "Crise économique mondiale", "durationYears": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "monde_licenciements_massifs",
+    "category": "world",
+    "minAge": 22,
+    "maxAge": 65,
+    "requiredTags": ["crise_economique_active", "en_emploi"],
+    "excludedTags": ["licencie_crise"],
+    "weight": 50,
+    "worldTagModifiers": { "crise_economique_active": 25 },
+    "text": "Les licenciements économiques se multiplient dans le secteur de {prenom}. La direction annonce une réorganisation.",
+    "choices": [
+      {
+        "id": "negocier",
+        "label": "Négocier sa position avec la hiérarchie",
+        "outcomes": [
+          {
+            "weight": 55,
+            "valence": "positif",
+            "tagModifiers": { "sait_negocier": 20, "etudiant_serieux": 15 },
+            "effects": {
+              "stats": { "santeMentale": -8 },
+              "career": { "satisfactionDelta": -15 }
+            }
+          },
+          {
+            "weight": 45,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -18, "reputation": -5 },
+              "career": { "setUnemployed": true },
+              "addTags": ["licencie_crise", "au_chomage"],
+              "removeTags": ["en_emploi"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "accepter_depart",
+        "label": "Accepter le départ négocié",
+        "effects": {
+          "stats": { "santeMentale": -10 },
+          "money": 8000,
+          "career": { "setUnemployed": true },
+          "addTags": ["licencie_crise", "au_chomage"],
+          "removeTags": ["en_emploi"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "monde_reprise_economique",
+    "category": "world",
+    "minAge": 22,
+    "maxAge": 85,
+    "requiredTags": ["crise_economique_active"],
+    "excludedTags": ["reprise_vecue"],
+    "weight": 30,
+    "worldTagModifiers": { "crise_economique_active": 10 },
+    "text": "Les indicateurs économiques se redressent. La reprise est timide mais réelle — de nouvelles opportunités s'ouvrent pour {prenom}.",
+    "choices": [
+      {
+        "id": "saisir_reprise",
+        "label": "Saisir les opportunités de la reprise",
+        "effects": {
+          "stats": { "santeMentale": 12, "reputation": 5 },
+          "money": 5000,
+          "addTags": ["reprise_vecue"],
+          "removeWorldTag": "crise_economique_active"
+        }
+      },
+      {
+        "id": "attendre",
+        "label": "Attendre que la situation se stabilise",
+        "effects": {
+          "stats": { "santeMentale": 5 },
+          "addTags": ["reprise_vecue"],
+          "removeWorldTag": "crise_economique_active"
+        }
+      }
+    ]
+  },
+  {
+    "id": "monde_guerre_regionale",
+    "category": "world",
+    "minAge": 15,
+    "maxAge": 90,
+    "requiredTags": [],
+    "excludedTags": ["guerre_regionale"],
+    "weight": 6,
+    "worldTagModifiers": { "crise_economique_active": 3 },
+    "text": "Un conflit armé éclate dans la région. Les informations se succèdent à un rythme inquiétant. {prenom} doit décider comment réagir.",
+    "choices": [
+      {
+        "id": "sinformer_sengager",
+        "label": "S'informer et s'engager dans la résistance civile",
+        "effects": {
+          "stats": { "santeMentale": -10, "reputation": 8, "charisme": 3 },
+          "addWorldTag": { "tag": "guerre_regionale", "label": "Conflit régional armé", "durationYears": 4 }
+        }
+      },
+      {
+        "id": "fuir_region",
+        "label": "Quitter la région en urgence",
+        "effects": {
+          "stats": { "santeMentale": 5, "reputation": -5 },
+          "money": -6000,
+          "addTags": ["exile"],
+          "addWorldTag": { "tag": "guerre_regionale", "label": "Conflit régional armé", "durationYears": 4 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "monde_mobilisation",
+    "category": "world",
+    "minAge": 18,
+    "maxAge": 35,
+    "requiredTags": ["guerre_regionale"],
+    "excludedTags": ["mobilise", "exile"],
+    "weight": 40,
+    "worldTagModifiers": { "guerre_regionale": 20 },
+    "text": "Une mobilisation partielle est annoncée. {prenom} reçoit une convocation militaire. Il faut décider rapidement.",
+    "choices": [
+      {
+        "id": "repondre_appel",
+        "label": "Répondre à l'appel",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "positif",
+            "effects": {
+              "stats": { "santePhysique": 8, "charisme": 5, "reputation": 10 },
+              "addTags": ["mobilise", "veteran"]
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santePhysique": -20, "santeMentale": -15 },
+              "addTags": ["mobilise", "blesse_guerre"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "exemption_medicale",
+        "label": "Demander une exemption médicale",
+        "outcomes": [
+          {
+            "weight": 50,
+            "valence": "positif",
+            "effects": {
+              "stats": { "reputation": -5 },
+              "addTags": ["mobilise"]
+            }
+          },
+          {
+            "weight": 50,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "reputation": -15, "santeMentale": -8 },
+              "addTags": ["mobilise"]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monde_paix_signee",
+    "category": "world",
+    "minAge": 15,
+    "maxAge": 90,
+    "requiredTags": ["guerre_regionale"],
+    "excludedTags": ["paix_vecue"],
+    "weight": 25,
+    "worldTagModifiers": { "guerre_regionale": 10 },
+    "text": "Un accord de paix est signé. Les combats cessent. {prenom} ressent un soulagement immense et une fatigue profonde à la fois.",
+    "choices": [
+      {
+        "id": "celebrer_paix",
+        "label": "Célébrer et reconstruire",
+        "effects": {
+          "stats": { "santeMentale": 18, "charisme": 4, "reputation": 5 },
+          "addTags": ["paix_vecue"],
+          "removeWorldTag": "guerre_regionale"
+        }
+      }
+    ]
+  },
+  {
+    "id": "monde_boom_technologique",
+    "category": "world",
+    "minAge": 15,
+    "maxAge": 75,
+    "requiredTags": [],
+    "excludedTags": ["boom_tech_actif"],
+    "weight": 12,
+    "text": "Une révolution technologique secoue l'économie mondiale. L'IA, la biotech et les énergies propres ouvrent des horizons inédits. {prenom} doit se positionner.",
+    "choices": [
+      {
+        "id": "se_former",
+        "label": "Se former et adopter les nouvelles technologies",
+        "effects": {
+          "stats": { "intelligence": 10, "reputation": 5 },
+          "money": -2500,
+          "addWorldTag": { "tag": "boom_tech_actif", "label": "Révolution technologique", "durationYears": 3 }
+        }
+      },
+      {
+        "id": "observer",
+        "label": "Observer avant d'agir",
+        "effects": {
+          "stats": { "intelligence": 2 },
+          "addWorldTag": { "tag": "boom_tech_actif", "label": "Révolution technologique", "durationYears": 3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "monde_opportunite_tech",
+    "category": "world",
+    "minAge": 20,
+    "maxAge": 60,
+    "requiredTags": ["boom_tech_actif"],
+    "excludedTags": ["opportunite_tech_saisie"],
+    "weight": 50,
+    "worldTagModifiers": { "boom_tech_actif": 20 },
+    "text": "L'effervescence technologique génère une opportunité rare pour {prenom} : rejoindre une startup prometteuse ou lancer son propre projet.",
+    "choices": [
+      {
+        "id": "saisir_opportunite",
+        "label": "Saisir l'opportunité",
+        "outcomes": [
+          {
+            "weight": 55,
+            "valence": "positif",
+            "tagModifiers": { "etudiant_serieux": 15, "entrepreneur": 10 },
+            "effects": {
+              "stats": { "intelligence": 5, "reputation": 10 },
+              "money": 20000,
+              "addTags": ["opportunite_tech_saisie", "entrepreneur"]
+            }
+          },
+          {
+            "weight": 45,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -8 },
+              "money": 3000,
+              "addTags": ["opportunite_tech_saisie"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "passer_son_tour",
+        "label": "Laisser passer",
+        "effects": {
+          "stats": { "santeMentale": -3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "monde_catastrophe_naturelle",
+    "category": "world",
+    "minAge": 5,
+    "maxAge": 90,
+    "requiredTags": [],
+    "excludedTags": ["catastrophe_nat"],
+    "weight": 14,
+    "text": "Une catastrophe naturelle ravage la région : inondations, incendies de forêt, tremblement de terre. {prenom} doit réagir vite.",
+    "choices": [
+      {
+        "id": "evacuer",
+        "label": "Évacuer immédiatement",
+        "effects": {
+          "stats": { "santeMentale": -5, "santePhysique": 2 },
+          "money": -3000,
+          "addWorldTag": { "tag": "catastrophe_nat", "label": "Catastrophe naturelle", "durationYears": 2 }
+        }
+      },
+      {
+        "id": "rester_proteger",
+        "label": "Rester pour protéger ses biens",
+        "outcomes": [
+          {
+            "weight": 45,
+            "valence": "positif",
+            "effects": {
+              "stats": { "santePhysique": -5, "reputation": 5 },
+              "addWorldTag": { "tag": "catastrophe_nat", "label": "Catastrophe naturelle", "durationYears": 2 }
+            }
+          },
+          {
+            "weight": 55,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santePhysique": -20, "santeMentale": -15 },
+              "money": -8000,
+              "addWorldTag": { "tag": "catastrophe_nat", "label": "Catastrophe naturelle", "durationYears": 2 }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monde_reconstruction",
+    "category": "world",
+    "minAge": 18,
+    "maxAge": 85,
+    "requiredTags": ["catastrophe_nat"],
+    "excludedTags": ["reconstruction_participee"],
+    "weight": 45,
+    "worldTagModifiers": { "catastrophe_nat": 20 },
+    "text": "La reconstruction de la région sinistrée commence lentement. Des milliers de personnes ont besoin d'aide. {prenom} peut contribuer.",
+    "choices": [
+      {
+        "id": "aider_reconstruction",
+        "label": "Participer activement à la reconstruction",
+        "effects": {
+          "stats": { "santeMentale": 10, "charisme": 5, "reputation": 8 },
+          "money": -800,
+          "addTags": ["reconstruction_participee"]
+        }
+      },
+      {
+        "id": "prioriser_sa_vie",
+        "label": "Se concentrer sur sa propre reconstruction",
+        "effects": {
+          "stats": { "santeMentale": -4 },
+          "addTags": ["reconstruction_participee"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "monde_inflation_galopante",
+    "category": "world",
+    "minAge": 20,
+    "maxAge": 90,
+    "requiredTags": [],
+    "excludedTags": ["inflation_active"],
+    "weight": 15,
+    "text": "L'inflation dépasse 8 % sur un an. Les prix des loyers, de l'énergie et de l'alimentation s'envolent. Le budget de {prenom} est sous pression.",
+    "choices": [
+      {
+        "id": "adapter_budget",
+        "label": "Revoir son budget et ses habitudes",
+        "effects": {
+          "stats": { "intelligence": 3, "santeMentale": -4 },
+          "money": -1500,
+          "addWorldTag": { "tag": "inflation_active", "label": "Inflation galopante", "durationYears": 2 }
+        }
+      },
+      {
+        "id": "maintenir_train_vie",
+        "label": "Maintenir son train de vie",
+        "effects": {
+          "stats": { "santeMentale": -8 },
+          "money": -6000,
+          "addWorldTag": { "tag": "inflation_active", "label": "Inflation galopante", "durationYears": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "monde_mouvement_social",
+    "category": "world",
+    "minAge": 15,
+    "maxAge": 85,
+    "requiredTags": [],
+    "excludedTags": [],
+    "weight": 18,
+    "worldTagModifiers": { "guerre_regionale": 10, "crise_economique_active": 8, "inflation_active": 6 },
+    "text": "Un mouvement social d'ampleur secoue le pays. Des millions de personnes descendent dans la rue pour réclamer justice et égalité. {prenom} est témoin de l'histoire.",
+    "choices": [
+      {
+        "id": "participer",
+        "label": "Rejoindre le mouvement",
+        "effects": {
+          "stats": { "santeMentale": 8, "charisme": 6, "reputation": 5 }
+        }
+      },
+      {
+        "id": "observer",
+        "label": "Observer depuis chez soi",
+        "effects": {
+          "stats": { "santeMentale": -3 }
+        }
+      }
+    ]
+  }
+]

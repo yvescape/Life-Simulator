@@ -110,7 +110,13 @@ export function generateRandomCharacter(): Character {
     finances:      genererFinances(),
 
     niveauEtude:   'aucun',
-    emploi:        null,
+    careerStatus: {
+      jobTitle:          null,
+      salary:            0,
+      employer:          null,
+      satisfaction:      50,
+      yearsInCurrentJob: 0,
+    },
     statutRelation:'celibataire',
     relations:     [],
     tags:          [],

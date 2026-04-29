@@ -1,0 +1,1288 @@
+[
+  {
+    "id": "carriere_premier_entretien",
+    "category": "career",
+    "minAge": 18,
+    "maxAge": 26,
+    "requiredTags": [],
+    "excludedTags": ["premier_cdi_signe", "au_chomage"],
+    "weight": 90,
+    "text": "Bonne nouvelle : {prenom} décroche un entretien d'embauche pour un premier vrai poste. La nuit d'avant, impossible de dormir. Le costume est repassé mais les mains transpirent.",
+    "choices": [
+      {
+        "id": "preparer_fond",
+        "label": "Préparer l'entretien sérieusement",
+        "outcomes": [
+          {
+            "weight": 65,
+            "valence": "positif",
+            "tagModifiers": { "etudiant_serieux": 20, "bon_eleve": 15, "sait_negocier": 15 },
+            "effects": {
+              "stats": { "charisme": 4, "reputation": 3 },
+              "career": { "jobTitle": "Employé Junior", "employer": "Sodalis", "salary": 1750, "satisfactionDelta": 15 },
+              "addTags": ["premier_cdi_signe", "en_emploi"],
+              "removeTags": ["au_chomage"]
+            }
+          },
+          {
+            "weight": 35,
+            "valence": "negatif",
+            "tagModifiers": { "etudiant_fêtard": 25 },
+            "effects": {
+              "stats": { "santeMentale": -3, "charisme": 2 },
+              "addTags": ["au_chomage"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "improviser",
+        "label": "Y aller avec ce qu'on est — sans sur-préparer",
+        "outcomes": [
+          {
+            "weight": 40,
+            "valence": "positif",
+            "tagModifiers": { "courageux_en_amour": 10, "gout_scene": 20 },
+            "effects": {
+              "stats": { "charisme": 6 },
+              "career": { "jobTitle": "Employé Junior", "employer": "Sodalis", "salary": 1650, "satisfactionDelta": 10 },
+              "addTags": ["premier_cdi_signe", "en_emploi"],
+              "removeTags": ["au_chomage"]
+            }
+          },
+          {
+            "weight": 60,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -4 },
+              "addTags": ["au_chomage"]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "carriere_serie_refus",
+    "category": "career",
+    "minAge": 19,
+    "maxAge": 32,
+    "requiredTags": ["au_chomage"],
+    "excludedTags": ["en_emploi"],
+    "weight": 75,
+    "text": "Depuis trois mois, {prenom} envoie des CV et enchaîne les refus polis. Le moral descend, le compte en banque aussi. La question commence à se poser : et si on revoyait ses prétentions ?",
+    "choices": [
+      {
+        "id": "perseverer",
+        "label": "Continuer à viser des postes à sa hauteur",
+        "effects": {
+          "stats": { "santeMentale": -4, "intelligence": 3 },
+          "addTags": ["perseverant_amour"]
+        }
+      },
+      {
+        "id": "revoir_pretentions",
+        "label": "Accepter un poste en dessous de ses qualifications",
+        "effects": {
+          "stats": { "santeMentale": -2, "reputation": -1 },
+          "career": { "jobTitle": "Agent de service", "employer": "Manpower Interim", "salary": 1500, "satisfactionDelta": -10 },
+          "addTags": ["premier_cdi_signe", "en_emploi"],
+          "removeTags": ["au_chomage"]
+        }
+      },
+      {
+        "id": "formation_courte",
+        "label": "Suivre une formation courte pour renforcer son dossier",
+        "effects": {
+          "stats": { "intelligence": 5, "santeMentale": 2 },
+          "money": -400
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_offre_cdi_premiere",
+    "category": "career",
+    "minAge": 20,
+    "maxAge": 30,
+    "requiredTags": ["au_chomage"],
+    "excludedTags": ["premier_cdi_signe"],
+    "weight": 80,
+    "text": "Le téléphone sonne un mardi matin. RH de TechNovea : {prenom} a le poste ! CDI, salaire correct, bonne ambiance d'après Glassdoor. La réponse est attendue avant vendredi.",
+    "choices": [
+      {
+        "id": "accepter_direct",
+        "label": "Dire oui immédiatement, sans négocier",
+        "effects": {
+          "stats": { "santeMentale": 6, "reputation": 3 },
+          "career": { "jobTitle": "Chargé de projet Junior", "employer": "TechNovea", "salary": 2100, "satisfactionDelta": 20 },
+          "addTags": ["premier_cdi_signe", "en_emploi"],
+          "removeTags": ["au_chomage"]
+        }
+      },
+      {
+        "id": "negocier",
+        "label": "Remercier et demander 48h pour négocier le salaire",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "positif",
+            "tagModifiers": { "sait_negocier": 30, "charisme": 5 },
+            "effects": {
+              "stats": { "charisme": 4, "reputation": 4 },
+              "career": { "jobTitle": "Chargé de projet Junior", "employer": "TechNovea", "salary": 2350, "satisfactionDelta": 22 },
+              "addTags": ["premier_cdi_signe", "en_emploi", "sait_negocier"],
+              "removeTags": ["au_chomage"]
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -3 },
+              "career": { "jobTitle": "Chargé de projet Junior", "employer": "TechNovea", "salary": 2100, "satisfactionDelta": 15 },
+              "addTags": ["premier_cdi_signe", "en_emploi"],
+              "removeTags": ["au_chomage"]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "carriere_perte_emploi_inattendue",
+    "category": "career",
+    "minAge": 22,
+    "maxAge": 55,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["licencie"],
+    "weight": 30,
+    "text": "L'email du DRH tombe un vendredi à 17h. {prenom} est convoqué lundi matin. La rumeur d'un plan de réduction circule depuis des semaines, mais on y croyait toujours pas vraiment.",
+    "choices": [
+      {
+        "id": "accepter_dignement",
+        "label": "Partir avec dignité, négocier les indemnités",
+        "effects": {
+          "stats": { "santeMentale": -5, "charisme": 3, "reputation": 2 },
+          "money": 2500,
+          "career": { "setUnemployed": true },
+          "addTags": ["au_chomage", "licencie"],
+          "removeTags": ["en_emploi"]
+        }
+      },
+      {
+        "id": "contester",
+        "label": "Contester le licenciement avec un avocat",
+        "effects": {
+          "stats": { "santeMentale": -6, "reputation": 2 },
+          "money": -800,
+          "career": { "setUnemployed": true },
+          "addTags": ["au_chomage", "licencie"],
+          "removeTags": ["en_emploi"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_chomage_long",
+    "category": "career",
+    "minAge": 25,
+    "maxAge": 58,
+    "requiredTags": ["au_chomage", "licencie"],
+    "excludedTags": ["en_emploi"],
+    "weight": 60,
+    "text": "Six mois de chômage. {prenom} a refait le CV quatre fois, passé des dizaines d'entretiens. Pôle Emploi propose une formation de reconversion. C'est peut-être le moment de changer de cap.",
+    "choices": [
+      {
+        "id": "formation_reconversion",
+        "label": "Accepter la formation de reconversion",
+        "effects": {
+          "stats": { "intelligence": 5, "santeMentale": 3, "reputation": 2 },
+          "addTags": ["reconversion_envisagee"]
+        }
+      },
+      {
+        "id": "continuer_chercher",
+        "label": "Continuer à chercher dans son domaine",
+        "effects": {
+          "stats": { "santeMentale": -3, "intelligence": 2 }
+        }
+      },
+      {
+        "id": "baisser_pretentions",
+        "label": "Accepter n'importe quel poste pour sortir du chômage",
+        "effects": {
+          "stats": { "santeMentale": -2, "reputation": -2 },
+          "career": { "jobTitle": "Opérateur polyvalent", "employer": "Interim Plus", "salary": 1600, "satisfactionDelta": -15 },
+          "addTags": ["en_emploi"],
+          "removeTags": ["au_chomage"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_mission_interim",
+    "category": "career",
+    "minAge": 18,
+    "maxAge": 35,
+    "requiredTags": [],
+    "excludedTags": ["premier_cdi_signe"],
+    "weight": 55,
+    "text": "Une agence d'intérim propose à {prenom} une mission de deux mois dans un entrepôt logistique. Pas glamour, mais ça paie les factures et ouvre peut-être des portes.",
+    "choices": [
+      {
+        "id": "accepter_impliquer",
+        "label": "Accepter et se donner à fond",
+        "effects": {
+          "stats": { "santePhysique": -2, "reputation": 3, "charisme": 2 },
+          "money": 1800,
+          "career": { "jobTitle": "Agent logistique (interim)", "employer": "LogiGroup", "salary": 1600, "satisfactionDelta": 5 },
+          "addTags": ["en_emploi", "sens_travail"]
+        }
+      },
+      {
+        "id": "accepter_minimum",
+        "label": "Accepter en faisant le minimum",
+        "effects": {
+          "stats": { "santeMentale": 2 },
+          "money": 1400,
+          "career": { "jobTitle": "Agent logistique (interim)", "employer": "LogiGroup", "salary": 1600, "satisfactionDelta": -5 },
+          "addTags": ["en_emploi"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_demande_augmentation",
+    "category": "career",
+    "minAge": 24,
+    "maxAge": 58,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["augmentation_recente"],
+    "weight": 65,
+    "text": "Deux ans dans le même poste, les responsabilités ont grandi mais le salaire, non. {prenom} décide que l'heure est venue de demander une augmentation.",
+    "choices": [
+      {
+        "id": "demande_directe",
+        "label": "Demander directement en réunion one-to-one",
+        "outcomes": [
+          {
+            "weight": 55,
+            "valence": "positif",
+            "tagModifiers": { "sait_negocier": 25, "travailleur_acharné": 20, "reputation": 15 },
+            "effects": {
+              "stats": { "charisme": 3, "reputation": 3 },
+              "career": { "salaryDelta": 300, "satisfactionDelta": 15 },
+              "addTags": ["augmentation_recente"]
+            }
+          },
+          {
+            "weight": 45,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -3 },
+              "career": { "satisfactionDelta": -10 },
+              "addTags": ["augmentation_recente"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "negocier_avec_offre",
+        "label": "Apporter une offre concurrente comme levier",
+        "outcomes": [
+          {
+            "weight": 70,
+            "valence": "positif",
+            "tagModifiers": { "sait_negocier": 30 },
+            "effects": {
+              "stats": { "charisme": 5, "reputation": 4 },
+              "career": { "salaryDelta": 500, "satisfactionDelta": 20 },
+              "addTags": ["augmentation_recente", "sait_negocier"]
+            }
+          },
+          {
+            "weight": 30,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -4, "reputation": -2 },
+              "career": { "satisfactionDelta": -15 },
+              "addTags": ["augmentation_recente"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "ne_pas_demander",
+        "label": "Finalement ne rien demander, pas le bon moment",
+        "effects": {
+          "stats": { "santeMentale": -2 },
+          "career": { "satisfactionDelta": -8 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_promotion_chef_projet",
+    "category": "career",
+    "minAge": 26,
+    "maxAge": 52,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["manager", "chef_projet"],
+    "weight": 55,
+    "text": "Le directeur convoque {prenom} : un poste de chef de projet se libère. Plus de responsabilités, une équipe à gérer, un vrai défi. Et une augmentation qui va avec.",
+    "choices": [
+      {
+        "id": "accepter",
+        "label": "Accepter avec enthousiasme",
+        "effects": {
+          "stats": { "reputation": 5, "charisme": 3, "santeMentale": -2 },
+          "career": { "jobTitle": "Chef de projet", "salaryDelta": 600, "satisfactionDelta": 18 },
+          "addTags": ["chef_projet"]
+        }
+      },
+      {
+        "id": "negocier_conditions",
+        "label": "Accepter après avoir négocié les conditions",
+        "effects": {
+          "stats": { "reputation": 4, "charisme": 5, "intelligence": 2 },
+          "career": { "jobTitle": "Chef de projet", "salaryDelta": 800, "satisfactionDelta": 22 },
+          "addTags": ["chef_projet", "sait_negocier"]
+        }
+      },
+      {
+        "id": "refuser",
+        "label": "Décliner, la pression managériale n'est pas pour toi",
+        "effects": {
+          "stats": { "santeMentale": 4 },
+          "career": { "satisfactionDelta": 5 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_evaluation_brillante",
+    "category": "career",
+    "minAge": 23,
+    "maxAge": 58,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["evaluation_brillante_eue"],
+    "weight": 50,
+    "text": "L'entretien annuel de {prenom} a abouti à une évaluation « Exceptionnel ». Le manager parle même d'une possible promotion en perspective. La fierté est bien là.",
+    "choices": [
+      {
+        "id": "capitaliser",
+        "label": "Profiter du moment pour parler d'évolution",
+        "effects": {
+          "stats": { "charisme": 4, "reputation": 5, "intelligence": 2 },
+          "career": { "salaryDelta": 200, "satisfactionDelta": 20 },
+          "addTags": ["evaluation_brillante_eue", "bon_eleve"]
+        }
+      },
+      {
+        "id": "etre_humble",
+        "label": "Remercier et continuer à travailler dur",
+        "effects": {
+          "stats": { "reputation": 4, "santeMentale": 3 },
+          "career": { "satisfactionDelta": 15 },
+          "addTags": ["evaluation_brillante_eue"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_prime_objectifs",
+    "category": "finance",
+    "minAge": 22,
+    "maxAge": 58,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": [],
+    "weight": 60,
+    "text": "Fin d'année : les objectifs ont été atteints et même dépassés. {prenom} reçoit une prime exceptionnelle. La question : qu'est-ce qu'on en fait ?",
+    "choices": [
+      {
+        "id": "epargner",
+        "label": "Mettre toute la prime de côté",
+        "effects": {
+          "stats": { "intelligence": 2, "santeMentale": 3 },
+          "money": 2500,
+          "career": { "satisfactionDelta": 10 }
+        }
+      },
+      {
+        "id": "se_faire_plaisir",
+        "label": "S'offrir quelque chose qui fait plaisir",
+        "effects": {
+          "stats": { "santeMentale": 6, "charisme": 2 },
+          "money": 1000,
+          "career": { "satisfactionDelta": 8 }
+        }
+      },
+      {
+        "id": "investir",
+        "label": "Investir dans une formation ou un projet perso",
+        "effects": {
+          "stats": { "intelligence": 5 },
+          "money": 0,
+          "career": { "satisfactionDelta": 12 },
+          "addTags": ["formation_pro"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_offre_debauche",
+    "category": "career",
+    "minAge": 26,
+    "maxAge": 50,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": [],
+    "weight": 45,
+    "text": "Un chasseur de têtes contacte {prenom} sur LinkedIn. L'offre est séduisante : poste plus senior, salaire 20% plus élevé, mais dans une boîte inconnue. Partir ou rester ?",
+    "choices": [
+      {
+        "id": "partir",
+        "label": "Saisir l'opportunité et changer d'entreprise",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "positif",
+            "tagModifiers": { "esprit_aventurier": 20, "ouverture_monde": 15 },
+            "effects": {
+              "stats": { "reputation": 5, "charisme": 3, "santeMentale": 3 },
+              "career": { "employer": "FinSoft Solutions", "salaryDelta": 700, "satisfactionDelta": 18 },
+              "addTags": ["changement_poste"]
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -4, "reputation": -2 },
+              "career": { "employer": "FinSoft Solutions", "salaryDelta": 700, "satisfactionDelta": -10 },
+              "addTags": ["changement_poste"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "rester_negocier",
+        "label": "Rester mais utiliser l'offre pour négocier",
+        "outcomes": [
+          {
+            "weight": 65,
+            "valence": "positif",
+            "tagModifiers": { "sait_negocier": 30 },
+            "effects": {
+              "stats": { "charisme": 5, "reputation": 3 },
+              "career": { "salaryDelta": 450, "satisfactionDelta": 15 },
+              "addTags": ["sait_negocier"]
+            }
+          },
+          {
+            "weight": 35,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "reputation": -3, "santeMentale": -3 },
+              "career": { "satisfactionDelta": -12 }
+            }
+          }
+        ]
+      },
+      {
+        "id": "decliner",
+        "label": "Décliner poliment, trop risqué",
+        "effects": {
+          "stats": { "santeMentale": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_collegue_toxique",
+    "category": "career",
+    "minAge": 22,
+    "maxAge": 58,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["conflit_collegue_gere"],
+    "weight": 55,
+    "text": "Un collègue passe son temps à saboter discrètement le travail de {prenom} et à s'en attribuer les mérites en réunion. Tout le monde le voit, personne n'agit.",
+    "choices": [
+      {
+        "id": "confronter_directement",
+        "label": "Lui parler en tête-à-tête sans ambiguïté",
+        "outcomes": [
+          {
+            "weight": 55,
+            "valence": "positif",
+            "tagModifiers": { "charisme": 10, "caractere_affirme": 25 },
+            "effects": {
+              "stats": { "charisme": 5, "reputation": 3 },
+              "career": { "satisfactionDelta": 12 },
+              "addTags": ["conflit_collegue_gere"]
+            }
+          },
+          {
+            "weight": 45,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -4, "reputation": -2 },
+              "career": { "satisfactionDelta": -15 },
+              "addTags": ["conflit_collegue_gere"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "remonter_manager",
+        "label": "Signaler la situation au manager",
+        "effects": {
+          "stats": { "reputation": 2, "santeMentale": -2 },
+          "career": { "satisfactionDelta": 5 },
+          "addTags": ["conflit_collegue_gere", "a_demande_aide"]
+        }
+      },
+      {
+        "id": "ignorer",
+        "label": "Ignorer et documenter discrètement",
+        "effects": {
+          "stats": { "intelligence": 3, "santeMentale": -3 },
+          "career": { "satisfactionDelta": -8 },
+          "addTags": ["conflit_collegue_gere"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_clash_manager",
+    "category": "career",
+    "minAge": 23,
+    "maxAge": 58,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["clash_manager_vecu"],
+    "weight": 45,
+    "text": "Le manager de {prenom} lui reproche publiquement une erreur mineure lors d'une réunion d'équipe. Injuste, humiliant, et tout le monde a vu.",
+    "choices": [
+      {
+        "id": "repondre_seance_tenante",
+        "label": "Se défendre calmement devant tout le monde",
+        "effects": {
+          "stats": { "charisme": 4, "santeMentale": -2, "reputation": 3 },
+          "career": { "satisfactionDelta": -5 },
+          "addTags": ["clash_manager_vecu", "caractere_affirme"]
+        }
+      },
+      {
+        "id": "aborder_en_prive",
+        "label": "Aborder le sujet en privé après la réunion",
+        "effects": {
+          "stats": { "intelligence": 4, "charisme": 3 },
+          "career": { "satisfactionDelta": 5 },
+          "addTags": ["clash_manager_vecu", "diplomate"]
+        }
+      },
+      {
+        "id": "avaler",
+        "label": "Avaler la couleuvre et ne rien dire",
+        "effects": {
+          "stats": { "santeMentale": -5, "reputation": -2 },
+          "career": { "satisfactionDelta": -15 },
+          "addTags": ["clash_manager_vecu"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_harcelement_moral",
+    "category": "health",
+    "minAge": 23,
+    "maxAge": 52,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["experience_harcelement_travail"],
+    "weight": 30,
+    "text": "Depuis plusieurs mois, le supérieur de {prenom} lui envoie des mails agressifs, lui fixe des objectifs impossibles et l'exclut des réunions importantes. C'est du harcèlement moral.",
+    "choices": [
+      {
+        "id": "signaler_rh",
+        "label": "Signaler aux RH avec preuves à l'appui",
+        "effects": {
+          "stats": { "santeMentale": -3, "reputation": 3, "intelligence": 3 },
+          "career": { "satisfactionDelta": 10 },
+          "addTags": ["experience_harcelement_travail", "a_demande_aide"]
+        }
+      },
+      {
+        "id": "quitter",
+        "label": "Démissionner pour préserver sa santé mentale",
+        "effects": {
+          "stats": { "santeMentale": 5, "reputation": -2 },
+          "career": { "setUnemployed": true },
+          "addTags": ["experience_harcelement_travail", "priorite_sante", "au_chomage"],
+          "removeTags": ["en_emploi"]
+        }
+      },
+      {
+        "id": "supporter",
+        "label": "Tenir bon, peut-être que ça va passer",
+        "effects": {
+          "stats": { "santeMentale": -8, "santePhysique": -3 },
+          "career": { "satisfactionDelta": -20 },
+          "addTags": ["experience_harcelement_travail"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_erreur_grave",
+    "category": "career",
+    "minAge": 23,
+    "maxAge": 58,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": [],
+    "weight": 40,
+    "text": "{prenom} vient de réaliser qu'il a envoyé un document confidentiel à la mauvaise personne. C'est grave. L'email est parti il y a dix minutes.",
+    "choices": [
+      {
+        "id": "avouer_immediatement",
+        "label": "Aller voir son manager sur-le-champ et tout dire",
+        "effects": {
+          "stats": { "reputation": 3, "santeMentale": -4, "charisme": 2 },
+          "career": { "satisfactionDelta": -10 },
+          "addTags": ["responsable"]
+        }
+      },
+      {
+        "id": "tenter_recall",
+        "label": "Tenter de rappeler l'email et espérer que ça passe",
+        "outcomes": [
+          {
+            "weight": 35,
+            "valence": "positif",
+            "tagModifiers": { "chanceux_finances": 20, "chance": 10 },
+            "effects": {
+              "stats": { "santeMentale": -2, "chance": 2 },
+              "career": { "satisfactionDelta": -5 }
+            }
+          },
+          {
+            "weight": 65,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -7, "reputation": -4 },
+              "career": { "satisfactionDelta": -20 }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "carriere_idee_volee",
+    "category": "career",
+    "minAge": 24,
+    "maxAge": 52,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["idee_volee_vecue"],
+    "weight": 38,
+    "text": "En réunion de direction, le manager de {prenom} présente le projet sur lequel il a travaillé pendant des semaines comme si c'était sa propre idée. Silence dans la salle.",
+    "choices": [
+      {
+        "id": "prendre_la_parole",
+        "label": "Prendre la parole et rétablir la vérité",
+        "outcomes": [
+          {
+            "weight": 50,
+            "valence": "positif",
+            "tagModifiers": { "caractere_affirme": 30, "gout_scene": 15 },
+            "effects": {
+              "stats": { "charisme": 5, "reputation": 4, "santeMentale": 2 },
+              "career": { "satisfactionDelta": 8 },
+              "addTags": ["idee_volee_vecue"]
+            }
+          },
+          {
+            "weight": 50,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -4, "reputation": -2 },
+              "career": { "satisfactionDelta": -12 },
+              "addTags": ["idee_volee_vecue"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "documenter_partir",
+        "label": "Ne rien dire mais commencer à chercher ailleurs",
+        "effects": {
+          "stats": { "intelligence": 3, "santeMentale": -3 },
+          "career": { "satisfactionDelta": -18 },
+          "addTags": ["idee_volee_vecue"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_devenir_freelance",
+    "category": "career",
+    "minAge": 26,
+    "maxAge": 46,
+    "requiredTags": ["premier_cdi_signe"],
+    "excludedTags": ["freelance", "entrepreneur"],
+    "weight": 40,
+    "text": "Après plusieurs missions intéressantes en dehors du bureau, {prenom} réalise qu'il pourrait facturer ses compétences directement. Le freelance, c'est risqué mais libérateur.",
+    "choices": [
+      {
+        "id": "se_lancer_freelance",
+        "label": "Démissionner et se lancer en indépendant",
+        "outcomes": [
+          {
+            "weight": 45,
+            "valence": "positif",
+            "tagModifiers": { "sait_negocier": 25, "sens_travail": 20, "ouverture_monde": 15 },
+            "effects": {
+              "stats": { "santeMentale": 5, "reputation": 4, "intelligence": 3 },
+              "career": { "jobTitle": "Consultant Freelance", "employer": null, "salary": 4200, "satisfactionDelta": 25 },
+              "addTags": ["freelance", "entrepreneur"],
+              "removeTags": ["en_emploi"]
+            }
+          },
+          {
+            "weight": 55,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -4, "santePhysique": -2 },
+              "career": { "jobTitle": "Consultant Freelance", "employer": null, "salary": 1800, "satisfactionDelta": -5 },
+              "addTags": ["freelance"],
+              "removeTags": ["en_emploi"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "freelance_weekend",
+        "label": "Tester en gardant son poste le temps de constituer un portefeuille",
+        "effects": {
+          "stats": { "intelligence": 4, "santeMentale": -2 },
+          "money": 800
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_proposition_associe",
+    "category": "career",
+    "minAge": 26,
+    "maxAge": 46,
+    "requiredTags": ["premier_cdi_signe"],
+    "excludedTags": ["entrepreneur"],
+    "weight": 35,
+    "text": "Un ex-collègue brillant contacte {prenom} : il a une idée de boîte solide et cherche un associé de confiance. L'opportunité semble sérieuse. Les risques aussi.",
+    "choices": [
+      {
+        "id": "s_associer",
+        "label": "Rejoindre le projet comme co-fondateur",
+        "effects": {
+          "stats": { "reputation": 4, "charisme": 3, "santeMentale": -2 },
+          "money": -2000,
+          "career": { "jobTitle": "Co-fondateur", "employer": "Startup (phase early)", "salary": 1200, "satisfactionDelta": 10 },
+          "addTags": ["entrepreneur"],
+          "removeTags": ["en_emploi"],
+          "scheduleEvent": { "eventId": "adulte_startup_pivot", "triggerAge": 3, "type": "career" }
+        }
+      },
+      {
+        "id": "investisseur_passif",
+        "label": "Investir financièrement sans quitter son poste",
+        "effects": {
+          "stats": { "intelligence": 3 },
+          "money": -3000,
+          "addTags": ["investisseur"]
+        }
+      },
+      {
+        "id": "decliner",
+        "label": "Décliner — trop risqué pour l'instant",
+        "effects": {
+          "stats": { "santeMentale": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_premier_gros_contrat",
+    "category": "career",
+    "minAge": 25,
+    "maxAge": 48,
+    "requiredTags": ["entrepreneur"],
+    "excludedTags": ["premier_gros_contrat"],
+    "weight": 70,
+    "text": "Une grande entreprise veut confier à {prenom} un contrat majeur. C'est la reconnaissance que tout le travail de ces dernières années était valide. Le montant est significatif.",
+    "choices": [
+      {
+        "id": "accepter_tout",
+        "label": "Accepter et mobiliser toutes ses ressources",
+        "effects": {
+          "stats": { "reputation": 7, "santeMentale": -3, "santePhysique": -2, "intelligence": 3 },
+          "money": 15000,
+          "career": { "satisfactionDelta": 25, "salaryDelta": 800 },
+          "addTags": ["premier_gros_contrat"]
+        }
+      },
+      {
+        "id": "sous_traiter",
+        "label": "Accepter et sous-traiter une partie",
+        "effects": {
+          "stats": { "reputation": 5, "intelligence": 4 },
+          "money": 8000,
+          "career": { "satisfactionDelta": 18 },
+          "addTags": ["premier_gros_contrat"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_crise_tresorerie",
+    "category": "finance",
+    "minAge": 25,
+    "maxAge": 50,
+    "requiredTags": ["entrepreneur"],
+    "excludedTags": ["crise_treso_vecue"],
+    "weight": 55,
+    "text": "Trois clients ont payé en retard ce mois-ci. {prenom} doit payer ses fournisseurs dans cinq jours. La trésorerie de la boîte est dans le rouge. Panique discrète.",
+    "choices": [
+      {
+        "id": "ligne_credit",
+        "label": "Négocier une ligne de crédit avec la banque",
+        "effects": {
+          "stats": { "charisme": 3, "santeMentale": -3 },
+          "money": -500,
+          "career": { "satisfactionDelta": -10 },
+          "addTags": ["crise_treso_vecue"]
+        }
+      },
+      {
+        "id": "relancer_clients",
+        "label": "Appeler les clients directement pour accélérer les paiements",
+        "outcomes": [
+          {
+            "weight": 65,
+            "valence": "positif",
+            "tagModifiers": { "sait_negocier": 25, "charisme": 10 },
+            "effects": {
+              "stats": { "charisme": 4 },
+              "money": 3000,
+              "career": { "satisfactionDelta": 5 },
+              "addTags": ["crise_treso_vecue"]
+            }
+          },
+          {
+            "weight": 35,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -5 },
+              "money": -1500,
+              "career": { "satisfactionDelta": -20 },
+              "addTags": ["crise_treso_vecue"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "avance_personnelle",
+        "label": "Injecter de l'épargne personnelle",
+        "effects": {
+          "stats": { "santeMentale": -4 },
+          "money": -4000,
+          "career": { "satisfactionDelta": -8 },
+          "addTags": ["crise_treso_vecue"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_signaux_burnout",
+    "category": "health",
+    "minAge": 28,
+    "maxAge": 58,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["burnout_vecu", "alerte_burnout_vue"],
+    "weight": 50,
+    "text": "Depuis quelques semaines, {prenom} rentre tard, dort mal et n'a plus vraiment envie d'ouvrir son ordinateur. Ce ne sont peut-être que des signaux d'alerte.",
+    "choices": [
+      {
+        "id": "prendre_conges",
+        "label": "Poser des congés pour souffler",
+        "effects": {
+          "stats": { "santeMentale": 6, "santePhysique": 4 },
+          "career": { "satisfactionDelta": 10 },
+          "addTags": ["alerte_burnout_vue", "priorite_sante"]
+        }
+      },
+      {
+        "id": "consulter_medecin",
+        "label": "Consulter un médecin ou un psychologue",
+        "effects": {
+          "stats": { "santeMentale": 8, "intelligence": 2 },
+          "money": -200,
+          "career": { "satisfactionDelta": 8 },
+          "addTags": ["alerte_burnout_vue", "priorite_sante", "conscience_soi"]
+        }
+      },
+      {
+        "id": "pousser_encore",
+        "label": "Se dire que ça va passer et continuer",
+        "effects": {
+          "stats": { "santeMentale": -5, "santePhysique": -3 },
+          "career": { "satisfactionDelta": -12 },
+          "addTags": ["alerte_burnout_vue"],
+          "scheduleEvent": { "eventId": "adulte_burnout", "triggerAge": 1, "type": "health" }
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_formation_continue",
+    "category": "career",
+    "minAge": 24,
+    "maxAge": 58,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["formation_pro"],
+    "weight": 50,
+    "text": "Une formation certifiante de deux semaines est proposée à {prenom} via le plan de formation de l'entreprise. Ça touche exactement ses lacunes mais ça tombe en période chargée.",
+    "choices": [
+      {
+        "id": "accepter",
+        "label": "Accepter et se libérer du temps",
+        "effects": {
+          "stats": { "intelligence": 6, "reputation": 3 },
+          "career": { "satisfactionDelta": 12 },
+          "addTags": ["formation_pro"]
+        }
+      },
+      {
+        "id": "remettre",
+        "label": "Remettre à la prochaine session",
+        "effects": {
+          "stats": { "santeMentale": -2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_reconversion_totale",
+    "category": "career",
+    "minAge": 32,
+    "maxAge": 58,
+    "requiredTags": ["premier_cdi_signe"],
+    "excludedTags": ["reconversion_faite"],
+    "weight": 40,
+    "text": "Un soir, en lisant un article sur les métiers qui donnent du sens, {prenom} réalise qu'il n'a plus envie de faire ce qu'il fait depuis des années. La reconversion est sérieusement envisageable.",
+    "choices": [
+      {
+        "id": "former_et_changer",
+        "label": "S'inscrire à une formation longue et tout recommencer",
+        "effects": {
+          "stats": { "intelligence": 6, "santeMentale": 5, "reputation": 2 },
+          "money": -4000,
+          "career": { "satisfactionDelta": 20 },
+          "addTags": ["reconversion_faite", "reconversion_envisagee"]
+        }
+      },
+      {
+        "id": "bilan_competences",
+        "label": "Faire un bilan de compétences d'abord",
+        "effects": {
+          "stats": { "intelligence": 3, "santeMentale": 3 },
+          "money": -500,
+          "addTags": ["reconversion_envisagee", "conscience_soi"]
+        }
+      },
+      {
+        "id": "rester",
+        "label": "Rester — la sécurité prime",
+        "effects": {
+          "stats": { "santeMentale": -3 },
+          "career": { "satisfactionDelta": -8 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_accord_teletravail",
+    "category": "career",
+    "minAge": 25,
+    "maxAge": 55,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["accord_teletravail_obtenu"],
+    "weight": 45,
+    "text": "Suite au bilan annuel, {prenom} demande à passer à 3 jours de télétravail par semaine. Le manager hésite — c'est nouveau pour l'équipe.",
+    "choices": [
+      {
+        "id": "negocier_progressivement",
+        "label": "Proposer un mois d'essai en 2 jours de télétravail",
+        "effects": {
+          "stats": { "charisme": 4, "santeMentale": 4 },
+          "career": { "satisfactionDelta": 15 },
+          "addTags": ["accord_teletravail_obtenu", "diplomate"]
+        }
+      },
+      {
+        "id": "insister",
+        "label": "Insister fermement sur 3 jours",
+        "outcomes": [
+          {
+            "weight": 45,
+            "valence": "positif",
+            "tagModifiers": { "sait_negocier": 25, "caractere_affirme": 20 },
+            "effects": {
+              "stats": { "santeMentale": 6, "santePhysique": 3 },
+              "career": { "satisfactionDelta": 20 },
+              "addTags": ["accord_teletravail_obtenu"]
+            }
+          },
+          {
+            "weight": 55,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -3, "reputation": -2 },
+              "career": { "satisfactionDelta": -8 },
+              "addTags": ["accord_teletravail_obtenu"]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "carriere_licenciement_eco",
+    "category": "career",
+    "minAge": 26,
+    "maxAge": 60,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["licencie"],
+    "weight": 28,
+    "text": "La direction annonce un plan de sauvegarde de l'emploi : 15% des effectifs. {prenom} fait partie des postes supprimés. C'est économique, pas personnel, dit-on.",
+    "choices": [
+      {
+        "id": "negocier_depart",
+        "label": "Négocier au maximum les indemnités",
+        "effects": {
+          "stats": { "charisme": 4, "santeMentale": -4 },
+          "money": 4000,
+          "career": { "setUnemployed": true },
+          "addTags": ["au_chomage", "licencie"],
+          "removeTags": ["en_emploi"]
+        }
+      },
+      {
+        "id": "accepter_rebondir",
+        "label": "Accepter et utiliser ce temps pour se réinventer",
+        "effects": {
+          "stats": { "santeMentale": -2, "intelligence": 4, "reputation": 2 },
+          "money": 2500,
+          "career": { "setUnemployed": true },
+          "addTags": ["au_chomage", "licencie"],
+          "removeTags": ["en_emploi"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_restructuration_interne",
+    "category": "career",
+    "minAge": 32,
+    "maxAge": 60,
+    "requiredTags": ["manager"],
+    "excludedTags": ["restructuration_vecue"],
+    "weight": 42,
+    "text": "La direction demande à {prenom} de gérer la suppression de deux postes dans son équipe. C'est lui qui doit annoncer ça à des collègues qui sont aussi des amis.",
+    "choices": [
+      {
+        "id": "etre_transparent",
+        "label": "Être totalement transparent avec l'équipe",
+        "effects": {
+          "stats": { "charisme": 4, "santeMentale": -5, "reputation": 4 },
+          "career": { "satisfactionDelta": -12 },
+          "addTags": ["restructuration_vecue", "pilier_famille"]
+        }
+      },
+      {
+        "id": "application_froide",
+        "label": "Appliquer les décisions sans état d'âme",
+        "effects": {
+          "stats": { "reputation": -3, "santeMentale": -3 },
+          "career": { "satisfactionDelta": -8 },
+          "addTags": ["restructuration_vecue"]
+        }
+      },
+      {
+        "id": "proteger_equipe",
+        "label": "Tenter de protéger ses collaborateurs en négociant",
+        "outcomes": [
+          {
+            "weight": 40,
+            "valence": "positif",
+            "tagModifiers": { "sait_negocier": 25, "diplomate": 20 },
+            "effects": {
+              "stats": { "reputation": 6, "charisme": 4, "santeMentale": -2 },
+              "career": { "satisfactionDelta": 5 },
+              "addTags": ["restructuration_vecue", "sait_adapter"]
+            }
+          },
+          {
+            "weight": 60,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "reputation": -2, "santeMentale": -6 },
+              "career": { "satisfactionDelta": -15 },
+              "addTags": ["restructuration_vecue"]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "carriere_rupture_conventionnelle",
+    "category": "career",
+    "minAge": 28,
+    "maxAge": 58,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["rupture_convention_vecue"],
+    "weight": 38,
+    "text": "Ni fichu, ni démissionnaire : {prenom} et son employeur envisagent une rupture conventionnelle. Les deux parties veulent tourner la page. La négociation commence.",
+    "choices": [
+      {
+        "id": "negocier_fort",
+        "label": "Négocier une indemnité maximale avec un avocat",
+        "effects": {
+          "stats": { "charisme": 4, "intelligence": 3, "santeMentale": 2 },
+          "money": 5000,
+          "career": { "setUnemployed": true },
+          "addTags": ["au_chomage", "rupture_convention_vecue"],
+          "removeTags": ["en_emploi"]
+        }
+      },
+      {
+        "id": "accepter_rapidement",
+        "label": "Accepter vite pour tourner la page",
+        "effects": {
+          "stats": { "santeMentale": 4 },
+          "money": 2500,
+          "career": { "setUnemployed": true },
+          "addTags": ["au_chomage", "rupture_convention_vecue"],
+          "removeTags": ["en_emploi"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_mentor_senior",
+    "category": "career",
+    "minAge": 22,
+    "maxAge": 38,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["mentor_professionnel"],
+    "weight": 45,
+    "text": "Un cadre senior remarque {prenom} et propose de le prendre sous son aile. Ce genre d'opportunité ne se présente pas deux fois dans une carrière.",
+    "choices": [
+      {
+        "id": "accepter_pleinement",
+        "label": "Accepter avec enthousiasme et curiosité",
+        "effects": {
+          "stats": { "intelligence": 5, "charisme": 4, "reputation": 4 },
+          "career": { "satisfactionDelta": 18 },
+          "addTags": ["mentor_professionnel"]
+        }
+      },
+      {
+        "id": "accepter_timidement",
+        "label": "Accepter mais rester dans sa réserve",
+        "effects": {
+          "stats": { "intelligence": 3, "reputation": 2 },
+          "career": { "satisfactionDelta": 10 },
+          "addTags": ["mentor_professionnel"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_mutation_etranger",
+    "category": "career",
+    "minAge": 25,
+    "maxAge": 48,
+    "requiredTags": ["en_emploi"],
+    "excludedTags": ["mutation_etranger_vecue"],
+    "weight": 35,
+    "text": "Le groupe propose à {prenom} une mission de deux ans à Berlin. Beau salaire expatrié, belle expérience, mais tout quitter — famille, amis, repères.",
+    "choices": [
+      {
+        "id": "accepter",
+        "label": "Accepter et partir à l'aventure",
+        "effects": {
+          "stats": { "intelligence": 6, "charisme": 5, "santeMentale": 3 },
+          "career": { "salaryDelta": 1200, "satisfactionDelta": 22 },
+          "addTags": ["mutation_etranger_vecue", "ouverture_monde", "esprit_aventurier"]
+        }
+      },
+      {
+        "id": "negocier_duree",
+        "label": "Accepter en renégociant pour réduire à 12 mois",
+        "effects": {
+          "stats": { "intelligence": 4, "charisme": 3 },
+          "career": { "salaryDelta": 800, "satisfactionDelta": 15 },
+          "addTags": ["mutation_etranger_vecue", "sait_negocier"]
+        }
+      },
+      {
+        "id": "refuser",
+        "label": "Refuser — la vie personnelle prime",
+        "effects": {
+          "stats": { "santeMentale": 2, "reputation": -1 },
+          "addTags": ["mutation_etranger_vecue"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "carriere_retour_conge_parental",
+    "category": "career",
+    "minAge": 26,
+    "maxAge": 44,
+    "requiredTags": ["en_emploi", "premier_enfant_ne"],
+    "excludedTags": ["retour_conge_parental"],
+    "weight": 70,
+    "text": "Après six mois de congé parental, {prenom} reprend le travail. Son poste a changé, son équipe aussi. Et son regard sur les priorités de la vie a totalement changé.",
+    "choices": [
+      {
+        "id": "repartir_motive",
+        "label": "Reprendre avec enthousiasme et énergie renouvelée",
+        "effects": {
+          "stats": { "charisme": 3, "reputation": 3, "santeMentale": 2 },
+          "career": { "satisfactionDelta": 10 },
+          "addTags": ["retour_conge_parental"]
+        }
+      },
+      {
+        "id": "demander_temps_partiel",
+        "label": "Demander un temps partiel pour être plus présent",
+        "effects": {
+          "stats": { "santeMentale": 6 },
+          "career": { "salaryDelta": -400, "satisfactionDelta": 15 },
+          "addTags": ["retour_conge_parental"]
+        }
+      },
+      {
+        "id": "demissionner",
+        "label": "Démissionner pour s'occuper pleinement de l'enfant",
+        "effects": {
+          "stats": { "santeMentale": 5, "santePhysique": 3 },
+          "career": { "setUnemployed": true },
+          "addTags": ["au_chomage", "retour_conge_parental"],
+          "removeTags": ["en_emploi"]
+        }
+      }
+    ]
+  }
+]

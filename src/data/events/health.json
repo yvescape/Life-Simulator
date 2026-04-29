@@ -1,0 +1,679 @@
+[
+  {
+    "id": "sante_rhume_saisonnier",
+    "category": "health",
+    "minAge": 3,
+    "maxAge": 99,
+    "requiredTags": [],
+    "excludedTags": [],
+    "weight": 60,
+    "text": "{prenom} se réveille avec le nez bouché, la gorge irritée et une légère fièvre. Un rhume de saison.",
+    "choices": [
+      {
+        "id": "rester_au_lit",
+        "label": "Rester au lit et se soigner",
+        "effects": { "stats": { "santePhysique": 2 } }
+      },
+      {
+        "id": "ignorer",
+        "label": "Continuer ses activités normalement",
+        "effects": { "stats": { "santePhysique": -4, "santeMentale": -2 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_grippe_severe",
+    "category": "health",
+    "minAge": 10,
+    "maxAge": 99,
+    "requiredTags": [],
+    "excludedTags": [],
+    "weight": 40,
+    "text": "Une grippe sévère cloue {prenom} au lit pendant plusieurs jours. Fièvre à 39 °C, courbatures, impossible de se lever.",
+    "choices": [
+      {
+        "id": "soigner_serieusement",
+        "label": "Consulter un médecin et se reposer",
+        "outcomes": [
+          {
+            "weight": 70,
+            "valence": "positif",
+            "effects": { "stats": { "santePhysique": 5 }, "money": -80 }
+          },
+          {
+            "weight": 30,
+            "valence": "negatif",
+            "effects": { "stats": { "santePhysique": -8, "santeMentale": -5 } }
+          }
+        ]
+      },
+      {
+        "id": "ignorer_symptomes",
+        "label": "Attendre que ça passe seul",
+        "effects": { "stats": { "santePhysique": -10, "santeMentale": -4 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_cancer_diagnostic",
+    "category": "health",
+    "minAge": 40,
+    "maxAge": 90,
+    "requiredTags": [],
+    "excludedTags": ["cancer_diagnostique", "cancer_remission"],
+    "weight": 15,
+    "text": "Un résultat d'analyse tombe comme un coup de massue : {prenom} est atteint d'un cancer. Le médecin présente les options thérapeutiques avec un regard grave.",
+    "choices": [
+      {
+        "id": "traitement_immediat",
+        "label": "Commencer le traitement immédiatement",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "positif",
+            "tagModifiers": { "sportif_regulier": 20, "alimentation_saine": 15 },
+            "effects": {
+              "stats": { "santePhysique": 12, "santeMentale": -10 },
+              "money": -5000,
+              "addTags": ["cancer_remission"],
+              "removeTags": ["cancer_diagnostique"]
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "tagModifiers": { "alcool_dependant": 20, "tabac_dependant": 15 },
+            "effects": {
+              "stats": { "santePhysique": -15, "santeMentale": -20 },
+              "money": -8000,
+              "addTags": ["cancer_diagnostique"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "refuser_traitement",
+        "label": "Refuser le traitement médical",
+        "effects": {
+          "stats": { "santePhysique": -25, "santeMentale": -15 },
+          "addTags": ["cancer_diagnostique"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "sante_depression_clinique",
+    "category": "health",
+    "minAge": 18,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": ["depression_traitee"],
+    "weight": 25,
+    "text": "Depuis des semaines, {prenom} n'éprouve plus aucun plaisir, se lève à contrecœur, le monde paraît gris. Un médecin évoque une dépression clinique.",
+    "choices": [
+      {
+        "id": "consulter_psychiatre",
+        "label": "Consulter un psychiatre",
+        "outcomes": [
+          {
+            "weight": 65,
+            "valence": "positif",
+            "tagModifiers": { "en_therapie": 20 },
+            "effects": {
+              "stats": { "santeMentale": 20, "santePhysique": 5 },
+              "money": -200,
+              "addTags": ["depression_traitee"]
+            }
+          },
+          {
+            "weight": 35,
+            "valence": "negatif",
+            "effects": { "stats": { "santeMentale": 8 }, "money": -200 }
+          }
+        ]
+      },
+      {
+        "id": "sisoler",
+        "label": "S'isoler et espérer que ça passe",
+        "effects": { "stats": { "santeMentale": -22, "santePhysique": -8, "charisme": -5 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_accident_voiture",
+    "category": "health",
+    "minAge": 16,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": [],
+    "weight": 20,
+    "text": "Une collision à un carrefour. La voiture de {prenom} est endommagée, et les conséquences physiques font encore plus peur.",
+    "choices": [
+      {
+        "id": "aller_urgences",
+        "label": "Aller aux urgences",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "positif",
+            "effects": {
+              "stats": { "santePhysique": -5, "santeMentale": -8 },
+              "money": -1200
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "tagModifiers": { "alcool_dependant": 20 },
+            "effects": {
+              "stats": { "santePhysique": -20, "santeMentale": -12 },
+              "money": -4000
+            }
+          }
+        ]
+      },
+      {
+        "id": "ignorer_douleurs",
+        "label": "Ignorer les douleurs et rentrer chez soi",
+        "effects": {
+          "stats": { "santePhysique": -15, "santeMentale": -5 },
+          "money": -500
+        }
+      }
+    ]
+  },
+  {
+    "id": "sante_accident_sport",
+    "category": "health",
+    "minAge": 10,
+    "maxAge": 60,
+    "requiredTags": [],
+    "excludedTags": [],
+    "weight": 30,
+    "text": "Lors d'une séance de sport, {prenom} se blesse : une chute, une entorse, peut-être pire. La douleur est vive.",
+    "choices": [
+      {
+        "id": "se_faire_soigner",
+        "label": "Consulter un médecin du sport",
+        "effects": { "stats": { "santePhysique": -6 }, "money": -150 }
+      },
+      {
+        "id": "continuer_sport",
+        "label": "Continuer à s'entraîner malgré la blessure",
+        "effects": { "stats": { "santePhysique": -18, "santeMentale": -5 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_accident_domestique",
+    "category": "health",
+    "minAge": 15,
+    "maxAge": 99,
+    "requiredTags": [],
+    "excludedTags": [],
+    "weight": 35,
+    "text": "Une maladresse à la maison : glissade dans la salle de bain, brûlure en cuisinant… Les accidents domestiques arrivent vite.",
+    "choices": [
+      {
+        "id": "soigner",
+        "label": "Soigner la blessure correctement",
+        "outcomes": [
+          {
+            "weight": 70,
+            "valence": "positif",
+            "effects": { "stats": { "santePhysique": -3 } }
+          },
+          {
+            "weight": 30,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santePhysique": -10, "santeMentale": -4 },
+              "money": -600
+            }
+          }
+        ]
+      },
+      {
+        "id": "banaliser",
+        "label": "Banaliser et ne rien faire",
+        "effects": { "stats": { "santePhysique": -8 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_sport_regulier",
+    "category": "health",
+    "minAge": 16,
+    "maxAge": 70,
+    "requiredTags": [],
+    "excludedTags": ["sportif_regulier"],
+    "weight": 50,
+    "text": "Un ami convainc {prenom} d'adopter une routine sportive. Courir, aller en salle, faire du yoga… Les options ne manquent pas.",
+    "choices": [
+      {
+        "id": "adopter_routine",
+        "label": "S'y mettre sérieusement",
+        "effects": {
+          "stats": { "santePhysique": 12, "santeMentale": 8, "beaute": 5 },
+          "addTags": ["sportif_regulier"]
+        }
+      },
+      {
+        "id": "abandonner",
+        "label": "Essayer puis abandonner au bout de quelques semaines",
+        "effects": { "stats": { "santePhysique": 2 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_alimentation_saine",
+    "category": "health",
+    "minAge": 18,
+    "maxAge": 70,
+    "requiredTags": [],
+    "excludedTags": ["alimentation_saine"],
+    "weight": 45,
+    "text": "{prenom} réalise que son alimentation laisse à désirer. L'opportunité de changer ses habitudes se présente.",
+    "choices": [
+      {
+        "id": "changer_habitudes",
+        "label": "Adopter une alimentation équilibrée",
+        "effects": {
+          "stats": { "santePhysique": 10, "santeMentale": 5, "beaute": 4 },
+          "addTags": ["alimentation_saine"]
+        }
+      },
+      {
+        "id": "continuer",
+        "label": "Continuer comme avant",
+        "effects": { "stats": { "santePhysique": -4 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_alcool_dependance",
+    "category": "health",
+    "minAge": 18,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": ["sobre", "alcool_dependant"],
+    "weight": 30,
+    "text": "{prenom} réalise que son rapport à l'alcool a changé. Ce qui était une habitude sociale est devenu une béquille quotidienne.",
+    "choices": [
+      {
+        "id": "demander_aide",
+        "label": "Demander de l'aide à un médecin",
+        "outcomes": [
+          {
+            "weight": 65,
+            "valence": "positif",
+            "effects": {
+              "stats": { "santeMentale": 18, "santePhysique": 10 },
+              "addTags": ["sobre"],
+              "removeTags": ["alcool_dependant"]
+            }
+          },
+          {
+            "weight": 35,
+            "valence": "negatif",
+            "effects": { "stats": { "santeMentale": 6 }, "addTags": ["sobre"] }
+          }
+        ]
+      },
+      {
+        "id": "minimiser",
+        "label": "Minimiser le problème",
+        "effects": {
+          "stats": { "santeMentale": -15, "santePhysique": -12, "reputation": -8 },
+          "addTags": ["alcool_dependant"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "sante_tabac_dependance",
+    "category": "health",
+    "minAge": 16,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": ["non_fumeur"],
+    "weight": 35,
+    "text": "{prenom} fume depuis un certain temps et commence à ressentir les effets : essoufflement, toux matinale, teint terne.",
+    "choices": [
+      {
+        "id": "arreter_fumer",
+        "label": "Arrêter de fumer",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "positif",
+            "effects": {
+              "stats": { "santePhysique": 12, "santeMentale": 5 },
+              "addTags": ["non_fumeur"]
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -8, "santePhysique": 4 },
+              "addTags": ["non_fumeur"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "continuer_fumer",
+        "label": "Continuer à fumer",
+        "effects": {
+          "stats": { "santePhysique": -8, "beaute": -5 },
+          "addTags": ["tabac_dependant"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "sante_visite_medicale",
+    "category": "health",
+    "minAge": 20,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": [],
+    "weight": 55,
+    "text": "La médecin de {prenom} rappelle qu'un bilan de santé annuel est recommandé. Ça fait un moment qu'il n'en a pas fait.",
+    "choices": [
+      {
+        "id": "faire_bilan",
+        "label": "Faire le bilan complet",
+        "effects": {
+          "stats": { "santePhysique": 6, "santeMentale": 5 },
+          "money": -50
+        }
+      },
+      {
+        "id": "annuler_rdv",
+        "label": "Annuler le rendez-vous",
+        "effects": { "stats": { "santePhysique": -5, "santeMentale": -3 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_depistage_cancer",
+    "category": "health",
+    "minAge": 40,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": ["depistage_fait"],
+    "weight": 40,
+    "text": "{prenom} reçoit une invitation pour un dépistage précoce. Les médecins insistent : pris à temps, un cancer se soigne dans 80 % des cas.",
+    "choices": [
+      {
+        "id": "faire_depistage",
+        "label": "Faire le dépistage",
+        "effects": {
+          "stats": { "santePhysique": 5, "santeMentale": 8 },
+          "addTags": ["depistage_fait"]
+        }
+      },
+      {
+        "id": "remettre",
+        "label": "Remettre à plus tard",
+        "effects": { "stats": { "santePhysique": -6, "santeMentale": -5 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_operation_chirurgicale",
+    "category": "health",
+    "minAge": 30,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": ["opere"],
+    "weight": 20,
+    "text": "Les médecins recommandent une opération chirurgicale à {prenom} pour traiter un problème qui traîne depuis trop longtemps.",
+    "choices": [
+      {
+        "id": "accepter_operation",
+        "label": "Accepter l'opération",
+        "outcomes": [
+          {
+            "weight": 70,
+            "valence": "positif",
+            "tagModifiers": { "sportif_regulier": 15, "alimentation_saine": 10 },
+            "effects": {
+              "stats": { "santePhysique": 18 },
+              "money": -3000,
+              "addTags": ["opere"]
+            }
+          },
+          {
+            "weight": 30,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santePhysique": 5, "santeMentale": -10 },
+              "money": -3000,
+              "addTags": ["opere"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "refuser_operation",
+        "label": "Refuser l'opération",
+        "effects": { "stats": { "santePhysique": -14, "santeMentale": -8 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_therapie_psy",
+    "category": "health",
+    "minAge": 18,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": ["en_therapie"],
+    "weight": 40,
+    "text": "Un ami suggère à {prenom} de consulter un psychologue. Les tensions s'accumulent et les nuits sont agitées.",
+    "choices": [
+      {
+        "id": "commencer_therapie",
+        "label": "Commencer une thérapie",
+        "effects": {
+          "stats": { "santeMentale": 18, "charisme": 4 },
+          "money": -300,
+          "addTags": ["en_therapie"]
+        }
+      },
+      {
+        "id": "refuser_aide",
+        "label": "Refuser l'aide",
+        "effects": { "stats": { "santeMentale": -8 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_insomnie_chronique",
+    "category": "health",
+    "minAge": 20,
+    "maxAge": 70,
+    "requiredTags": [],
+    "excludedTags": ["insomnie_traitee"],
+    "weight": 30,
+    "text": "Depuis plusieurs semaines, {prenom} n'arrive plus à dormir. Les nuits s'éternisent et les journées sont floues.",
+    "choices": [
+      {
+        "id": "consulter_medecin",
+        "label": "Consulter un médecin",
+        "effects": {
+          "stats": { "santeMentale": 10, "santePhysique": 7 },
+          "money": -80,
+          "addTags": ["insomnie_traitee"]
+        }
+      },
+      {
+        "id": "somniferes",
+        "label": "Se tourner vers les somnifères",
+        "effects": {
+          "stats": { "santeMentale": 4, "santePhysique": -5 },
+          "money": -30
+        }
+      }
+    ]
+  },
+  {
+    "id": "sante_douleurs_chroniques",
+    "category": "health",
+    "minAge": 40,
+    "maxAge": 80,
+    "requiredTags": [],
+    "excludedTags": ["douleurs_prises_en_charge"],
+    "weight": 25,
+    "text": "Des douleurs persistantes envahissent le quotidien de {prenom} : dos, articulations, migraines. Chaque mouvement devient une épreuve.",
+    "choices": [
+      {
+        "id": "prise_en_charge",
+        "label": "Faire une prise en charge globale",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "positif",
+            "effects": {
+              "stats": { "santePhysique": 10, "santeMentale": 8 },
+              "money": -500,
+              "addTags": ["douleurs_prises_en_charge"]
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santePhysique": 3, "santeMentale": -4 },
+              "money": -500
+            }
+          }
+        ]
+      },
+      {
+        "id": "endurer",
+        "label": "Endurer en silence",
+        "effects": { "stats": { "santePhysique": -14, "santeMentale": -10 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_infarctus",
+    "category": "health",
+    "minAge": 50,
+    "maxAge": 90,
+    "requiredTags": [],
+    "excludedTags": ["infarctus_survenu"],
+    "weight": 18,
+    "text": "Une douleur fulgurante dans la poitrine terrasse {prenom}. Sueurs froides, bras gauche engourdi. Les secondes qui suivent sont décisives.",
+    "choices": [
+      {
+        "id": "appeler_secours",
+        "label": "Appeler le 15 immédiatement",
+        "outcomes": [
+          {
+            "weight": 65,
+            "valence": "positif",
+            "tagModifiers": { "sportif_regulier": 20, "alimentation_saine": 10 },
+            "effects": {
+              "stats": { "santePhysique": -10, "santeMentale": -15 },
+              "money": -2000,
+              "addTags": ["infarctus_survenu"]
+            }
+          },
+          {
+            "weight": 35,
+            "valence": "negatif",
+            "tagModifiers": { "alcool_dependant": 20, "tabac_dependant": 15 },
+            "effects": {
+              "stats": { "santePhysique": -28, "santeMentale": -20 },
+              "money": -5000,
+              "addTags": ["infarctus_survenu"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "ignorer_douleur",
+        "label": "Ignorer et attendre que ça passe",
+        "effects": {
+          "stats": { "santePhysique": -35, "santeMentale": -10 },
+          "addTags": ["infarctus_survenu"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "sante_burnout_physique",
+    "category": "health",
+    "minAge": 25,
+    "maxAge": 65,
+    "requiredTags": ["burnout_vecu"],
+    "excludedTags": ["burnout_physique_traite"],
+    "weight": 45,
+    "text": "Le corps de {prenom} tire la sonnette d'alarme : fatigue extrême, douleurs musculaires, concentration impossible. Le burnout a laissé des séquelles physiques.",
+    "choices": [
+      {
+        "id": "sarreter_completement",
+        "label": "S'arrêter complètement et se reconstruire",
+        "effects": {
+          "stats": { "santeMentale": 14, "santePhysique": 12 },
+          "addTags": ["burnout_physique_traite"],
+          "career": { "satisfactionDelta": 5 }
+        }
+      },
+      {
+        "id": "continuer_force",
+        "label": "Continuer à force de volonté",
+        "effects": { "stats": { "santeMentale": -14, "santePhysique": -12, "reputation": -5 } }
+      }
+    ]
+  },
+  {
+    "id": "sante_critique",
+    "category": "health",
+    "minAge": 0,
+    "maxAge": 99,
+    "requiredTags": ["sante_critique_active"],
+    "excludedTags": [],
+    "weight": 1,
+    "text": "L'état de santé de {prenom} atteint un point critique. Les médecins sont formels : sans intervention immédiate, les conséquences pourraient être irréversibles.",
+    "choices": [
+      {
+        "id": "hospitalisation",
+        "label": "Accepter l'hospitalisation d'urgence",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "positif",
+            "tagModifiers": { "sportif_regulier": 15, "en_therapie": 10 },
+            "effects": {
+              "stats": { "santePhysique": 15, "santeMentale": -10 },
+              "money": -4000,
+              "removeTags": ["sante_critique_active"]
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santePhysique": 6, "santeMentale": -15 },
+              "money": -4000,
+              "removeTags": ["sante_critique_active"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "refuser_soins",
+        "label": "Refuser les soins",
+        "effects": {
+          "stats": { "santePhysique": -12, "santeMentale": -8 },
+          "removeTags": ["sante_critique_active"]
+        }
+      }
+    ]
+  }
+]
