@@ -187,12 +187,37 @@
       {
         "id": "se_lancer",
         "label": "Quitter son job et se lancer",
-        "effects": {
-          "stats": { "reputation": 4, "santeMentale": -3, "intelligence": 5, "charisme": 3 },
-          "money": -3000,
-          "addTags": ["idee_entreprise_eue", "entrepreneur"],
-          "scheduleEvent": { "triggerAge": 25, "type": "finance" }
-        }
+        "outcomes": [
+          {
+            "weight": 25,
+            "valence": "positif",
+            "tagModifiers": { "sait_negocier": 25, "ouverture_monde": 20, "gout_scene": 15, "sens_travail": 20 },
+            "effects": {
+              "stats": { "reputation": 7, "intelligence": 6, "charisme": 4, "santeMentale": 3 },
+              "money": 5000,
+              "addTags": ["idee_entreprise_eue", "entrepreneur"]
+            }
+          },
+          {
+            "weight": 45,
+            "valence": "neutre",
+            "effects": {
+              "stats": { "reputation": 4, "intelligence": 5, "charisme": 3, "santeMentale": -3 },
+              "money": -3000,
+              "addTags": ["idee_entreprise_eue", "entrepreneur"]
+            }
+          },
+          {
+            "weight": 30,
+            "valence": "negatif",
+            "tagModifiers": { "tendance_mensonge": 20, "mauvaise_influence": 15, "etudiant_fêtard": 15 },
+            "effects": {
+              "stats": { "reputation": -2, "santeMentale": -6, "intelligence": 2 },
+              "money": -6000,
+              "addTags": ["idee_entreprise_eue", "startup_echouee"]
+            }
+          }
+        ]
       },
       {
         "id": "projet_secondaire",
@@ -307,6 +332,94 @@
     ]
   },
   {
+    "id": "jeune_investissement_crypto",
+    "category": "finance",
+    "minAge": 20,
+    "maxAge": 30,
+    "requiredTags": [],
+    "excludedTags": ["crypto_tente"],
+    "weight": 45,
+    "text": "Un collègue jure que les cryptomonnaies vont exploser ce mois-ci. {prenom} a 5 000 € d'économies. C'est maintenant ou jamais, dit-il.",
+    "choices": [
+      {
+        "id": "investir_gros",
+        "label": "Investir 5 000 € — quitte ou double",
+        "outcomes": [
+          {
+            "weight": 15,
+            "valence": "positif",
+            "effects": {
+              "money": 50000,
+              "stats": { "chance": 3, "reputation": 4 },
+              "addTags": ["crypto_tente", "chanceux_finances", "riche_precoce"]
+            }
+          },
+          {
+            "weight": 25,
+            "valence": "positif",
+            "effects": {
+              "money": 3000,
+              "stats": { "intelligence": 2 },
+              "addTags": ["crypto_tente"],
+              "scheduleEvent": { "eventId": "crypto_outcome_suivi", "triggerAge": 10, "type": "finance" }
+            }
+          },
+          {
+            "weight": 35,
+            "valence": "negatif",
+            "effects": {
+              "money": -3000,
+              "stats": { "santeMentale": -3 },
+              "addTags": ["crypto_tente"],
+              "scheduleEvent": { "eventId": "crypto_outcome_suivi", "triggerAge": 10, "type": "finance" }
+            }
+          },
+          {
+            "weight": 25,
+            "valence": "negatif",
+            "effects": {
+              "money": -5000,
+              "stats": { "santeMentale": -6, "chance": -2 },
+              "addTags": ["crypto_tente", "traumatise_finance"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "investir_petit",
+        "label": "Tester avec 500 € seulement",
+        "outcomes": [
+          {
+            "weight": 40,
+            "valence": "positif",
+            "effects": {
+              "money": 2000,
+              "stats": { "intelligence": 2 },
+              "addTags": ["crypto_tente"]
+            }
+          },
+          {
+            "weight": 60,
+            "valence": "negatif",
+            "effects": {
+              "money": -500,
+              "stats": { "santeMentale": -1 },
+              "addTags": ["crypto_tente"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "refuser",
+        "label": "Refuser, c'est trop risqué",
+        "effects": {
+          "stats": { "intelligence": 2 },
+          "addTags": ["crypto_tente"]
+        }
+      }
+    ]
+  },
+  {
     "id": "jeune_mariage_ami",
     "category": "family",
     "minAge": 24,
@@ -338,6 +451,41 @@
         "effects": {
           "stats": { "santeMentale": 2, "reputation": -2 },
           "addTags": ["mariage_ami_assiste"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "jeune_projet_enfant",
+    "category": "family",
+    "minAge": 25,
+    "maxAge": 42,
+    "requiredTags": ["courageux_en_amour"],
+    "excludedTags": ["tentative_bebe", "premier_enfant_ne"],
+    "weight": 55,
+    "text": "La question flotte dans l'air depuis quelques mois entre {prenom} et son partenaire. Fonder une famille — est-ce que c'est maintenant ?",
+    "choices": [
+      {
+        "id": "essayer",
+        "label": "Oui, on se lance — c'est le bon moment",
+        "effects": {
+          "stats": { "santeMentale": 5, "charisme": 2 },
+          "addTags": ["tentative_bebe"],
+          "scheduleEvent": { "eventId": "naissance_enfant_attendu", "triggerAge": 1, "type": "family" }
+        }
+      },
+      {
+        "id": "pas_encore",
+        "label": "Pas encore, encore un peu de temps à deux",
+        "effects": {
+          "stats": { "santeMentale": 1 }
+        }
+      },
+      {
+        "id": "jamais",
+        "label": "Être honnête : ce n'est pas dans les plans",
+        "effects": {
+          "stats": { "santeMentale": 3, "charisme": -2 }
         }
       }
     ]

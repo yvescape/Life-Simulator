@@ -19,10 +19,13 @@ export default function GamePage() {
   const removeTag     = useGameStore((s) => s.removeTag)
   const addLifeEvent  = useGameStore((s) => s.addLifeEvent)
   const scheduleEvent = useGameStore((s) => s.scheduleEvent)
+  const consumeScheduledEventsAtAge = useGameStore((s) => s.consumeScheduledEventsAtAge)
 
+  // Événement affiché dans la modal
   const [evenementActuel, setEvenementActuel] = useState<GameEvent | null>(null)
+  // File d'attente : événements à afficher après la modal courante
+  const [fileAttente, setFileAttente] = useState<GameEvent[]>([])
 
-  // Redirige vers l'accueil si aucune partie n'est en cours
   useEffect(() => {
     if (!character) navigate('/')
   }, [character, navigate])
@@ -31,24 +34,50 @@ export default function GamePage() {
 
   function handleAnnéeSuivante() {
     advanceYear()
-    // Zustand est synchrone : on lit l'état mis à jour immédiatement
-    const characterMisAJour = useGameStore.getState().character
-    if (!characterMisAJour) return
-    const event = pickNextEvent(characterMisAJour, tousLesEvenements)
-    setEvenementActuel(event)
+
+    // Zustand est synchrone : état déjà mis à jour
+    const { character: perso } = useGameStore.getState()
+    if (!perso) return
+
+    const queue: GameEvent[] = []
+
+    // 1. Événements programmés en priorité (déclenchés à cet âge exact)
+    const dus = consumeScheduledEventsAtAge(perso.age)
+    for (const scheduled of dus) {
+      const evt = tousLesEvenements.find((e) => e.id === scheduled.eventId)
+      if (evt) queue.push(evt)
+    }
+
+    // 2. Compléter avec un événement aléatoire si la file est vide
+    if (queue.length === 0) {
+      const aléatoire = pickNextEvent(perso, tousLesEvenements)
+      if (aléatoire) queue.push(aléatoire)
+    }
+
+    if (queue.length > 0) {
+      setEvenementActuel(queue[0])
+      setFileAttente(queue.slice(1))
+    }
   }
 
   const handleChoiceSelected = useCallback((choice: Choice): string[] => {
-    const characterActuel = useGameStore.getState().character
-    if (!characterActuel || !evenementActuel) return []
-    return applyChoice(choice, evenementActuel, characterActuel, storeActions)
-  // storeActions est stable car les actions Zustand ne changent pas
+    const { character: perso } = useGameStore.getState()
+    if (!perso || !evenementActuel) return []
+    return applyChoice(choice, evenementActuel, perso, storeActions)
+  // storeActions est stable (actions Zustand ne changent pas entre les renders)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [evenementActuel])
 
   const handleFermerModal = useCallback(() => {
     setEvenementActuel(null)
-  }, [])
+    // Passer à l'événement suivant dans la file d'attente si elle n'est pas vide
+    if (fileAttente.length > 0) {
+      setTimeout(() => {
+        setEvenementActuel(fileAttente[0])
+        setFileAttente((f) => f.slice(1))
+      }, 300) // petit délai pour laisser l'animation de fermeture se terminer
+    }
+  }, [fileAttente])
 
   if (!character) return null
 
@@ -129,7 +158,7 @@ export default function GamePage() {
       <AnimatePresence>
         {evenementActuel && (
           <EventModal
-            key={evenementActuel.id}
+            key={evenementActuel.id + character.age}
             event={evenementActuel}
             character={character}
             onChoiceSelected={handleChoiceSelected}

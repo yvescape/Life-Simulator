@@ -298,10 +298,34 @@
       {
         "id": "reviser_fond",
         "label": "Réviser à fond les deux semaines qui restent",
-        "effects": {
-          "stats": { "intelligence": 5, "santePhysique": -3, "santeMentale": -2 },
-          "addTags": ["bac_blanc_passe", "travailleur_acharné"]
-        }
+        "outcomes": [
+          {
+            "weight": 35,
+            "valence": "positif",
+            "tagModifiers": { "bon_eleve": 30, "grand_lecteur": 20, "passion_lecture_eveillee": 15, "eleve_courageux": 15 },
+            "effects": {
+              "stats": { "intelligence": 8, "santePhysique": -2, "santeMentale": 3 },
+              "addTags": ["bac_blanc_passe", "travailleur_acharné"]
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "neutre",
+            "effects": {
+              "stats": { "intelligence": 5, "santePhysique": -3, "santeMentale": -1 },
+              "addTags": ["bac_blanc_passe", "travailleur_acharné"]
+            }
+          },
+          {
+            "weight": 25,
+            "valence": "negatif",
+            "tagModifiers": { "etudiant_fêtard": 30, "mauvaise_influence": 20, "tendance_mensonge": 10 },
+            "effects": {
+              "stats": { "intelligence": 2, "santePhysique": -4, "santeMentale": -6 },
+              "addTags": ["bac_blanc_passe"]
+            }
+          }
+        ]
       },
       {
         "id": "reviser_normal",

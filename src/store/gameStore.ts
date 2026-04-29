@@ -22,6 +22,11 @@ interface GameActions {
   removeTag: (tag: string) => void
   /** Met à jour les finances du personnage (merge partiel) */
   updateFinances: (partialFinances: Partial<CharacterFinances>) => void
+  /**
+   * Retire et retourne tous les événements programmés dont l'âge déclencheur
+   * correspond à l'âge fourni. Opération atomique : lecture + suppression.
+   */
+  consumeScheduledEventsAtAge: (age: number) => ScheduledEvent[]
 }
 
 // ─── État initial ─────────────────────────────────────────────────────────────
@@ -103,15 +108,25 @@ export const useGameStore = create<GameState & GameActions>()(
         if (!character) return
         set({ character: { ...character, finances: { ...character.finances, ...partialFinances } } })
       },
+
+      consumeScheduledEventsAtAge(age) {
+        const { evenementsProgrammes } = get()
+        const dus = evenementsProgrammes.filter((e) => e.ageDeclencheur === age)
+        if (dus.length > 0) {
+          set({ evenementsProgrammes: evenementsProgrammes.filter((e) => e.ageDeclencheur !== age) })
+        }
+        return dus
+      },
     }),
     {
       name: 'life-simulator-save',
       // Ne persiste pas les événements programmés : le moteur les recrée au chargement
       partialize: (etat) => ({
-        character:        etat.character,
-        evenementsVecus:  etat.evenementsVecus,
-        anneeCourante:    etat.anneeCourante,
-        partieEnCours:    etat.partieEnCours,
+        character:             etat.character,
+        evenementsVecus:       etat.evenementsVecus,
+        evenementsProgrammes:  etat.evenementsProgrammes,
+        anneeCourante:         etat.anneeCourante,
+        partieEnCours:         etat.partieEnCours,
       }),
     },
   ),

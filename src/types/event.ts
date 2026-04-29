@@ -17,11 +17,38 @@ export interface ChoiceEffects {
   removeTags?: string[]
   /** Événement à programmer pour un âge futur */
   scheduleEvent?: {
-    /** Âge auquel l'événement sera déclenché */
+    /** Identifiant de l'événement cible dans le pool (fichiers JSON) */
+    eventId: string
+    /** Délai en années depuis l'âge actuel du personnage (offset relatif) */
     triggerAge: number
-    /** Catégorie servant au routage vers le bon fichier JSON */
+    /** Catégorie de l'événement cible */
     type: EventCategory
   }
+}
+
+// ─── Outcome (résultat variable) ──────────────────────────────────────────────
+
+export interface Outcome {
+  /** Poids brut avant tout ajustement (1–100) */
+  weight: number
+  effects: ChoiceEffects
+  /**
+   * Nature de l'outcome, détermine comment les stats du personnage
+   * font varier sa probabilité :
+   * - 'positif' : favorisé par une chance / stat pertinente élevée
+   * - 'negatif' : défavorisé par une chance / stat pertinente élevée
+   * - 'neutre'  : non modifié par les stats (défaut si absent)
+   */
+  valence?: 'positif' | 'negatif' | 'neutre'
+  /**
+   * Modificateurs additifs par tag du personnage.
+   * Appliqués au poids de base AVANT le multiplicateur de stats.
+   * Valeur positive = outcome plus probable si le personnage a ce tag.
+   * Valeur négative = outcome moins probable.
+   *
+   * Exemple : { 'travailleur_acharné': 25, 'burnout_vecu': -15 }
+   */
+  tagModifiers?: Record<string, number>
 }
 
 // ─── Choix proposé au joueur ──────────────────────────────────────────────────
@@ -31,10 +58,19 @@ export interface Choice {
   id: string
   /** Texte affiché sur le bouton */
   label: string
-  effects: ChoiceEffects
   /**
-   * Poids relatif pour les résultats aléatoires (1–100).
-   * Utilisé quand plusieurs choix sont tirés au sort plutôt que présentés au joueur.
+   * Résultat direct, appliqué systématiquement.
+   * Exclusif avec `outcomes` : utiliser l'un ou l'autre, pas les deux.
+   */
+  effects?: ChoiceEffects
+  /**
+   * Résultats variables : un seul outcome est tiré au sort, pondéré par
+   * les weights et ajusté selon les stats du personnage.
+   * Exclusif avec `effects`.
+   */
+  outcomes?: Outcome[]
+  /**
+   * Poids relatif pour les choix tirés au sort plutôt que présentés au joueur.
    */
   weight?: number
 }

@@ -242,7 +242,8 @@
         "label": "Laisser passer, ça va se réconcilier tout seul",
         "effects": {
           "stats": { "santeMentale": -2, "intelligence": 2 },
-          "addTags": ["premiere_dispute_ami"]
+          "addTags": ["premiere_dispute_ami"],
+          "scheduleEvent": { "eventId": "retour_ami_perdu", "triggerAge": 15, "type": "family" }
         }
       },
       {

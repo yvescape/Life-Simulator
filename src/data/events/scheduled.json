@@ -1,0 +1,170 @@
+[
+  {
+    "id": "crypto_outcome_suivi",
+    "category": "finance",
+    "minAge": 22,
+    "maxAge": 70,
+    "requiredTags": ["crypto_tente"],
+    "excludedTags": ["crypto_outcome_vecu"],
+    "weight": 100,
+    "text": "Dix ans ont passé depuis l'investissement en crypto de {prenom}. Les marchés ont fait mille tours. Un email du portefeuille arrive : il est temps de regarder le solde.",
+    "choices": [
+      {
+        "id": "vendre_tout",
+        "label": "Tout vendre et encaisser le résultat",
+        "outcomes": [
+          {
+            "weight": 35,
+            "valence": "positif",
+            "tagModifiers": { "chanceux_finances": 30, "riche_precoce": 20, "investisseur": 15 },
+            "effects": {
+              "money": 28000,
+              "stats": { "reputation": 5, "intelligence": 3, "santeMentale": 4 },
+              "addTags": ["crypto_outcome_vecu", "investisseur"]
+            }
+          },
+          {
+            "weight": 65,
+            "valence": "negatif",
+            "tagModifiers": { "traumatise_finance": 25 },
+            "effects": {
+              "money": -1500,
+              "stats": { "santeMentale": -5, "intelligence": 3 },
+              "addTags": ["crypto_outcome_vecu"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "reinvestir",
+        "label": "Réinvestir — les cryptos vont remonter",
+        "outcomes": [
+          {
+            "weight": 20,
+            "valence": "positif",
+            "tagModifiers": { "chanceux_finances": 35, "riche_precoce": 25 },
+            "effects": {
+              "money": 80000,
+              "stats": { "reputation": 8, "chance": 3, "santeMentale": 6 },
+              "addTags": ["crypto_outcome_vecu", "riche_precoce", "investisseur"]
+            }
+          },
+          {
+            "weight": 80,
+            "valence": "negatif",
+            "tagModifiers": { "traumatise_finance": 30 },
+            "effects": {
+              "money": -4000,
+              "stats": { "santeMentale": -8, "intelligence": 2 },
+              "addTags": ["crypto_outcome_vecu", "traumatise_finance"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "diversifier",
+        "label": "Vendre la moitié et placer le reste prudemment",
+        "effects": {
+          "money": 4000,
+          "stats": { "intelligence": 5, "reputation": 3, "santeMentale": 2 },
+          "addTags": ["crypto_outcome_vecu", "investisseur"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "naissance_enfant_attendu",
+    "category": "family",
+    "minAge": 20,
+    "maxAge": 47,
+    "requiredTags": ["tentative_bebe"],
+    "excludedTags": ["naissance_enfant_attendu_vecu"],
+    "weight": 100,
+    "text": "Après des mois d'attente et de tests répétés, {prenom} tient enfin le résultat dans les mains. Les secondes qui suivent semblent infinies.",
+    "choices": [
+      {
+        "id": "regarder_seul",
+        "label": "Regarder le résultat seul, le souffle coupé",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "positif",
+            "tagModifiers": { "priorite_sante": 20, "hygiène_vie_saine": 15, "sportif": 10 },
+            "effects": {
+              "stats": { "santeMentale": 10, "charisme": 2 },
+              "addTags": ["premier_enfant_ne", "naissance_enfant_attendu_vecu"]
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "tagModifiers": { "priorite_sante": -15 },
+            "effects": {
+              "stats": { "santeMentale": -7, "santePhysique": -2 },
+              "addTags": ["naissance_enfant_attendu_vecu"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "regarder_ensemble",
+        "label": "Attendre et regarder le résultat à deux",
+        "outcomes": [
+          {
+            "weight": 60,
+            "valence": "positif",
+            "tagModifiers": { "priorite_sante": 20, "courageux_en_amour": 15, "perseverant_amour": 10 },
+            "effects": {
+              "stats": { "santeMentale": 12, "charisme": 3, "reputation": 2 },
+              "addTags": ["premier_enfant_ne", "naissance_enfant_attendu_vecu"]
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "negatif",
+            "effects": {
+              "stats": { "santeMentale": -5, "charisme": 3 },
+              "addTags": ["naissance_enfant_attendu_vecu"]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "retour_ami_perdu",
+    "category": "family",
+    "minAge": 15,
+    "maxAge": 80,
+    "requiredTags": ["premiere_dispute_ami"],
+    "excludedTags": ["ami_perdu_revenu"],
+    "weight": 100,
+    "text": "Un message inattendu apparaît dans la boîte mail de {prenom}. C'est Théo, l'ami perdu de vue depuis des années. Il s'excuse maladroitement et propose un café, si c'est encore possible.",
+    "choices": [
+      {
+        "id": "accepter_sans_hesiter",
+        "label": "Répondre oui immédiatement — la vie est trop courte",
+        "effects": {
+          "stats": { "santeMentale": 7, "charisme": 4, "reputation": 3 },
+          "addTags": ["ami_perdu_revenu", "reconciliation_famille", "ami_loyal"]
+        }
+      },
+      {
+        "id": "repondre_prudemment",
+        "label": "Répondre, mais prendre le temps d'y réfléchir",
+        "effects": {
+          "stats": { "santeMentale": 4, "intelligence": 3, "charisme": 2 },
+          "addTags": ["ami_perdu_revenu"]
+        }
+      },
+      {
+        "id": "ignorer",
+        "label": "Laisser le message sans réponse",
+        "effects": {
+          "stats": { "santeMentale": -3 },
+          "addTags": ["ami_perdu_revenu"]
+        }
+      }
+    ]
+  }
+]

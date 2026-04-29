@@ -88,11 +88,37 @@
       {
         "id": "accepter",
         "label": "Accepter avec enthousiasme",
-        "effects": {
-          "stats": { "reputation": 6, "charisme": 3, "santeMentale": -3 },
-          "money": 500,
-          "addTags": ["premiere_promotion", "manager"]
-        }
+        "outcomes": [
+          {
+            "weight": 35,
+            "valence": "positif",
+            "tagModifiers": { "travailleur_acharné": 25, "sens_travail": 20, "etudiant_serieux": 15, "bon_eleve": 10 },
+            "effects": {
+              "stats": { "reputation": 8, "charisme": 4, "santeMentale": -1 },
+              "money": 700,
+              "addTags": ["premiere_promotion", "manager"]
+            }
+          },
+          {
+            "weight": 40,
+            "valence": "neutre",
+            "effects": {
+              "stats": { "reputation": 5, "charisme": 3, "santeMentale": -3 },
+              "money": 500,
+              "addTags": ["premiere_promotion", "manager"]
+            }
+          },
+          {
+            "weight": 25,
+            "valence": "negatif",
+            "tagModifiers": { "etudiant_fêtard": 30, "burnout_vecu": 25, "mauvaise_influence": 15 },
+            "effects": {
+              "stats": { "reputation": 2, "santeMentale": -7, "santePhysique": -4 },
+              "money": 300,
+              "addTags": ["premiere_promotion", "manager"]
+            }
+          }
+        ]
       },
       {
         "id": "negocier_conditions",
@@ -172,10 +198,26 @@
       {
         "id": "pousser_encore",
         "label": "Tenir bon encore quelques mois",
-        "effects": {
-          "stats": { "santePhysique": -6, "santeMentale": -8, "reputation": 2 },
-          "addTags": ["burnout_vecu"]
-        }
+        "outcomes": [
+          {
+            "weight": 30,
+            "valence": "positif",
+            "tagModifiers": { "resilience_precoce": 30, "volonte_de_fer": 25 },
+            "effects": {
+              "stats": { "santePhysique": -3, "santeMentale": -4, "reputation": 4 },
+              "addTags": ["burnout_vecu"]
+            }
+          },
+          {
+            "weight": 70,
+            "valence": "negatif",
+            "tagModifiers": { "priorite_sante": -25, "hygiène_vie_saine": -20 },
+            "effects": {
+              "stats": { "santePhysique": -8, "santeMentale": -12, "reputation": 1 },
+              "addTags": ["burnout_vecu"]
+            }
+          }
+        ]
       },
       {
         "id": "changer_poste",
@@ -306,11 +348,28 @@
       {
         "id": "traitement_total",
         "label": "Suivre le traitement à la lettre",
-        "effects": {
-          "stats": { "santePhysique": -4, "santeMentale": -3, "reputation": 2, "intelligence": 3 },
-          "money": -2000,
-          "addTags": ["maladie_serieuse_vecue", "priorite_sante"]
-        }
+        "outcomes": [
+          {
+            "weight": 40,
+            "valence": "positif",
+            "tagModifiers": { "priorite_sante": 30, "hygiène_vie_saine": 25, "sportif": 20, "resilience_precoce": 15 },
+            "effects": {
+              "stats": { "santePhysique": 0, "santeMentale": 3, "reputation": 3, "intelligence": 4 },
+              "money": -2000,
+              "addTags": ["maladie_serieuse_vecue", "priorite_sante"]
+            }
+          },
+          {
+            "weight": 60,
+            "valence": "negatif",
+            "tagModifiers": { "priorite_sante": -25, "hygiène_vie_saine": -20 },
+            "effects": {
+              "stats": { "santePhysique": -5, "santeMentale": -3, "reputation": 2, "intelligence": 3 },
+              "money": -2000,
+              "addTags": ["maladie_serieuse_vecue", "priorite_sante"]
+            }
+          }
+        ]
       },
       {
         "id": "medecine_parallele",
@@ -327,6 +386,84 @@
         "effects": {
           "stats": { "santePhysique": -8, "santeMentale": -2 },
           "addTags": ["maladie_serieuse_vecue"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "adulte_startup_pivot",
+    "category": "career",
+    "minAge": 32,
+    "maxAge": 50,
+    "requiredTags": ["entrepreneur"],
+    "excludedTags": ["startup_pivot_vecu"],
+    "weight": 75,
+    "text": "La startup de {prenom} doit pivoter. Les investisseurs proposent un nouveau créneau mais ça implique de tout refondre. Le conseil d'administration vote dans deux heures.",
+    "choices": [
+      {
+        "id": "accepter_pivot",
+        "label": "Accepter le pivot et refondre le produit",
+        "outcomes": [
+          {
+            "weight": 25,
+            "valence": "positif",
+            "effects": {
+              "money": 80000,
+              "stats": { "reputation": 8, "intelligence": 5, "charisme": 3 },
+              "addTags": ["startup_pivot_vecu", "startup_succes"]
+            }
+          },
+          {
+            "weight": 45,
+            "valence": "neutre",
+            "effects": {
+              "money": 5000,
+              "stats": { "reputation": 2, "santeMentale": -2 },
+              "addTags": ["startup_pivot_vecu"]
+            }
+          },
+          {
+            "weight": 30,
+            "valence": "negatif",
+            "effects": {
+              "money": -20000,
+              "stats": { "reputation": -3, "santeMentale": -5 },
+              "addTags": ["startup_pivot_vecu", "startup_echouee"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "refuser_pivot",
+        "label": "Refuser et rester fidèle à la vision initiale",
+        "outcomes": [
+          {
+            "weight": 20,
+            "valence": "positif",
+            "effects": {
+              "money": 30000,
+              "stats": { "reputation": 5, "charisme": 4 },
+              "addTags": ["startup_pivot_vecu", "startup_succes"]
+            }
+          },
+          {
+            "weight": 80,
+            "valence": "negatif",
+            "effects": {
+              "money": -10000,
+              "stats": { "reputation": -2, "santeMentale": -3 },
+              "addTags": ["startup_pivot_vecu", "startup_echouee"]
+            }
+          }
+        ]
+      },
+      {
+        "id": "vendre_parts",
+        "label": "Vendre ses parts et passer à autre chose",
+        "effects": {
+          "money": 15000,
+          "stats": { "santeMentale": 3, "reputation": -1 },
+          "addTags": ["startup_pivot_vecu"]
         }
       }
     ]

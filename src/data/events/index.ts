@@ -5,6 +5,7 @@ import teenagerRaw    from './teenager.json'
 import youngAdultRaw  from './youngAdult.json'
 import adultRaw       from './adult.json'
 import seniorRaw      from './senior.json'
+import scheduledRaw   from './scheduled.json'
 
 // Cast explicite : les JSON correspondent au type GameEvent
 const childhood  = childhoodRaw  as GameEvent[]
@@ -12,6 +13,7 @@ const teenager   = teenagerRaw   as GameEvent[]
 const youngAdult = youngAdultRaw as GameEvent[]
 const adult      = adultRaw      as GameEvent[]
 const senior     = seniorRaw     as GameEvent[]
+const scheduled  = scheduledRaw  as GameEvent[]
 
 /** Totalité des événements du jeu, toutes catégories confondues */
 export const tousLesEvenements: GameEvent[] = [
@@ -20,6 +22,7 @@ export const tousLesEvenements: GameEvent[] = [
   ...youngAdult,
   ...adult,
   ...senior,
+  ...scheduled,
 ]
 
 /** Événements par tranche de vie, pour un accès ciblé si besoin */
@@ -29,4 +32,5 @@ export const evenementsPar = {
   jeuneAdulte:   youngAdult,
   adulte:        adult,
   senior:        senior,
+  programmes:    scheduled,
 } as const
